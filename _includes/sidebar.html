@@ -1,0 +1,45 @@
+<aside id="sidebar">
+    <section id = "subscribe">
+        <h2>Subscribe ?</h2>
+        <img src="//feedburner.google.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0">&nbsp;<a href="http://feeds.feedburner.com/codingvision" rel="alternate" type="application/rss+xml">FeedBurner by Google</a><br>
+        <span style="font-size:10px; font-style: italic;">* at least 90% of content is about coding.</span>
+    </section>
+    
+    <section id = "ads">
+    </section>
+    
+    
+    <section id = "categories">
+    <h2>Categories</h2>
+    <ul>
+    {% for page in site.pages %}
+        {% if page.title and page.iscategory %}
+        <li><a href="{{page.url}}" name="{{ page.title }}">{{ page.title }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    </section>
+    
+    <section id = "links">
+    <h2>Links</h2>
+    <ul>
+        <li><a href="http://student.codingvision.net">Student's blog @ ACS/Politehnica</a></li>
+        <li><a href="/sitemap.xml">Sitemap</a></li>
+    </section>
+    
+</aside>
+
+
+<script>
+	(function(){
+ 		 setTimeout(function() {
+		 if (document.getElementById('ads').offsetHeight < 200)  
+		 { 
+            document.getElementById('ads').style.background = "url('/imgs/ad.png') no-repeat";            
+			document.getElementById('ads').style.height = "250px";
+			document.getElementById('ads').style.width = "300px";
+		 }
+		}, 3000);
+	})();
+
+</script>

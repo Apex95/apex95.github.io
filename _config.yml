@@ -1,0 +1,32 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: coding.vision
+email: JiMwOTc7JiMxMTI7JiMxMDE7JiMxMjA7JiMwNjQ7JiMwOTk7JiMxMTE7JiMxMDA7JiMxMDU7JiMxMTA7JiMxMDM7JiMxMTg7JiMxMDU7JiMxMTU7JiMxMDU7JiMxMTE7JiMxMTA7JiMwNDY7JiMxMTA7JiMxMDE7JiMxMTY7
+description: > # this means to ignore newlines until "baseurl:"
+    a blog about coding...and many other things.
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://www.codingvision.net" # the base hostname & protocol for your site
+#twitter_username: jekyllrb
+#github_username:  jekyll
+
+# Build settings
+markdown: kramdown
+
+# Permalinks
+permalink: /:categories/:title
+
+markdown: kramdown
+
+kramdown:
+    input: GFM
+    
+paginate: 12
+gems: [jekyll-paginate, jekyll-sitemap, jekyll-seo-tag]
+paginate_path: "/page/:num"
+author: apex

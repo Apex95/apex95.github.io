@@ -1,0 +1,48 @@
+---
+layout: default
+---
+
+<div class="home">
+
+  <h1 class="page-heading">Latest posts</h1>
+
+  <ul class="post-list">
+    {% for post in paginator.posts %}
+      <li class="current_post">
+        <div class="thumbnail"><img src="{% if post.thumbnail %} {{post.thumbnail}} {% else %} /imgs/thumbnails/no_thumbnail.png {% endif %}"></div>
+        <h2>
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+        
+        <p class="excerpt">
+            {{ post.content | strip_html | truncatewords: 40 }}
+        </p>
+        
+        <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }} / {% for category in post.categories %} <a href="/category/{{category}}">{{category}}</a>{% endfor; %}</p>
+      </li>
+      <hr class="separator">
+    {% endfor %}
+  </ul>
+
+    {% if paginator.total_pages > 1 %}
+    <div class="pagination">
+    {% if paginator.previous_page %}
+        {% if paginator.page == 2 %}
+            &laquo; <a href="/">previous page</a>
+            <link rel="next" href="/">
+        {% else %}
+            &laquo; <a href="/page/{{paginator.page | minus: 1}}">previous page</a>
+            <link rel="next" href="/page/{{paginator.page | minus: 1}}">
+        {% endif %}
+    {% endif %}
+    |
+    {% if paginator.next_page %}
+        <a class="next" href="/page/{{paginator.page | plus: 1}}">next page</a> &raquo;
+        <link rel="next" href="/page/{{paginator.page | plus: 1}}">
+
+    {% endif %}
+    </div>
+    {% endif %}
+  
+
+</div>
