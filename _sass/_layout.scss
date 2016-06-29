@@ -3,7 +3,7 @@
  */
 .site-header {
     border-top: 5px solid $black-color;
-    min-height: 60px;
+    height: 60px;
 
     // Positioning context for the mobile navigation icon
     position: fixed;
@@ -383,3 +383,23 @@
   user-select: none;
  }
  
+ /* -- google search edits -- */
+ input.gsc-search-button {
+    display:none;
+ }
+ 
+ div.gsc-control-cse, div.gsc-control-cse-en {
+     background: none;
+     padding: 0px !important;
+     border: 0px !important;
+     
+ }
+ input.gsc-input {
+    color: darken($grey-color-dark, 10%);
+    font-size: 17px !important;
+ }
+ 
+ /* end google search edits -- */
+ .site-nav {
+    width: 30%;
+ }
