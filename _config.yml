@@ -9,7 +9,7 @@
 title: coding.vision
 email: JiMwOTc7JiMxMTI7JiMxMDE7JiMxMjA7JiMwNjQ7JiMwOTk7JiMxMTE7JiMxMDA7JiMxMDU7JiMxMTA7JiMxMDM7JiMxMTg7JiMxMDU7JiMxMTU7JiMxMDU7JiMxMTE7JiMxMTA7JiMwNDY7JiMxMTA7JiMxMDE7JiMxMTY7
 description: > # this means to ignore newlines until "baseurl:"
-    mostly about programming
+    programming blog
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://www.codingvision.net" # the base hostname & protocol for your site
 #twitter_username: jekyllrb
