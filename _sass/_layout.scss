@@ -406,6 +406,15 @@
     font-size: 17px !important;
  }
  
+ .gsc-result .gs-title {
+    overflow: unset !important;
+ }
+ 
+ .gs-title a:hover {
+    text-decoration: none !important;
+    color: #0000cc !important;
+ }
+ 
  /* end google search edits -- */
  .site-nav {
     width: 30%;
