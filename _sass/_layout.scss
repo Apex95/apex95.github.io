@@ -338,10 +338,11 @@
  }
  
  /* -- sidebar fix for smartphones --*/
- @media all and (max-width: 768px) {
+ @include media-query($on-palm) {
     #sidebar {
         display: table-row;
     }
+    
 }
  
  .thumbnail {
@@ -408,4 +409,10 @@
  /* end google search edits -- */
  .site-nav {
     width: 30%;
+ }
+ 
+ 
+ #ad2 {
+    text-align: center;
+    
  }
