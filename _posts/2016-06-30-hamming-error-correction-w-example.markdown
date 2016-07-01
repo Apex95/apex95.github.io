@@ -93,14 +93,14 @@ So the encoded data is: <span style="color:red;">01</span>1<span style="color:re
 ## Hamming Decoding
 
 
-This part verifies extracts the original bits and flips one of them if it's corrupted.
+This part verifies the original bits and flips one of them if it's corrupted.
 Keeping the same **example**, we use the value that we determined before, but to make it more interesting, we'll **corrupt 1 bit**.
 
 original: 011010110<span style="color:green;">0</span>10
 
 corrupted: 011010110<span style="color:red;">1</span>10
 
-\* in this case I corrupted the **data bit** - if a **parity bit** gets **corrupted** there's no need to correct anything, we only care about the data bits.
+\* in this case I corrupted a **data bit** - if a **parity bit** gets **corrupted** there's no need to correct anything, we only care about the data bits.
 
 
 We have to recalculate the parity bits, but this time we'll also include their values (taken from the encoded data):
@@ -138,7 +138,7 @@ However, in a general case we won't know which bit is corrupted...so here's how 
 <span style="color:red;">P<sub>8</sub>P<sub>4</sub>P<sub>2</sub>P<sub>1</sub></span>
 
 and by replacing, we get this number in binary: `1010` (10 in decimal) => the **10th** bit, in the encoded data, is corrupted and needs some flippin'.
-Aand...we get the original encoded message: `011010110010`. From here, we extract the data bits => `11010010`.
+Aand...finally, we get the original encoded message: `011010110010`. From here, we extract the data bits => `11010010`.
 
 
 ## The end
