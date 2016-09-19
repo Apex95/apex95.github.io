@@ -2,7 +2,7 @@
 layout: post
 title:  "C# Password Protected File"
 date:   2013-12-08 20:02:05 +0300
-categories: file
+categories: files
 thumbnail: /imgs/thumbnails/filePassword.png
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title:  "XNA Disable Profile check"
 date:   2012-05-17 20:02:05 +0300
-categories: xna miscellaneous
+categories: xna
 thumbnail: /imgs/thumbnails/fbdeprofiler.png
 ---
 
