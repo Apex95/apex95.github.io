@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="theme.css">
+    </head>
+
+
+    <body>
+        <div id="main-wrapper">
+
+            <div id="profile-info">aaaaaa
+            </div>
+
+        </div>
+    </body>
+
+</html>
