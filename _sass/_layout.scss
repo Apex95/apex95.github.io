@@ -2,14 +2,13 @@
  * Site header
  */
 .site-header {
-    border-top: 5px solid $black-color;
     height: 60px;
 
     // Positioning context for the mobile navigation icon
     position: fixed;
     width: 100%;
-    background-color: $blue2-color;
-    
+    background-color: $black-color;
+    border-bottom: 2px solid $blue2-color;
     box-shadow: 0 4px 3px $shadow-color;
     
 
