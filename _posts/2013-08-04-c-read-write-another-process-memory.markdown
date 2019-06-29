@@ -108,8 +108,7 @@ using System.Text;
 
 public class MemoryRead
 {
-    const int PROCESS_VM_WRITE = 0x0020;
-    const int PROCESS_VM_OPERATION = 0x0008;
+    const int PROCESS_ALL_ACCESS = 0x1F0FFF;
 
     [DllImport("kernel32.dll")]
     public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
@@ -121,7 +120,7 @@ public class MemoryRead
     {
 
         Process process = Process.GetProcessesByName("notepad")[0];
-        IntPtr processHandle = OpenProcess(0x1F0FFF, false, process.Id); 
+        IntPtr processHandle = OpenProcess(PROCESS_ALL_ACCESS, false, process.Id); 
 
         int bytesWritten = 0;
         byte[] buffer = Encoding.Unicode.GetBytes("It works!\0"); // '\0' marks the end of string

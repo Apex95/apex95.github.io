@@ -1,8 +1,8 @@
 ---
 layout: page
-title: "xna"
-permalink: /category/xna
+title: jekyll
+permalink: /category/jekyll
 iscategory: 1
-excerpt: "XNA Tutorials."
 ---
+
 {% include category.html category=page.title %}

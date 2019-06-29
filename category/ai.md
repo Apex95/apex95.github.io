@@ -1,8 +1,10 @@
 ---
 layout: page
-title: "xna"
-permalink: /category/xna
+title: ai
+permalink: /category/ai
 iscategory: 1
-excerpt: "XNA Tutorials."
+excerpt: "The fancy stuff."
 ---
+
 {% include category.html category=page.title %}
+

@@ -39,7 +39,7 @@ In this tutorial I'll use a **2-2-1** neural network (2 input neurons, 2 hidden 
 
 As any neural network requires an **activation function**, we'll use **sigmoid** activation. The main idea is to adjust that function so it will produce the correct output (and the minimum error). This is done by modifying the **weights** and the **biases**.
 
-It's graph looks like this (note that the output values range from **0** to **1**)
+Its graph looks like this (note that the output values range from **0** to **1**)
 
 ![sigmoid function graph](http://oi39.tinypic.com/2wg5b2v.jpg)
 
@@ -48,7 +48,7 @@ It's graph looks like this (note that the output values range from **0** to **1*
 _1) Basic sigmoid function:_  
 ![sigmoid formula](http://oi42.tinypic.com/ih4d9j.jpg)
 
-_2) Sigmoid Derivative (it's value is used to adjust the weights):_  
+_2) Sigmoid Derivative (its value is used to adjust the weights):_  
 ![sigmoid derivative formula](http://oi44.tinypic.com/5kq4gp.jpg)
 
 Backpropagation always aims to reduce the error of each output. The algorithm knows what output is correct when the error is getting under a threshold.
@@ -59,7 +59,7 @@ For a better understanding of this, take a look at the graph below which shows t
 
 ## 4\. Formulas
 
-Calculate the output of a neuron (**f** is the sigmoid function, **f'** is the derivative of f, aka dx/df):  
+Calculate the output of a neuron (**f** is the sigmoid function, **f'** is the derivative of f, aka df/dx):  
 **actualOutput = f(weights[0] * inputs[0] + weights[1] * inputs[1] + biasWeight)**
 
 Calculate the global error (error for the **output neuron**)  
@@ -187,7 +187,7 @@ namespace BackPropagationXor
 
                 // 2) back propagation (adjusts weights)
 
-                // adjusts the weight of the output neuron, based on it's error
+                // adjusts the weight of the output neuron, based on its error
                 outputNeuron.error = sigmoid.derivative(outputNeuron.output) * (results[i] - outputNeuron.output);
                 outputNeuron.adjustWeights();
 

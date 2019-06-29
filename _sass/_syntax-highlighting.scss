@@ -1,14 +1,22 @@
 /**
  * Syntax highlighting styles
  */
-.highlight {
-    background: #fff;
-    @extend %vertical-rhythm;
 
-    border-left: 4px solid $green-color;
+.highlighter-rouge {
+	border-left: 2px solid $green-color;
+	background-color: $pure-white;
+
+}
+ 
+.highlight {
+    @extend %vertical-rhythm;
+	
+	background-color: $pure-white;
+    border-left: 2px solid $green-color;
     
     .highlighter-rouge & {
-      background: #eef;
+	  border-left: 2px solid $green-color;
+	  background-color: $pure-white;
     }
 
     .c     { color: #998; font-style: italic } // Comment

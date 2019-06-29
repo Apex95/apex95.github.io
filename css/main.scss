@@ -28,6 +28,7 @@ $red-color:        darkred;
 $blue2-color:      #0886C4;
 $green-color:      darkgreen;
 $grey2-color:      #4D4D4D;
+$pure-white:       #FFF;
 
 $black-color-light: lighten($black-color, 2%);
 
@@ -40,10 +41,10 @@ $shadow-color: #AAA;
 
 
 // Width of the content area
-$content-width:    1300px;
+$content-width:    1200px;
 
-$on-palm:          600px;
-$on-laptop:        1300px;
+$on-palm:          900px;
+$on-laptop:        1200px;
 
 
 

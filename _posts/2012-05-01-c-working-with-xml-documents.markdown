@@ -50,7 +50,7 @@ If we need to select **only one node** corresponding to a certain product, the f
 XmlNode book_node = xmldoc.SelectSingleNode("/products/product[name='Book']"); //selects the node where name is 'Book'
 {% endhighlight %}
 
-If we need to know the price of the product selected before, we create a **string** in where be stored the information:
+If we need to know the price of the product selected before:
 
 {% highlight csharp linenos %}
 string book_price = book_node["price"].InnerText;

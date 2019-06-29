@@ -130,15 +130,12 @@ blockquote {
 pre,
 code {
     font-size: 15px;
-    /*border: 1px solid $grey-color;*/
-    border: none;
-    border-radius: 3px;
-    background-color: darken($grey-color, 7%);
 }
 
 code {
     padding: 1px 5px;
 }
+
 
 pre {
     padding: 8px 12px;

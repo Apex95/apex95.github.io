@@ -33,9 +33,9 @@ Given this set of **4 points**:
 
 <tr>
 
-<td>**x**</td>
+<td><strong>x</strong></td>
 
-<td>**y**</td>
+<td><strong>y</strong></td>
 
 </tr>
 
