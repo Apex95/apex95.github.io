@@ -12,7 +12,7 @@ description: > # this means to ignore newlines until "baseurl:"
     A programming blog (mostly C#) where I publish articles about various subjects that I personally find interesting, useful or undocumented.
 indextitle: "Apex's Programming Blog"
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://www.codingvision.net" # the base hostname & protocol for your site
+url: "https://codingvision.net" # the base hostname & protocol for your site
 #twitter_username: jekyllrb
 #github_username:  jekyll
 
