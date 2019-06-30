@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>{% if page.title %}{{ page.title | append: ' | ' | append: site.title | escape }}{% else %}{% if paginator and paginator.page > 1 %} {{'page ' | append: paginator.page | append: ' | ' | append: site.title | escape}} {% else %} {{site.title | append: ' | ' | append: site.indextitle | escape }} {% endif %}  {% endif %}</title>
-  <meta name="description" content="{% if page.iscategory %} {{page.excerpt | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if page.excerpt %} {{ page.content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if paginator and paginator.page == 1 %} {{ site.description }} {% else %}{{ page.content | strip_html | replace: '\n' ' ' | truncatewords: 40}}{% endif %}{% endif %}{% endif %}">
+  <meta name="description" content="{% if page.iscategory %} {{page.excerpt | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if page.excerpt %} {{ page.content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if paginator and paginator.page == 1 %} {{ site.description }} {% else %} {{ content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% endif %}{% endif %}{% endif %}">
   
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
