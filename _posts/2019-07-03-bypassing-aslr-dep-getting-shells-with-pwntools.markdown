@@ -97,7 +97,7 @@ actually output the external address of `puts@libc`.
 
 We'll want our initial payload to perform such a call in order to have an initial idea of where the libc is mapped.
 
-Start by running so you can get the address of `puts@GOT`:
+Start by running the following command so you can view the address of `puts@GOT`:
 
 {% highlight bash linenos %}
 objdump -R vuln {% endhighlight %}
