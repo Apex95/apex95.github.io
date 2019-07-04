@@ -248,7 +248,7 @@ r.interactive()
 
 ## Small Proof-Of-Concept
 
-If you followed the steps correctly, you should achieve achieve something like this:
+If you followed the steps correctly, you should achieve something like this:
 
 {% include image.html url="/imgs/posts/bypass_aslr_dep_poc_shell.png" description="Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP" %}
 
