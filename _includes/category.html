@@ -2,7 +2,7 @@
     {% for post in site.posts %}
     {% if post.categories contains include.category %}
       <li>
-        <div class="thumbnail"><img src="{% if post.thumbnail %} {{post.thumbnail}} {% else %} /imgs/thumbnails/no_thumbnail.png {% endif %}"></div>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo="{% if post.thumbnail %} {{post.thumbnail}} {% else %} /imgs/thumbnails/no_thumbnail.png {% endif %}" alt="{{ post.title }}"></div>
         <h2 style="border:none;">
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </h2>
