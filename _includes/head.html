@@ -6,6 +6,9 @@
   <title>{% if page.title %}{{ page.title | append: ' | ' | append: site.title | escape }}{% else %}{% if paginator and paginator.page > 1 %} {{'page ' | append: paginator.page | append: ' | ' | append: site.title | escape}} {% else %} {{site.title | append: ' | ' | append: site.indextitle | escape }} {% endif %}  {% endif %}</title>
   <meta name="description" content="{% if page.iscategory %} {{page.excerpt | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if page.excerpt %} {{ page.content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if paginator and paginator.page == 1 %} {{ site.description }} {% else %} {{ content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% endif %}{% endif %}{% endif %}">
   
+  <link rel="preload" as="font" type="font/woff2" href="./fonts/dosis-v8-latin-regular.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff" href="./fonts/dosis-v8-latin-regular.woff" crossorigin>
+  
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
@@ -27,10 +30,8 @@
   }
   </script>
   
-  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Dosis">
 
 
-  
   
     
 </head>
