@@ -29,9 +29,7 @@ have the third party's consent to provide any of the data.
 Personal data (**Cookies** and **Usage Data**) is collected for the following purposes and using the following services:
 
 - Analytics (**Google Analytics**) - _the services contained in this section enable the webmaster to monitor and analyze web traffic and can be used to keep track of user behavior._
-- Interaction with external social platforms(**AddThis**) - _the service allows interaction with social networks or other external platforms directly from the pages of this website._
-- Content commenting (**Disqus**) - _the service allows users to make and publish their comments on the contents of this website._
-- RSS Feed Subscription (**FeedBurner**) - _the service allows users to receive new content in email or RSS format._
+- Interaction with external social platforms (**AddThis**) - _the service allows interaction with social networks or other external platforms directly from the pages of this website._
 - Displaying advertisements (**Sovrn**) - _the service allows the website to display relevant advertisements to the users._
     
 More details concerning the collection or processing of personal data may be requested from the data controller at any time. 
@@ -42,4 +40,4 @@ More details concerning the collection or processing of personal data may be req
 
 **Codingvision.net** reserves the right to make changes to this privacy policy at any time by giving notice to its users on this page.
 
-_Updated : 17.12.2016_
+_Updated : 10.07.2019_
