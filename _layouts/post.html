@@ -20,16 +20,17 @@ layout: default
 
 
   <div id="disqus_thread"></div>
-<script>
-    (function() {
-        var d = document, s = d.createElement('script');
-        
-        s.src = '//codingvision.disqus.com/embed.js';
-        
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the comments.</noscript>
+  
+  <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          
+          s.src = '//codingvision.disqus.com/embed.js';
+          s.defer = true;
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the comments.</noscript>
   
 </article>
