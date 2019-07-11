@@ -30,4 +30,9 @@ kramdown:
 paginate: 12
 gems: [jekyll-paginate, jekyll-sitemap, jekyll-seo-tag]
 paginate_path: "/page/:num"
+
 author: apex
+	nickname: apex
+	name: Dan Sporici
+	avatar: /imgs/authors/dan.jpeg
+	about: Master's Student at the Faculty of Automatic Control & Computers (Advanced Cybersecurity) from University Politehnica of Bucharest, Researcher and Teaching Assistant.
