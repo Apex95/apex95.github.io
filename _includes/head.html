@@ -34,7 +34,26 @@
   }
   </script>
   
-
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+  <script>
+  window.addEventListener("load", function(){
+  window.cookieconsent.initialise({
+    "palette": {
+      "popup": {
+        "background": "#000"
+      },
+      "button": {
+        "background": "#f1d600"
+      }
+    },
+    "theme": "classic",
+    "content": {
+      "message": "Certain third party modules use cookies in order to ensure correct functionality. Continuing browsing requires you confirm your consent.",
+      "href": "https://codingvision.net/privacy-policy"
+    }
+  })});
+  </script>
 
   
     

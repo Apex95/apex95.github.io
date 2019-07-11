@@ -114,6 +114,7 @@
     padding: $spacing-unit 0;
     box-shadow: 0 -4px 3px $shadow-color;
     background-color: $black-color;
+    margin-top: 2%;
 }
 
 .site-footer a:hover {
@@ -123,7 +124,7 @@
 
 .footer-heading {
     font-size: 18px;
-    margin-bottom: $spacing-unit / 2;
+    margin-bottom: $spacing-unit * 2;
     text-align:center;
 }
 
@@ -443,3 +444,5 @@
  #ads {
 	margin:auto !important;
  }
+
+

@@ -13,7 +13,7 @@ thumbnail:
 - **Cookies**
 - **Usage Data**
 
-The personal data may be freely provided by the visitor, or collected automatically when using this website.
+The personal data may be freely provided by the visitor, or collected automatically when using this website (using technologies such as the **web beacons**).
 
 Any use of Cookies - or of other tracking tools, serves to identify users and remember their preferences, for the sole purpose of providing 
 the service required by the user.
@@ -28,9 +28,12 @@ have the third party's consent to provide any of the data.
 
 Personal data (**Cookies** and **Usage Data**) is collected for the following purposes and using the following services:
 
-- Analytics (**Google Analytics**) - _the services contained in this section enable the webmaster to monitor and analyze web traffic and can be used to keep track of user behavior._
-- Interaction with external social platforms (**AddThis**) - _the service allows interaction with social networks or other external platforms directly from the pages of this website._
-- Displaying advertisements (**Sovrn**) - _the service allows the website to display relevant advertisements to the users._
+- Analytics ([Google Analytics](https://analytics.google.com)) - _the services contained in this section enable the webmaster to monitor and analyze web traffic and can be used to keep track of user behavior. You may opt out using [Google Analytics Opt-Out Add-on](https://tools.google.com/dlpage/gaoptout)_
+- Interaction with external social platforms ([AddThis](https://www.addthis.com)) - _the service allows interaction with social networks or other external platforms directly from the pages of this website. You may opt out at [Targeting Opt-Out](www.addthis.com/privacy/opt-out/)_
+- Displaying advertisements ([Google Adsense](https://www.google.com/adsense/)) - _the service serves relevant advertisements to the users. You may opt out at [Google's Ads Settings](https://www.google.com/settings/ads)_
+
+The aforementioned third party vendors use **Cookies** in order to adjust their services based on a user's prior visits to this website or other websites.
+
     
 More details concerning the collection or processing of personal data may be requested from the data controller at any time. 
 
@@ -40,4 +43,4 @@ More details concerning the collection or processing of personal data may be req
 
 **Codingvision.net** reserves the right to make changes to this privacy policy at any time by giving notice to its users on this page.
 
-_Updated : 10.07.2019_
+_Updated : 11.07.2019_

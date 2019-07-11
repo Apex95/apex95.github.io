@@ -1,0 +1,25 @@
+---
+layout: page
+title:  "About"
+date:   2011-08-13 20:02:05 +0300
+categories: 
+thumbnail: 
+---
+
+## About this blog
+
+Hi there,
+
+
+I've started this blog back in 2012, while I was in highschool, with the intention of tracking my progress in the domain of computer science - since I consider that if I can explain a concept to others, I understand that concept. During this time, I tried to publish different technical articles that covered subjects which I, personally, considered interesting for me and for others and turn this into a small notebook.
+
+Mostly, you'll find here programming-related issues and solutions (initially focused around the .NET framework) that I encountered in my journey, short code snippets and proofs of concepts (POCs). My intention is to properly explain different concepts while also providing a working example in order to successfully grasp the idea.
+
+The subjects I will cover range from machine learning to security to networking as these are the domains I'm currently learning as a master's student and currently working with as a junior researcher.
+
+
+I thank you for reading this short bio and hope this website proves useful to you,
+
+Apex
+
+
