@@ -54,11 +54,11 @@ img {
  */
 figure > img {
     display: block;
+    margin-bottom: 7px;
 }
 
 figcaption {
-    font-size: $small-font-size;
-    font-style: italic;
+    font-size: $caption-font-size;
     text-align: center;
 }
 
