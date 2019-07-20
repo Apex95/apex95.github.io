@@ -8,11 +8,24 @@
 
 }
  
+ 
+figure.highlight {
+    margin-bottom: 60px;
+
+}
+
+div.highlighter-rouge {
+    margin-bottom: 60px;
+
+}
+ 
 .highlight {
     @extend %vertical-rhythm;
 	
 	background-color: $pure-white;
     border-left: 2px solid $green-color;
+    
+    
     
     .highlighter-rouge & {
 	  border: 1px solid $grey-color;

@@ -114,7 +114,7 @@ OFFSET           TYPE                VALUE
 ```
 
 
-Next, you'll need a **ROP gadget** that takes a parameter from the stack and places it into the **RDI** register (in our case, takes the **@GOT** address from our payload, from the stack, and sets it as the first paramteres for a future `puts@PLT` call). As you remember, we're running on a **x64** architecture and the calling convention
+Next, you'll need a **ROP gadget** that takes a parameter from the stack and places it into the **RDI** register (in our case, takes the **@GOT** address from our payload, from the stack, and sets it as the first parameter for a future `puts@PLT` call). As you remember, we're running on a **x64** architecture and the calling convention
 states that the first parameter of a method must be placed in the **RDI** register. We're looking for a `POP RDI; RET` gadget -- I'm doing this using **ROPgadget** (so it's `ROPgadget --binary vuln`)
 but feel free to use whatever you're confortable with (GDB, radare2, etc.). 
 
