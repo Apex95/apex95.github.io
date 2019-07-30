@@ -87,7 +87,7 @@ To continue, one must understand the role of the **GOT** (*Global Offset Table*)
 
 {% include image.html url="/imgs/posts/bypass_aslr_dep_ldd.webp" description="Running ldd reveals different mapping addresses of libc each time the process starts" %}
 
-The address of the external methods are usually determined at runtime when these methods are called for the first time (i.e.: when the **PLT** trampoline is executed for the first time).
+The addresses of the external methods are usually determined at runtime when these methods are called for the first time (i.e.: when the **PLT** trampoline is executed for the first time).
 However, the addresses need to be referenced in the original code before the program runs -> so placeholders (fixed addresses / **@GOT** addresses) are used. **GOT** acts as a _dictionary_ and binds
 the placeholder addresses to the real/external addresses (in the library). The values of the **GOT** are determined and written by the dynamic address solver (linker) once a method is called.
 
@@ -251,4 +251,6 @@ r.interactive()
 If you followed the steps correctly, you should achieve something like this:
 
 {% include image.html url="/imgs/posts/bypass_aslr_dep_poc_shell.webp" description="Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP" %}
+
+<a href="https://www.codeproject.com" rel="tag" style="display:none">CodeProject</a>
 
