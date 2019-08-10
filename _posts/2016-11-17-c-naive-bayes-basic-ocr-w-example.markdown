@@ -34,22 +34,24 @@ that our object is, in fact, an object that it already knows.
 
 It is all based on **Bayes' theorem** which looks like this:
 
-<img src="http://i68.tinypic.com/e5mck9.gif" border="0" alt="Bayes' Theorem with 2 Variables">
-{: style="text-align: center;" }
+$$ P(A|B,C) = \frac{P(A,B,C)}{P(B,C)} = \frac{P(A,B,C)}{P(A)} \cdot  \frac{P(A)}{P(B,C)} = \frac{P(A)\cdot P(B,C|A)}{P(B,C)} $$
 
 However, this theorem is supposed to work with independent variables, and we can't always
 guarantee that. So, it is <span style="color:red">incorrect</span> to expand the denominator like this:
 
-<img src="http://i67.tinypic.com/m7v18p.gif" border="0" alt="Wrong denominator for dependent variables">
-{: style="text-align: center;" }
+
+
+$$ P(B,C) = P(B) \cdot P(C) $$
+
 
 You can try it but you may get probabilities **higher than 1** for some cases.
 
-To avoid this, it might be better to think this in terms of **likelihood** and to use this
+To avoid this, it might be better to think this in terms of **likelihoods** and to use this
 property:
 
-<img src="http://i66.tinypic.com/k3lydi.gif" border="0" alt="Bayes proportionality">
-{: style="text-align: center;" }
+
+
+$$ P(A|B,C) \propto P(A) \cdot P(B|A) \cdot P(C|A) $$
 
 The equation above says that the **likelihood** is <u>directly proportional</u> to the **probability** itself,
 so we can consider only the **likelihood** when we do the classification (highest likelihood = highest chance).
@@ -111,8 +113,7 @@ Intermission.
 
 The formula, for an image with 3 pixels, should look like this:
 
-<img src="http://i67.tinypic.com/9qa1hv.gif" border="0" alt="3 pixels image formula">
-{: style="text-align: center;" }
+$$ P(one|P1, P2, \sim P3) = P(one) \cdot P(P1|one) \cdot P(P2 | one) \cdot (1 - P(P3|one)) $$
 
 Where: 
 
