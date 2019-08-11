@@ -10,7 +10,7 @@
     background-color: $black-color;
     border-bottom: 2px solid $blue2-color;
     box-shadow: 0 4px 3px $shadow-color;
-    
+    z-index: 99;
 
 }
 
@@ -446,11 +446,18 @@
  
  #ad2 {
     text-align: center;
-    overflow: hidden;
  }
+
+ #ad2 > ins {
+    display: inline-block !important;
+}
  
  #ads {
     margin:auto !important;
+ }
+
+ #ads > ins {
+    display: inline-block !important;
  }
 
 
