@@ -225,6 +225,6 @@ In practice, I recommend experimenting with **smaller** learning rates and more 
 
 ## Conclusion
 
-I guess this is all. Reading it now, it might take more than 5 minutes but... I guess it's still a short article when compared to others that discuss the same subject :))
+I guess this is all. Reading it now, I think it might take more than 5 minutes but... I guess it's still a short article when compared to others that discuss the same subject :))
 
 I hope this proves useful as a starting point and you've got something out of it. **Backpropagation** of errors in **nerual networks** works in a similar fashion, although the number of dimensions is way larger than what was presented here. Aaand it contains some additional features in order to handle **non-convex** functions (and avoid getting stuck in **local minima**). Maybe in other article we'll take a look at those, too.
