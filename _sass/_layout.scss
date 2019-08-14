@@ -291,9 +291,7 @@
         font-weight: normal;
     }
     
-    ul, ol {
-        margin-left: 80px;
-    }
+
 }
 
 
@@ -386,7 +384,7 @@
     text-align: center;
  }
  
- #categories, #links {
+ #categories {
     ul {
         list-style-type: square;
     }
@@ -402,6 +400,10 @@
         
         transition: background 0.28s linear;
     }
+ }
+
+ #newsletter {
+    font-size: 17px;
  }
  
  pre.lineno {
