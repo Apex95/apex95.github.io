@@ -143,7 +143,7 @@ $$ = 10 + 0.15 \cdot \frac{2}{2} \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x_i + 
 
 $$ = 10 + 0.15 \cdot ((5 - (9 \cdot 1 + 10)) + (7 - (9 \cdot 2 + 10))) = $$
  
-$$ = 10 - 0.15 * 35 = 4.75 $$ 
+$$ = 10 - 0.15 \cdot 35 = 4.75 $$ 
 
 
 Recalculating the output of our function, we observe that the outputs are somehow closer to our expected values.
@@ -218,7 +218,7 @@ Writing this formula as a Python script yields the following results:
      f(1) = 5.009, f(2) = 6.994
 ```
  
-It converges to $$ w1 = 2 $$ and $$ w2 = 3 $$ which are, indeed, the coefficients we were looking for.
+It converges to $$ w_1 = 2 $$ and $$ w_2 = 3 $$ which are, indeed, the coefficients we were looking for.
 
 In practice, I recommend experimenting with **smaller** learning rates and more iterations - large learning rates can lead to **divergence** (the coefficients stray from their correct values and tend to plus or minus infinity).
 
