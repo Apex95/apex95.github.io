@@ -195,10 +195,11 @@
 }
 
 .page-heading {
-    font-size: 24px;
+    font-size: 28px;
     color: $red-color;
     border-bottom: 1px solid $red-color;
     text-align: right;
+    margin-bottom: 20px;
     
 }
 
@@ -234,7 +235,7 @@
 }
 
 .post-title {
-    font-size: 42px;
+    font-size: 36px;
     letter-spacing: -1px;
     line-height: 1;
 
@@ -349,8 +350,9 @@
     
     h2{
         font-size: $small-font-size;
-        color: $red-color;
-        border-bottom: 1px solid $red-color;
+        color: $grey2-color;
+        border-bottom: 1px solid $grey2-color;
+        font-weight: bold;
     }
     
     section{
