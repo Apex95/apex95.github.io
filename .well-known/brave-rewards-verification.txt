@@ -1,4 +1,0 @@
-This is a Brave Rewards publisher verification file.
-
-Domain: codingvision.net
-Token: d9cbc818a7aa8e37cb23a2b03eda3402c63e5c76ebac853afc33ade2685132c6
