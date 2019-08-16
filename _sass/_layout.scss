@@ -188,6 +188,20 @@
 /**
  * Page content
  */
+
+
+a.category-link {
+    display: inline-block;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: $black-color;
+    color: $white-color;
+}
+
+
+
 .page-content {
     padding: $content-top-padding 0 $spacing-unit;
     background-color: $background-color;
@@ -343,7 +357,22 @@
     display: table-cell;
 	width: 70%;
  }
- 
+
+ a.newsletter-link {
+    display: inline-block;
+    margin-bottom: 2px;
+    margin-top: 2px;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    paddint-top: 5px;
+    background-color: $orange-color;
+    color: $white-color;
+    font-size: 22px;
+    font-weight: bold;
+ } 
+
  #sidebar {
     display: table-cell;
     width: auto;

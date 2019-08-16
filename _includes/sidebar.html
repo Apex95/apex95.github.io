@@ -15,18 +15,16 @@
 
     <section id = "newsletter">
     <h2>Newsletter</h2>
-    Receive email notifications when new articles are published, by visiting the following link: <a href="https://feedburner.google.com/fb/a/mailverify?uri=codingvision&amp;loc=en_US" target="_blank" rel="nofollow">coding.vision newsletter sign up</a>
+    Receive email notifications when new articles are published, by visiting the following link:<br> <a class="newsletter-link" href="https://feedburner.google.com/fb/a/mailverify?uri=codingvision&amp;loc=en_US" target="_blank" rel="nofollow">coding.vision newsletter</a>
     </section>    
 
     <section id = "categories">
     <h2>Categories</h2>
-    <ul>
     {% for page in site.pages %}
         {% if page.title and page.iscategory %}
-        <li><a href="{{page.url}}" name="{{ page.title }}">{{ page.title }}</a></li>
+        <a class="category-link" href="{{page.url}}" name="{{ page.title }}">{{ page.title }}</a>
         {% endif %}
     {% endfor %}
-    </ul>
     </section>
 
     
