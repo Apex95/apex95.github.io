@@ -34,7 +34,7 @@ Pretty sure you are probably using a set of metrics like the following ones:
 - vertical distance between the bird and the lower pipe (**dist2**)
 - verctical distance between the bird and the upper pipe (**dist3**)
 
-{% include image.html url="imgs/posts/c-making-a-neural-network-that-plays-flappy-bird/1.png" description="Metrics used as Inputs for the Neural Network" %}
+{% include image.html url="/imgs/posts/c-making-a-neural-network-that-plays-flappy-bird/1.png" description="Metrics used as Inputs for the Neural Network" %}
 
 
 What we actually want now is a **function** that takes these **3 parameters** and has **1 output** (because the whole game can be resumed to a single command).
