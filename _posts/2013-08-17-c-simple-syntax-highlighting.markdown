@@ -14,7 +14,7 @@ Anyhow it needs to be improved - I tried to keep things as simple as possible. T
 
 ## Preview
 
-{% include image.html url="/imgs/posts/c-simple-syntax-highlighting/1.png" description="Preview of the custom highlighter" %})
+{% include image.html url="/imgs/posts/c-simple-syntax-highlighting/1.png" description="Preview of the custom highlighter" %}
 
 ## 1.How It Works:
 

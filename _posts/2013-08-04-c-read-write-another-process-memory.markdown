@@ -20,17 +20,17 @@ First, open **notepad.exe**, type some text (like "hello world") and attach **Ol
 
 It should look like this:
 
-{% include image.html url="/imgs/posts/c-read-write-another-process-memory/1.png" description="View of OllyDbg's Memory Map of a Process" %})
+{% include image.html url="/imgs/posts/c-read-write-another-process-memory/1.png" description="View of OllyDbg's Memory Map of a Process" %}
 
 Press **CTRL+B** and it will open the **Binary Search** Window. Now, because the value is stored in memory as **Unicode**, you have to type the string you're looking for in the **2nd textbox**:
 
-{% include image.html url="/imgs/posts/c-read-write-another-process-memory/2.png" description="Searching through the binary for the targeted string" %})
+{% include image.html url="/imgs/posts/c-read-write-another-process-memory/2.png" description="Searching through the binary for the targeted string" %}
 
 Once you hit **Ok** another window will pop up - the **Memory Dump**. Here, look at the **very first memory address** (on the left) - from that address we'll start reading. In the image below, the highlighted part contains the message I typed in **Notepad**.
 
 _**Note:** don't use the memory address from the image - it's not the same memory address every time_
 
-{% include image.html url="/imgs/posts/c-read-write-another-process-memory/3.png" description="Viewing the text in OllyDbg's Memory Dump" %})
+{% include image.html url="/imgs/posts/c-read-write-another-process-memory/3.png" description="Viewing the text in OllyDbg's Memory Dump" %}
 
 We got the memory address, now...**don't close/restart** the application. If you restart it, the memory for the text will be reallocated, so the address will most likely be changed.
 
