@@ -70,8 +70,8 @@ was used during the training procedure
 
 Something like this:
 
-<img src="http://i66.tinypic.com/folvf5.png" border="0" alt="Naive Bayes image test">
-{: style="text-align: center;" }
+{% include image.html url="/imgs/posts/c-naive-bayes-basic-ocr-w-example/1.png" description="Naive Bayes model for Basic OCR" %}
+
 
 Where P(one\|...) is the probability the image matches the one I used to train the classifier.
 
@@ -181,14 +181,12 @@ Notice that `P(P1|one) = 1/(10+100) = 0.009`.
 
 These were the inputs
 
-<img src="http://i63.tinypic.com/2rm2zk8.png" border="0" alt="Input images">
-{: style="text-align: center;" }
+{% include image.html url="/imgs/posts/c-naive-bayes-basic-ocr-w-example/2.png" description="Images used for Training and Testing the Naive Bayes model" %}
+
 
 And the outputs:
 
-<img src="http://i65.tinypic.com/2u469nt.png" border="0" alt="Probabilities">
-{: style="text-align: center;" }
-
+{% include image.html url="/imgs/posts/c-naive-bayes-basic-ocr-w-example/3.png" description="The results achieved by the current implementation" %}
 
 ## Complete Sourcecode
 
