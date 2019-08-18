@@ -34,13 +34,15 @@ Pretty sure you are probably using a set of metrics like the following ones:
 - vertical distance between the bird and the lower pipe (**dist2**)
 - verctical distance between the bird and the upper pipe (**dist3**)
 
-<img src="http://i67.tinypic.com/21cyphe.png" border="0" alt="metrics">
-{: style="text-align: center;" }
+{% include image.html url="imgs/posts/c-making-a-neural-network-that-plays-flappy-bird/1.png" description="Metrics used as Inputs for the Neural Network" %}
+
 
 What we actually want now is a **function** that takes these **3 parameters** and has **1 output** (because the whole game can be resumed to a single command).
 
-<img src="http://i68.tinypic.com/2v32ele.gif" border="0" alt="jump function">
-{: style="text-align: center;" }
+$$ f(dist_1, dist_2, dist_3) = \left\{\begin{matrix}
+> 0.5 => jump()\\ 
+<= 0.5 => do\_nothing
+\end{matrix}\right. $$
 
 Considering we don't know the relationship between the 3 distances, we can try to approximate the behaviour of this function using a **neural network**.
 
