@@ -13,7 +13,7 @@ First of all, the **TextBox** Control is not a secure way to hold passwords - so
 As an example, take a simple **TextBox** with **PasswordChar = '*'**.  
 Now, if you use Spy++ and inspect this application, you can get the password.
 
-{% include image.html url="/imgs/posts/c-protect-the-password-inside-a-textbox/1.png" description="Recovering values from Password Textboxes with Spy++" %})
+{% include image.html url="/imgs/posts/c-protect-the-password-inside-a-textbox/1.jpg" description="Recovering values from Password Textboxes with Spy++" %})
 
 
 _But...why is this happening?_
