@@ -14,7 +14,7 @@ but now with a more serious approach - this one should work on **any decompiler*
 <u>The point is:</u> it is rather difficult to make **.NET** programs run with a key or license; since these can be reverted back
 to their sourcecode, anyone can alter it or just learn to create fake keys that will be seen as valid.
 
-<img src="http://i67.tinypic.com/vgt07l.png" title="cracking the app with a decompiler" alt="cracking the app with a decompiler" style="width: 500px; height: 400px; display:block; margin: 0 auto;">
+{% include image.html url="/imgs/posts/c-prevent-decompilation-by-decrypting-source-at-runtime/1.png" description="Data placed as plain text in a .NET application can be easily discovered" %}
 
 
 ## Possible Solution
@@ -95,7 +95,7 @@ It's not the clean way to handle this...don't use it in serious projects; but fo
 
 **FS** = **28**(dec) = **1C**(hex);
 
-<img src="http://i63.tinypic.com/2mg0cxv.png" title="cracking the app with a decompiler" alt="cracking the app with a decompiler" style="display:block; margin: 0 auto;">
+{% include image.html url="/imgs/posts/c-prevent-decompilation-by-decrypting-source-at-runtime/2.png" description="Hex editor view: the format of the encrypter with 2 attached files." %}
 
 The method that I use looks like this:
 
