@@ -12,13 +12,13 @@ This tutorial aims to show how to make a **C# Form** with **rounded corners**, u
 
 In the tutorial, I'll use something like this:
 
-![background image](http://i46.tinypic.com/2ujl5cl.png)
+{% include image.html url="/imgs/posts/c-simple-form-with-rounded-corners/1.png" description="The initial background image" %}
 
 **2.** Use a 'specific' color to cover the corners of the image - so it appears with rounded corners - it can be easily done by drawing a rectangle over the original image. This color will be set as transparent, so it will not show up with the window. For this it's usually used the **Magenta** (R: 255, G: 0, B: 255) color. I recommend using it for the first time.
 
 You'll get something like this:
 
-![background rounded corners](http://i49.tinypic.com/1z50prr.png)
+{% include image.html url="/imgs/posts/c-simple-form-with-rounded-corners/2.png" description="Rounding the corners by adding a border" %}
 
 **3.** Open **Visual Studio** or any **IDE** and create a **Form Project**.  
 On the right side, in the **Properties Window** look for **BackgroundImage**. option. Click **Import** and choose the image you made before.  
@@ -28,6 +28,6 @@ Also in the properties, set the **TransparencyKey** to **Magenta** - so it won't
 
 Now when you'll open the window it will show the background image with nice, rounded corners:
 
-![desktop](http://i50.tinypic.com/3wv4o.png)
+{% include image.html url="/imgs/posts/c-simple-form-with-rounded-corners/3.png" description="A Form with Rounded Corners" %}
 
 You've probably noticed that the form isn't moving - that's because it has no title bar and border. No need to worry about that, you can find [here](http://www.codingvision.net/interface/c-moving-form-without-title-bar/) a solution.

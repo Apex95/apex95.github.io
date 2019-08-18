@@ -11,7 +11,7 @@ thumbnail: /imgs/thumbnails/perceptron.png
 The **Perceptron** is basically the simplest learning algorithm, that uses only one neuron.  
 An usual representation of a perceptron (neuron) that has **2 inputs** looks like this:
 
-![perceptron](http://i45.tinypic.com/aw6xpy.png)
+{% include image.html url="/imgs/posts/c-perceptron-tutorial/1.png" description="A 2 Inputs + Bias Perceptron" %}
 
 Now for a better understanding:
 
@@ -21,14 +21,15 @@ Now for a better understanding:
 
 The **Bias** shoult be treated as another input value, that always has the value of **1** (bias = 1). It must have it's own weight -> **weight 3**.
 
-To learn, perceptron uses **supervised learning**: that means, we need to provide multiple inputs and correct outputs so the weights can be adjusted correctly. Repeating this process will constantly lower the error until the generated output is almost equal with the desired output. When the weights are adjusted, the perceptron will pe able to 'guess' the output for new inputs.
+To learn, a perceptron uses **supervised learning**: that means, we need to provide multiple inputs and correct outputs so the weights can be adjusted correctly. Repeating this process will constantly lower the error until the generated output is almost equal with the desired output. When the weights are adjusted, the perceptron will be able to 'guess' the output for new inputs.
 
 ## How the perceptron works
 
-One thing that you must understand about the perceptron is that it can only handle **linear separable** outputs.  
+One thing that you must understand about the perceptron is that it can only handle **linear separable** outputs, as its 'backend' function can be written as a polynomial (weights multiplied by inputs).
+  
 Let's take a look at the following image:
 
-![linear separability](http://i45.tinypic.com/t0hthy.png)
+{% include image.html url="/imgs/posts/c-perceptron-tutorial/2.png" description="Linear separability of 2 classes is required in order to perform classification using only 1 Perceptron" %}
 
 Each dot from the graphic above represents an output value:  
 <font color="red">red dots</font> shall return **0**  

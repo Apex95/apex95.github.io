@@ -9,7 +9,7 @@ thumbnail: /imgs/thumbnails/timer1.png
 A **timer** in C # is an object that executes an action after a specified time interval - for example, it can call a method every 5 seconds.  
 The best way to understand how it works is to use it in a program.
 
-![timer1 Properties](http://i46.tinypic.com/wbdoqv.png)
+{% include image.html url="/imgs/posts/c-countdown-timer/1.png" description="Basic .NET Timer Properties" %}
 
 ## Creating a timer
 

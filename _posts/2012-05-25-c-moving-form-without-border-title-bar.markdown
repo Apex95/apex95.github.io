@@ -8,7 +8,6 @@ thumbnail: /imgs/thumbnails/formTitleBar.png
 
 ## 1\. Removing the title bar and border
 
-<img border="1px" src="http://i46.tinypic.com/fn8vo0.png" another="custom form in c#" title = "custom form in c#" width = "422" height = "376" style="float:right;margin:5px;" /> 
 In this tutorial I will show you how you can make a window (**Form**) with no **title bar** or **border** - which we can also move with the cursor.
 
 I assume you already have the program ready - at least the design part, so I'll skip to what interests you. :D

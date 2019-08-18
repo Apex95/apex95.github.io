@@ -9,7 +9,8 @@ thumbnail: /imgs/thumbnails/fbdeprofiler.png
 **HiDef** is one of the 2 profiles available for developing games in XNA. But...this profile requires a **direct3d/D3D** compatible video card. It apparently checks for **DirectX10** compatibility.  
 XNA will check this before compiling/running the project and will throw an error if the video card doesn't meet the requirements
 
-![xna hidef error](http://i48.tinypic.com/21akpk.png)
+{% include image.html url="/imgs/posts/xna-disable-profile-check/1.png" description="Error thrown whenever a HiDef profile is used with an incompatible video card" %}
+
 
 ## How to solve this ?
 

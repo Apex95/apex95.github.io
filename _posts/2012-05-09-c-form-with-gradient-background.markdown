@@ -52,4 +52,4 @@ This method (**set_background**) must be called by a **Paint event** so we'll cr
 
 If you followed all the steps correctly, your form should look like this - maybe with different colors:
 
-![Paint gradient](http://i50.tinypic.com/eg9ysg.png)
+{% include image.html url="/imgs/posts/c-form-with-gradient-background/1.png" description="Result: Form with code-generated Gradient Background" %}

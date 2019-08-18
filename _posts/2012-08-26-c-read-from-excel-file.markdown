@@ -53,11 +53,11 @@ wbook.Close(); //closing...
 ## Result
 
 That's all you might need to know about how to read an Excel document with C#.  
-I wrote a small application which shows the content of a Excel file, using a **dataGridView**.
+I wrote a small application which shows the content of a Excel file, using a **dataGridView**. It looks like this:
 
-The source code is below the screenshot:
+{% include image.html url="/imgs/posts/c-read-from-excel-file/1.png" description="Successfully Reading data from an Excel Spreadsheet" %}
 
-![Reading from Excel files](http://i45.tinypic.com/4hz2bn.png)
+And the code I wrote:
 
 {% highlight csharp linenos %}using System;
 using System.Collections.Generic;
