@@ -77,7 +77,7 @@ Given this set of **4 points**:
 
 We construct the polynomial this way (using **Lagrange Multipliers**)
 
-$$ {\color{Red} 2} \cdot \frac{(x-3)(x-4)(x-5)}{(2-3)(2-4)(2-5)} + {\color{Red} 6} \cdot \frac{(x-2)(x-4)(x-5)}{(3-2)(3-4)(3-5)} + {\color{Red} 24} \cdot \frac{(x-2)(x-3)(x-5)}{(4-2)(4-3)(4-5)} + {\color{Red} 2} \cdot \frac{(x-2)(x-3)(x-4)}{(5-2)(5-3)(5-4)} $$
+$$ {\color{Red} {2}} \cdot \frac{(x-3)(x-4)(x-5)}{(2-3)(2-4)(2-5)} + {\color{Red}{6}} \cdot \frac{(x-2)(x-4)(x-5)}{(3-2)(3-4)(3-5)} + {\color{Red}{24}} \cdot \frac{(x-2)(x-3)(x-5)}{(4-2)(4-3)(4-5)} + {\color{Red}{120}} \cdot \frac{(x-2)(x-3)(x-4)}{(5-2)(5-3)(5-4)} $$
 
 Notice that if **x** is equal to one of the **known values** (from the table), many of these fractions will be **0** and only **one of them** will be **1**. That **1** is multiplied with the expected output and you get the result.
 
@@ -93,7 +93,7 @@ And this is for inputs **inside the interval** of known values **[2;5]** - for v
 
 Still it provides exact values for 2!, 3!, 4! and 5!
 
-{% include image.html url="/imgs/posts/matlab-octave-lagrange-interpolation-polynomial/4.png" description="Meh..." %})
+{% include image.html url="/imgs/posts/matlab-octave-lagrange-interpolation-polynomial/4.png" description="Meh..." %}
 
 ## Matlab/Octave Sourcecode
 
