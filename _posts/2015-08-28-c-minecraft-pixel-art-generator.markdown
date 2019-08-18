@@ -22,19 +22,19 @@ Ok guys, so I saw people creating **pixel art** in **Minecraft** (trying to rend
 
 This is what I managed to obtain with this program using a palette of **16 colors**. The coloring is not very accurate since I can't produce all the colors in the photos with only 16 types of blocks - however this can be fixed by using more types of blocks.
 
-![](http://i57.tinypic.com/35lyxeb.png)
+{% include image.html url="/imgs/posts/c-minecraft-pixel-art-generator/1.png" description="Sample #1" %}
 
-![](http://i59.tinypic.com/2q33wpk.png)
+{% include image.html url="/imgs/posts/c-minecraft-pixel-art-generator/2.png" description="Sample #2" %}
 
-![](http://i59.tinypic.com/k05aas.png)
+{% include image.html url="/imgs/posts/c-minecraft-pixel-art-generator/3.png" description="Sample #3" %}
 
-![](http://i59.tinypic.com/jsnll3.png)
+{% include image.html url="/imgs/posts/c-minecraft-pixel-art-generator/4.png" description="Sample #4" %}
 
-![](http://i61.tinypic.com/34j50gl.png)
+{% include image.html url="/imgs/posts/c-minecraft-pixel-art-generator/5.png" description="Sample #5" %}
 
-![](http://i57.tinypic.com/fdgaaa.png)
+{% include image.html url="/imgs/posts/c-minecraft-pixel-art-generator/6.png" description="Sample #6" %}
 
-![](http://i59.tinypic.com/11j0hth.png)
+{% include image.html url="/imgs/posts/c-minecraft-pixel-art-generator/7.png" description="Sample #7" %}
 
 ## 1\. Starting the server
 
@@ -157,9 +157,9 @@ Our function is based on a method called **k nearest neighbor**: which compares 
 if we have a pixel of this color: **P****(R:100 G:100 B:100)** and we have only 2 available blocks: **BlackBlock****(R:0 G:0 B:0)** and **WhiteBlock****(R:255 G:255 B:255)** we compute the errors for each one
 
 *   Comparing the pixel's color to the **BlackBlock**:  
-    error = sqrt((100-0)^2 + (100-0)^2 + (100-0)^2) = <u>173.2</u>
+    $$ error = \sqrt{(100-0)^2 + (100-0)^2 + (100-0)^2)} = 173.2 $$
 *   Now comparing it to the **WhiteBlock**:  
-    error = sqrt((100-255)^2 + (100-255)^2 + (100-255)^2) = <u>268.46</u>
+    $$ error = \sqrt{(100-255)^2 + (100-255)^2 + (100-255)^2} = 268.46 $$
 
 This means the **BlackBlock** is a better choice as it matches the pixel's color better.
 

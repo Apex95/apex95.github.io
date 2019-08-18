@@ -14,7 +14,7 @@ This **Lagrange Polynomial** is a function (curve) that you create, that goes th
 
 For **N** sets of points (**x y**) the general formula is the one below:
 
-![lagrange general formula](http://i62.tinypic.com/i1d84n.gif "lagrange general formula")
+$$ Y(x) = \sum_{i=1}^{n} y_i \cdot \prod_{j=1, j \neq i} \frac{x-x_j}{x_i-x_j} $$
 
 Now a sum of products may look intimidating, but it's a really simple method - whatever is not needed is cancelled (in this case multiplied with 0) so it won't change the final result unless it's necessary.
 
@@ -77,7 +77,7 @@ Given this set of **4 points**:
 
 We construct the polynomial this way (using **Lagrange Multipliers**)
 
-![lagrange example](http://i62.tinypic.com/s61wjt.png "lagrange example")
+$$ {\color{Red} 2} \cdot \frac{(x-3)(x-4)(x-5)}{(2-3)(2-4)(2-5)} + {\color{Red} 6} \cdot \frac{(x-2)(x-4)(x-5)}{(3-2)(3-4)(3-5)} + {\color{Red} 24} \cdot \frac{(x-2)(x-3)(x-5)}{(4-2)(4-3)(4-5)} + {\color{Red} 2} \cdot \frac{(x-2)(x-3)(x-4)}{(5-2)(5-3)(5-4)} $$
 
 Notice that if **x** is equal to one of the **known values** (from the table), many of these fractions will be **0** and only **one of them** will be **1**. That **1** is multiplied with the expected output and you get the result.
 
@@ -87,13 +87,13 @@ After creating the polynomial and testing it, we may find out that...we'll need 
 
 You can see below a **plot** that contains the <span style="color:red">Lagrange Polynomial</span> and the <span style="color:green">values computed with Gamma function</span>(or the correct factorial values).
 
-![](http://i60.tinypic.com/fooflv.png width=)
+{% include image.html url="/imgs/posts/matlab-octave-lagrange-interpolation-polynomial/3.png" description="Comparing the Lagrange approximation (Red) with the Gamma function (Green)." %}
 
 And this is for inputs **inside the interval** of known values **[2;5]** - for values greater than 5 or lower than 2, the function still works but the outputs are completely wrong since there are no points to guide the curve.
 
 Still it provides exact values for 2!, 3!, 4! and 5!
 
-![](http://i62.tinypic.com/ve9lxj.png)
+{% include image.html url="/imgs/posts/matlab-octave-lagrange-interpolation-polynomial/4.png" description="Meh..." %})
 
 ## Matlab/Octave Sourcecode
 
