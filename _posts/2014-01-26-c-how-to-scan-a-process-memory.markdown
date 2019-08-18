@@ -17,13 +17,13 @@ In this tutorial I'll try to output all memory allocated by **Notepad**, I _reco
 Here's a small image that shows the outcome:  
 * spaces between chars (empty bytes) are caused by Notepad's usage of Unicode Encoding.
 
-![](http://i43.tinypic.com/yjx2q.png)
+{% include image.html url="/imgs/posts/c-how-to-scan-a-process-memory/1.png" description="Viewing the text stored in Notepad's memory. %}
 
 ## Required Methods
 
 Whenever a process starts, the system allocates enough memory for its heap, stack and regions - however Windows won't allocate an 'entire block' of memory. It tries to allocate any free memory available for the User-Mode - so the allocated memory won't be contiguous. Basically, Windows won't tell us a range of addresses where we can find the program's data.
 
-![](http://i40.tinypic.com/nybn28.png)
+{% include image.html url="/imgs/posts/c-how-to-scan-a-process-memory/2.png" description="Notepad's allocated memory is not contiguous. %}
 
 So, the remaining solution is to scan almost every possible address (we get this using **GetSystemInfo()**) and check if it belongs to the target process (with **VirtualQueryEx()**): if it does, we read the values from there (**ReadProcessMemory()**).
 
@@ -67,7 +67,7 @@ static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_B
   This method gets information about a range of memory addresses and returns it into a structure named **MEMORY_BASIC_INFORMATION**. Given a minimum address, we use this to find out if there's a region of memory that's allocated by that program (this way we reduce the search range by directly jumping over memory chunks). Basically this method tells us the range of a memory chunk that starts from the specified address: in order to get to the next memory chunk, we add the length of this region to the current memory address (sum).  
   Requires **PROCESS_QUERY_INFORMATION**.
 
-![](http://i43.tinypic.com/212zarp.png)
+{% include image.html url="/imgs/posts/c-how-to-scan-a-process-memory/3.png" description="Scanning only regions of memory that belong to Notepad. %}
 
 **MEMORY_BASIC_INFORMATION** must be defined this way:
 

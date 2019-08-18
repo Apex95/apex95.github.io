@@ -16,7 +16,7 @@ As you probably know, some keyloggers (not all) place hooks like **WH_KEYBOARD_L
 
 This is where <u>Secure Desktop</u> becomes useful: it's actually a 2nd desktop, but whatever runs on this desktop can not be 'influenced' by what runs on the original desktop. Basically, the 2 desktops are separated by the kernel, so the applications can't interact: the keylogger that is running on the original desktop will not intercept the messages received by a program which is found on the other desktop.
 
-![](http://oi43.tinypic.com/2dam63k.jpg)
+{% include image.html url="/imgs/posts/c-create-secure-desktop-anti-keylogger/1.png" description="The application will intermediate the communication between the normal desktop and the newly created one" %}
 
 ## 2\. Creating a new Desktop
 

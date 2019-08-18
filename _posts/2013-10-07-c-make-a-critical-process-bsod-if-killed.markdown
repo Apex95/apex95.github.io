@@ -12,7 +12,7 @@ Theoretically, you can BSoD yourself whenever you want :)
 
 <u>Note: The complete code is available at the bottom of the page (scroll down).</u>
 
-![bsod](http://oi39.tinypic.com/14o0yyp.jpg "bsod")
+{% include image.html url="/imgs/posts/c-make-a-critical-process-bsod-if-killed/1.png" description="We all love it" %}
 
 ## Technical Details
 

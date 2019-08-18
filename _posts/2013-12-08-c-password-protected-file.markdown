@@ -26,7 +26,7 @@ _* the executable file won't be affected by what we add._
 2.  load the file's content into memory -> decrypt it with the password provided
 3.  save the content as a new file
 
-![](http://oi40.tinypic.com/16hrqt5.jpg)
+{% include image.html url="/imgs/posts/c-password-protected-file/1.png" description="Appending file's content at the end of the binary (after all the sections of the executable)" %}
 
 ## 1\. Creating the decryptor
 
