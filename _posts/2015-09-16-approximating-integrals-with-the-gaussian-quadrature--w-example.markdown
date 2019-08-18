@@ -55,7 +55,7 @@ $$ <P,Q> = \int_{-1}^{1} P(x)Q(x)w(x)dx $$
 
 where **P** and **Q** are 2 polynomials and **w(x)** is the **weight function**.
 
-Ok enough with the theory, moving back to our example: we had that **?** polynomial.  
+Ok enough with the theory, moving back to our example: we had that **π** polynomial.  
 Now we pick the first **n=2** terms from the **monomial basis** (**1**, **x**, x<sup>2</sup>, x<sup>3</sup>...).
 
 Notice that those 2 "polynomials" are of degree **0** and **1** - both lower than **n=2**(the degree of our **π** polynomial) => these are **orthogonal** to **π**. Knowing this we can create the following system of equations:
