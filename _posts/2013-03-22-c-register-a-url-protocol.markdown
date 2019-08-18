@@ -18,7 +18,7 @@ In order to create your custom url protocol, you must first add it to the comput
 
 Here's the structure of the subkey you should create:
 
-![Custom Protocol Registry](http://oi50.tinypic.com/ix8202.jpg)
+{% include image.html url="/imgs/posts/c-register-a-url-protocol/1.png" description="Setting an Application for the 'myApp' url protocol" %}
 
 The method below creates all the **subkeys** needed:
 

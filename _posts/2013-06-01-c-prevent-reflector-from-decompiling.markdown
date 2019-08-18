@@ -21,7 +21,7 @@ This value holds the number of data directories (**IMAGE_DATA_DIRECTORY**) - Ref
 On 32-bit systems, the value of **NumberOfRvaAndSizes** is always stored on the **244th byte** (**0x00000F4**), so you can change that value with a simple Hex Editor.
 
 It will look like this:  
-![Hex Editor View](http://oi40.tinypic.com/1sgsr7.jpg)
+{% include image.html url="/imgs/posts/c-prevent-reflector-from-decompiling/1.png" description="The value of NumberOfRvaAndSizes." %})
 
 After you change that value with one between **6** and **9**, save the application and you're done.  
 If you try to open this in **Reflector** it should return an error message:

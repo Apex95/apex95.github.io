@@ -7,7 +7,7 @@ thumbnail: /imgs/thumbnails/childforms.png
 ---
 
 **Child Forms** are those forms that are found inside another form (parent form). There are multiple ways to create child forms - most of them require to use a **MDI Container**.  
-![C# Child Form](http://i45.tinypic.com/33a6hkx.png)  
+  
 
 ## Child Forms without MDI Container
 
@@ -21,7 +21,7 @@ The following lines of code are used to create a child form:
 
 {% highlight csharp linenos %}Form childForm = new Form(); //initialize a child form
 
-childForm.TopLevel = false; //set it's TopLevel to false
+childForm.TopLevel = false; //set its TopLevel to false
 
 Controls.Add(childForm); //and add it to the parent Form
 childForm.Show(); //finally display it

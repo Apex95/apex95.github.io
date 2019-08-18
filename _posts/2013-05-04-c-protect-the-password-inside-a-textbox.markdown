@@ -13,9 +13,10 @@ First of all, the **TextBox** Control is not a secure way to hold passwords - so
 As an example, take a simple **TextBox** with **PasswordChar = '*'**.  
 Now, if you use Spy++ and inspect this application, you can get the password.
 
-![TextBox is not safe](http://oi39.tinypic.com/4fy2ol.jpg)
+{% include image.html url="/imgs/posts/c-protect-the-password-inside-a-textbox/1.png" description="Recovering values from Password Textboxes with Spy++" %})
 
-_But...why this happens?_
+
+_But...why is this happening?_
 
 Spy++ sends the message **WM_GETTEXT (0x000D)** to the TextBox, and the control just returns its value. It's actually working as intended and it reacts just like any other control, that obeys any message received.
 

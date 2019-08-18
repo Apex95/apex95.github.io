@@ -8,7 +8,7 @@ thumbnail: /imgs/thumbnails/snowflake.jpg
 
 Since it's winter, I decided to write about how to create an application that makes **snowflakes fall on your desktop**. It's just like snowing on your desktop, but the application is pretty basic so there's space for improvements - I tried to write a short code so it's easier to understand.
 
-![Snowflakes on Desktop](http://i50.tinypic.com/2h6vxaa.png)
+{% include image.html url="/imgs/posts/c-falling-snowflakes-on-desktop/1.png" description="Snowflakes over the window of Visual Studio" %}
 
 ## 1.How to?
 
@@ -27,7 +27,9 @@ The program presented in this tutorial has 2 parts:
 
 First, try drawing a **white** snowflake on a **black background**. Why? We'll set the black background as **transparent** so only the true snowflake will be shown.
 
-For my application I used this image -> ![SnowFlake 10x10](http://i47.tinypic.com/34xkwfb.jpg)
+For my application I used the following image:
+
+{% include image.html url="/imgs/posts/c-falling-snowflakes-on-desktop/2.jpg" description="Snowflake image used in this project" %}
 
 Next is the coding part: I created a separate class called **snowflake** (inherits from **PictureBox** class).
 

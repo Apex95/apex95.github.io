@@ -218,6 +218,6 @@ When you run the application, wait until the Form shows up - that's when the ima
 
 Here's a small screenshot of an Ascii Art made with this program - this is how the result will look like:
 
-![Ascii Art](http://oi49.tinypic.com/5whzsn.jpg)
+{% include image.html url="/imgs/posts/c-ascii-art-tutorial/1.png" description="Ascii Art Sample generated with this program" %})
 
 Well, that's all, if you have problems, you can always leave a comment :).
