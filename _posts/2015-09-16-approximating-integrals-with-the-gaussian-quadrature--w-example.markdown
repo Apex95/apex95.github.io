@@ -73,9 +73,9 @@ $$ -\frac{2}{3}(x_1 + x_2) = 0 $$
 
 So we get these values:
 
-$$ x_1 = -\frac{-\sqrt{3}}{3} $$
+$$ x_1 = -\frac{\sqrt{3}}{3} $$
 
-$$ x_2 = \frac{-\sqrt{3}}{3} $$
+$$ x_2 = \frac{\sqrt{3}}{3} $$
 
 ## Finding the coefficients
 
