@@ -57,7 +57,7 @@ For a better understanding of this, take a look at the graph below which shows t
 
 {% include image.html url="/imgs/posts/c-backpropagation-tutorial-xor/5.png" description="Plotting the error function, considering the case of 1 dimension (1 variable)" %}
 
-I won't dive into the **gradient descent** method, as I wrote a ![separate article](https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example) that contains both theory and examples.
+I won't dive into the **gradient descent** method, as I wrote a [separate article](https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example) that contains both theory and examples.
 
 ## 4\. Formulas
 
@@ -212,7 +212,8 @@ namespace BackPropagationXor
 
 ## 6\. Proof of concept
 
-![](http://oi42.tinypic.com/684idg.jpg)
+{% include image.html url="/imgs/posts/c-backpropagation-tutorial-xor/6.png" description="The presented model manages to learn the outputs of the XOR gate" %}
+
 
 ## 7\. Wrong values?
 
