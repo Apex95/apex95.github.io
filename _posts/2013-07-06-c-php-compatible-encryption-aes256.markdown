@@ -14,8 +14,7 @@ Finding a way to encrypt messages in **C#** and decrypting them in **PHP** or vi
 
 The encrypted messages _should_ be encoded using **base64** before being sent.
 
-<span style="color:green">base64</span>(
-<span style="color:gray">[</span>ENCRYPTED_TEXT<span style="color:gray">][<span style="color:darkred">-[--IV-[-</span><span style="color:gray">][<span style="color:darkred">INITIALIZATION_VECTOR</span><span style="color:gray">]</span>)
+<span style="color:green">base64</span>(<span style="color:gray">[</span>ENCRYPTED_TEXT<span style="color:gray">][<span style="color:darkred">-[--IV-[-</span><span style="color:gray">][<span style="color:darkred">INITIALIZATION_VECTOR</span><span style="color:gray">]</span>)
 
 <font color="darkred">Encryption steps:</font>
 

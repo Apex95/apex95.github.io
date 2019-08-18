@@ -23,7 +23,7 @@ _Steps:_
 
 In this tutorial I'll use a **2-2-1** neural network (2 input neurons, 2 hidden and 1 output). Keep an eye on this picture, it might be easier to understand.
 
-![neural network 2-2-1](http://oi41.tinypic.com/2vilde8.jpg)
+{% include image.html url="/imgs/posts/c-backpropagation-tutorial-xor/1.png" description="Cookie-cutter Neural Network Model for learning XOR" %}
 
 ## 2\. How it works?
 
@@ -41,21 +41,23 @@ As any neural network requires an **activation function**, we'll use **sigmoid**
 
 Its graph looks like this (note that the output values range from **0** to **1**)
 
-![sigmoid function graph](http://oi39.tinypic.com/2wg5b2v.jpg)
+{% include image.html url="/imgs/posts/c-backpropagation-tutorial-xor/2.png" description="Plot of the Sigmoid activation function" %}
 
 **Sigmoid formulas** that we'll use (where **f(x)** is our sigmoid function)
 
 _1) Basic sigmoid function:_  
-![sigmoid formula](http://oi42.tinypic.com/ih4d9j.jpg)
+$$ f(x) = \frac{1}{1+e^{-x}} $$
 
-_2) Sigmoid Derivative (its value is used to adjust the weights):_  
-![sigmoid derivative formula](http://oi44.tinypic.com/5kq4gp.jpg)
+_2) Sigmoid Derivative (its value is used to adjust the weights using gradient descent):_  
+$$ f'(x) = f(x)(1-f(x)) $$
 
 Backpropagation always aims to reduce the error of each output. The algorithm knows what output is correct when the error is getting under a threshold.
 
 For a better understanding of this, take a look at the graph below which shows the error, based on the output:
 
-![backpropagation minimum error](http://oi41.tinypic.com/fn625u.jpg)
+{% include image.html url="/imgs/posts/c-backpropagation-tutorial-xor/5.png" description="Plotting the error function, considering the case of 1 dimension (1 variable)" %}
+
+I won't dive into the **gradient descent** method, as I wrote a ![separate article](https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example) that contains both theory and examples.
 
 ## 4\. Formulas
 
