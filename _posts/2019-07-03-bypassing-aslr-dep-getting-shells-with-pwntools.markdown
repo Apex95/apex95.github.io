@@ -51,18 +51,18 @@ gcc -Wall -ansi -fno-stack-protector vuln.c -o vuln
 
 We start by finding the offset in order to **overwrite** the **return address** and perform a simple execution hijacking. There are multiple ways of doing this: you can either start with a payload of a random size and analyze the behaviour of the binary in a debugger (like **GDB**) such as the image below, where we overwrite the return address and the **RIP** (PC) jumps to **0x414241424142** ("**ABABAB**")
 
-{% include image.html url="imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_buffer_overflow.webp" description="Finding the offset for a buffer overflow attack by trial-and-error" %}
+{% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_buffer_overflow.webp" description="Finding the offset for a buffer overflow attack by trial-and-error" %}
 
 
 
 I usually test this with an address that calls a specific function or jumps back to the start of the program (**0x400566**)
 
-{% include image.html url="imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_main_addr.webp" description="The 'main' address is used to call the program multiple times and supply multiple payloads" %}
+{% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_main_addr.webp" description="The 'main' address is used to call the program multiple times and supply multiple payloads" %}
 
 
 Should you succeed, it will print twice the same message:
 
-{% include image.html url="imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_call_twice.webp" description="Running the same program twice to prevent ASLR re-randomization" %}
+{% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_call_twice.webp" description="Running the same program twice to prevent ASLR re-randomization" %}
 
 
 ---
@@ -85,7 +85,7 @@ I recommend you perform these steps using a framework like **pwntools** since th
 
 To continue, one must understand the role of the **GOT** (*Global Offset Table*) in a binary as there is no exact way of previously knowing where **ASLR** will map each external library of the current process.
 
-{% include image.html url="imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_ldd.webp" description="Running ldd reveals different mapping addresses of libc each time the process starts" %}
+{% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_ldd.webp" description="Running ldd reveals different mapping addresses of libc each time the process starts" %}
 
 The addresses of the external methods are usually determined at runtime when these methods are called for the first time (i.e.: when the **PLT** trampoline is executed for the first time).
 However, the addresses need to be referenced in the original code before the program runs -> so placeholders (fixed addresses / **@GOT** addresses) are used. **GOT** acts as a _dictionary_ and binds
@@ -168,7 +168,7 @@ print r.recvline() # "hi there"
 
 And when running it...
 
-{% include image.html url="imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_payload_leak_puts.webp" description="Leaking the address of puts@libc" %}
+{% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_payload_leak_puts.webp" description="Leaking the address of puts@libc" %}
 
 
 
@@ -193,7 +193,7 @@ The lines of interest are:
 
 I found the **offset** of the **"sh"** string inside **libc** using **radare2**. Pick one.
 
-{% include image.html url="imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_sh_address.webp" description="Offsets of various 'sh' strings inside libc (radare2)" %}
+{% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_sh_address.webp" description="Offsets of various 'sh' strings inside libc (radare2)" %}
 
 
 
@@ -250,7 +250,7 @@ r.interactive()
 
 If you followed the steps correctly, you should achieve something like this:
 
-{% include image.html url="imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_poc_shell.webp" description="Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP" %}
+{% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_poc_shell.webp" description="Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP" %}
 
 <a href="https://www.codeproject.com" rel="tag" style="display:none">CodeProject</a>
 
