@@ -205,3 +205,5 @@ Aaand it seems to be working
 To conclude, I'm pretty sure **Intel Pin** is capable of more complex stuff than what I'm presenting here - which I believe is examples-level (actually it's inspired by an example). To me, it seems rather strange that it is not a more popular tool - and no, I'm not paid by Intel to endorse it.
 
 However, I hope this article manages to provide support and solutions/ideas to those who are looking at **hot patching** methods and who, like me, never heard of **Intel Pin** before. 
+
+<a href="https://www.codeproject.com" rel="tag" style="display:none">CodeProject</a>
