@@ -198,7 +198,7 @@ sudo ../../../pin -pid $(pidof targeted_binary_name) -t obj-intel64/hotpatch.so
 
 ## Results and Conclusions
 
-Aaand it seems to be working
+Aaand it seems to be working:
 {% include image.html url="/imgs/posts/hot-patching-functions-with-intel-pin/hot_patched_process.png" description="Testing the Hot Patched version against Buffer Overflow" %}
 
 
