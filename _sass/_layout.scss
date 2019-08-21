@@ -492,5 +492,35 @@ a.category-link {
     display: inline-block !important;
  }
 
+ #author-avatar {
+ 	max-width: 150px;
+     max-height: 150px;
+     float: left;
+     border: 3px solid $white-color;
+     box-shadow: 0px 0px 5px $black-color;
+     border-radius: 2%;
+     margin-right: 20px;
+ }
+
+ #author-name {
+     color: $red-color;
+     font-size: 27px;
+ }
+
+ #author-desc {
+     font-size: 17px;
+ }
+
+ #author-email {
+     margin-top: 10px;
+ }
+
+ #author-bio {
+     margin-top: 20px;
+     margin-bottom: 20px;
+     padding-top: 20px;
+     padding-bottom: 20px;
+     border-top: 1px solid $grey-color-dark;
+ }
 
 

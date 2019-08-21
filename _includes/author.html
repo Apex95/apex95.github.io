@@ -1,0 +1,13 @@
+{% assign author = site.data.authors[page.author] %}
+
+{% if author == null %}
+{% assign author = site.data.authors['dan.sporici'] %}   
+{% endif %}
+
+
+
+<div id="author-bio">
+    <img src="{{ author.avatar }}" id="author-avatar" rel="{{ author.name }}">
+    <div id = "author-name">{{ author.name }}</div>
+    <div id = "author-desc">{{ author.bio }} </div>
+</div>
