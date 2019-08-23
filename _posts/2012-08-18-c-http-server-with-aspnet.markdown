@@ -4,7 +4,7 @@ title:  "C# Http Server With ASP.NET"
 date:   2012-08-18 20:02:05 +0300
 categories: networking
 thumbnail: /imgs/thumbnails/aspnet.png
-redirect_from: "/networking/c-http-server-with-asp-net"
+redirect_from: "/networking/c-http-server-with-asp-net/"
 ---
 
 This tutorial will show you how to create a **HTTP server** that can parse **ASP.NET files**. It will be able to serve pages containing **html**,**css** and **server-side code**. As always I'll try to keep the code simple - luckily .NET does all the work for us.
