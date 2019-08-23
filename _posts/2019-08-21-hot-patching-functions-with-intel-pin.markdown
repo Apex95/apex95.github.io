@@ -10,7 +10,7 @@ thumbnail: /imgs/thumbnails/patch.png
 
 What we'll try to achieve here is to **replace**, from outside, a function inside a **running executable**, without stopping/freezing the process (or crashing it...).
 
-In my opinion, applying **hot patches** is quite a daunting task, if implemented from scratch, since:
+In my opinion, applying hot patches is quite a daunting task, if implemented from scratch, since:
 
 * it requires access to a different process' memory (most operating systems are fans of **process isolation**)
 * has software compatibility constraints (**Windows** binaries vs **Linux** binaries)
