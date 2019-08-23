@@ -8,9 +8,9 @@ thumbnail: /imgs/thumbnails/patch.png
 
 5 years ago, I said in one of my articles that I shall return, one day, with a method of **hot patching** functions inside live processes; So... I guess this is that day.
 
-What we'll try to achieve here is to **replace**, from outside, a **function** inside a **running executable**, without stopping/freezing the process (or crashing it...).
+What we'll try to achieve here is to **replace**, from outside, a function inside a **running executable**, without stopping/freezing the process (or crashing it...).
 
-In my opinion, applying **hot patches** is quite a daunting task, if implemented **from scratch**, since:
+In my opinion, applying **hot patches** is quite a daunting task, if implemented from scratch, since:
 
 * it requires access to a different process' memory (most operating systems are fans of **process isolation**)
 * has software compatibility constraints (**Windows** binaries vs **Linux** binaries)
@@ -34,7 +34,7 @@ Start by [downloading Intel Pin](https://software.intel.com/en-us/articles/pin-a
 _Disclaimer: I'm doing this tutorial on **Ubuntu x86_64**. You might see some bash._
 
 
-I'll use the following **dummy** C program as a target for the **hot patch**:
+I'll use the following **dummy** C program as a target for the hot patch:
 
 {% highlight c linenos %}
 #include<stdio.h>
