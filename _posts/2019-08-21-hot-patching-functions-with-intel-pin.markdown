@@ -132,7 +132,7 @@ void read_input_patched(void *original_routine_ptr, int *return_address)
 }
 
 
-void loaded_image_callback( IMG current_image, VOID *v )
+void loaded_image_callback(IMG current_image, void *v)
 {
     // look for the routine in the loaded image
     RTN current_routine = RTN_FindByName(current_image, target_routine_name);
