@@ -9,6 +9,9 @@
   <link rel="preload" as="font" type="font/woff2" href="{{ "/fonts/dosis-v8-latin-regular.woff2" | prepend: site.baseurl }}" crossorigin>
   <link rel="preload" as="font" type="font/woff" href="{{ "/fonts/dosis-v8-latin-regular.woff" | prepend: site.baseurl }}" crossorigin>
 
+  <link rel="preload" as="font" type="font/woff2" href="{{ "/fonts/roboto-v20-latin-regular.woff2" | prepend: site.baseurl }}" crossorigin>
+  <link rel="preload" as="font" type="font/woff" href="{{ "/fonts/roboto-v20-latin-regular.woff" | prepend: site.baseurl }}" crossorigin>
+
   <link href="//www.google-analytics.com" rel="preconnect" crossorigin>
   <link href="//cdn.jsdelivr.net" rel="preconnect" crossorigin>
   <link href="//pagead2.googlesyndication.com" rel="preconnect" crossorigin>
@@ -16,7 +19,7 @@
   <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
-  
+  <link rel="shortcut icon" type="image/png" href="/favicon.png">
   
   <meta property="og:title" content="{% if page.title %}{{ page.title | append: ' | ' | append: site.title | escape }}{% else %}{% if paginator and paginator.page > 1 %} {{'page ' | append: paginator.page | append: ' | ' | append: site.title | escape}} {% else %} {{site.title | append: ' | ' | append: site.indextitle | escape }} {% endif %}  {% endif %}" />
   <meta property="og:description" content="{% if page.iscategory %} {{page.excerpt | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if page.excerpt %} {{ page.content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %}{{ site.description }}{% endif %}{% endif %}" />
