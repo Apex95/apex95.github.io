@@ -34,7 +34,9 @@ Start by [downloading Intel Pin](https://software.intel.com/en-us/articles/pin-a
 _Disclaimer: I'm doing this tutorial on **Ubuntu x86_64**. You might see some bash._
 
 
-I'll use the following **dummy** C program as a target for the hot patch:
+Now, I imagine this turns out to be useful for endpoints that provide remote services to clients - i.e.: a server receives some sort of input and is expected to also return something. Let's say that someone discovered that a  service is vulnerable to certain inputs - so it can be comprimised by the first attacker who submits a specially crafted request. We'll consider that taking the service down, compiling, deploying and launching a new instance is not a desirable solution so hot patching is wanted until a new version is ready. 
+
+I’ll use the following dummy C program to illustrate the aforementioned model - to keep it simple, I'm reading inputs from **stdin** (instead of a tcp stream / network).
 
 {% highlight c linenos %}
 #include<stdio.h>
@@ -66,6 +68,10 @@ Some of you probably noticed that the `read_input()` function is not very well w
 
 {% include image.html url="/imgs/posts/hot-patching-functions-with-intel-pin/buffer_overflow.png" description="Scanf() reading exceeds the limits of the allocated buffer" %}
 
+We intend to patch this vulnerability by "replacing" the vulnerable reading function (read_input()) with another that we know it's actually safe. I'm using quotes there to express the fact that
+it will act more like a re-routing procedure - the code of the original (vulnerable) function will still be in the process' memory, but all the calls will be forwarded to the new (patched) method. 
+
+I hope it makes sense for now.
 
 
 ## Project's Structure
