@@ -19,7 +19,7 @@ In my opinion, applying hot patches is quite a daunting task, if implemented fro
 * it has only a didactic purpose - probably no one would actually use a 'from-scratch' method since there are tools that do this better
 
 Considering these, I guess it is better to use something that was actually written for this task and not coding something manually.
-Therefore, we'll be looking at a way to do this with [Intel Pin](https://software.intel.com/en-us/articles/pin-a-dynamic-binary-instrumentation-tool). I stumbled upon this tool while working at a completely different project but it seems to be quite versatile. Basically, it is described as a **Dynamic Binary Instrumentation Tool**, however we'll be using it to facilitate the procedure of writing code to another's process memory.
+Therefore, we'll be looking at a way to do this with [Intel Pin](https://software.intel.com/en-us/articles/pin-a-dynamic-binary-instrumentation-tool). I stumbled upon this tool while working at a completely different project but it seems to be quite versatile. Basically, it is described as a **Dynamic Binary Instrumentation Tool**, however we'll be using it to facilitate the procedure of writing code to another process' memory.
 
 
 
