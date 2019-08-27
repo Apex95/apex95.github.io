@@ -39,7 +39,7 @@ Now, I imagine this turns out to be useful for endpoints that provide remote ser
 I’ll use the following **dummy** C program to illustrate the aforementioned model - to keep it simple, I'm reading inputs from **stdin** (instead of a tcp stream / network).
 
 {% highlight c linenos %}
-#include<stdio.h>
+#include <stdio.h>
 
 // TODO: hot patch this method
 void read_input()
