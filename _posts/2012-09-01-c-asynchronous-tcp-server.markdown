@@ -8,7 +8,7 @@ thumbnail: /imgs/thumbnails/asynctcplistener.bmp
 
 This is the model of an **Asynchronous TCP server**, that can have multiple clients connected, each one on it's own **thread** - all of this is done using a relatively short and easy-to-remember code.
 
-If you don't have basic knowledge of how a Tcp server works, it is highly recommended to read first: [how to make a simple tcp server](http://www.codingvision.net/networking/c-simple-tcp-server/ "C# simple tcp server").
+If you don't have basic knowledge of how a Tcp server works, it is highly recommended to read first: [how to make a simple tcp server](http://www.codingvision.net/networking/c-simple-tcp-server "C# simple tcp server").
 
 ## The code
 
