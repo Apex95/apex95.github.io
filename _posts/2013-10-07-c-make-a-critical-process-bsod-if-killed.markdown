@@ -10,7 +10,7 @@ A **critical** process is a type of process that Windows requires to be running 
 
 Theoretically, you can BSoD yourself whenever you want :)
 
-<u>Note: The complete code is available at the bottom of the page (scroll down).</u>
+##### The complete code is available at the bottom of the page.
 
 {% include image.html url="/imgs/posts/c-make-a-critical-process-bsod-if-killed/1.png" description="We all love it" %}
 

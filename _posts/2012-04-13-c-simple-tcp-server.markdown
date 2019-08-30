@@ -10,7 +10,7 @@ If you got here, you probably want to know how to make a simple server in C#, us
 
 For the sake of simplicity we'll make a **synchronous server** using a **Console Application** project, so we don't need to use multithreading or anything else.
 
-* It's recommended to use a Console Application with this code, because this code is considered 'thread-blocker' - if you use it in a Form project, you won't be able to move/close the form while the server is running.
+##### It's recommended to use a Console Application with this code, because this code is considered 'thread-blocker' - if you use it in a Form project, you won't be able to move/close the form while the server is running.
 
 I'll post now the code of the TCP server and I'll explain below how it works:
 
@@ -116,6 +116,8 @@ Encoding.Default.GetString(msg);
 
 Well... if we take a closer look into the source we can easily see the problem, but I'll explain for a better understanding:
 
-We have the **tcp client** which connects to our **server** and sends data. While **client.Connected** returns **true** the server will be 'blocked' waiting for new messages, and won't check/accept a new Tcp Client. This is usually solved using a different **thread** for every client connected or simply using an **asynchronous server** but those methods are not ideal for this kind of tutorial.
+We have the **tcp client** which connects to our **server** and sends data. While **client.Connected** returns **true** the server will be 'blocked' waiting for new messages, and won't check/accept a new Tcp Client. This is usually solved using a different **thread** for every client connected or simply using an **asynchronous server** but those methods are not ideal for this kind of tutorial. 
+
+Take a look at [how to code an asynchronous tcp server](https://codingvision.net/networking/c-asynchronous-tcp-server) if you're interested in a version which accepts **multiple clients**.
 
 If you don't have a clinet to connect to the server, you can use Telnet, available on any Windows System: go to **Command Prompt** and type: **telnet 127.0.0.1 9999**.

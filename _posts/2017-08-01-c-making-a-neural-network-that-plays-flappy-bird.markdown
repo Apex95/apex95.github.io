@@ -18,8 +18,7 @@ Btw, here's a short demo:
 
 Hopefully I can still understand the code that I wrote ~7 months ago. Yep.
 
-<u>Disclaimer</u>: this was my first project that involved this kind of stuff...the code is rather sketchy and I don't really have the time to rewrite it - probably better than nothing but...sorry. The encoding / decoding parts can be skipped - however the most important part is to
- grasp the idea behind it.
+##### this was my first project that involved this kind of stuff...the code is rather sketchy and I don't really have the time to rewrite it - probably better than nothing but...sorry. The encoding / decoding parts can be skipped - however the most important part is to grasp the idea behind it. Can't say I really recommend implementing your own GA's.
 
 
 

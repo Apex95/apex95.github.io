@@ -10,7 +10,7 @@ This tutorial will show you how to register a custom **Url Protocol** for your a
 
 **myApp:doSomething**
 
-_Note: In this tutorial, I'll name the custom protocol **myApp** - but you can use any name you want._
+##### In this tutorial, I'll name the custom protocol **myApp** - but you can use any name you want.
 
 ## 1.Editing the Registry
 

@@ -31,7 +31,7 @@ Therefore, we'll be looking at a way to do this with [Intel Pin](https://softwar
 Start by [downloading Intel Pin](https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads) and extract it somewhere in your workspace. 
 
 
-_Disclaimer: I'm doing this tutorial on Ubuntu x86_64. You might see some bash._
+##### I'm doing this tutorial on Ubuntu x86_64, but I'm expecting the code to be highly similar on Windows or other operating systems.
 
 
 Now, I imagine this turns out to be useful for endpoints that provide remote services to clients - i.e.: a server receives some sort of input and is expected to also return something. Let's say that someone discovered that a  service is vulnerable to certain inputs - so it can be comprimised by the first attacker who submits a specially crafted request. We'll consider that taking the service down, compiling, deploying and launching a new instance is not a desirable solution so hot patching is wanted until a new version is ready. 

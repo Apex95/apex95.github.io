@@ -10,7 +10,7 @@ thumbnail: /imgs/thumbnails/dpapi.bmp
 
 You have to supply the data as **byte array** in order to be encrypted / decrypted.
 
-_Note: DPAPI uses the user's key to encrypt / decrypt so anyone who has access to your account can see the original data unless you define an **Entropy** - see below what that is._
+##### DPAPI uses the user's key to encrypt / decrypt so anyone who has access to your account can see the original data unless you define an **Entropy** - see below what that is.
 
 ## 1.What is needed
 

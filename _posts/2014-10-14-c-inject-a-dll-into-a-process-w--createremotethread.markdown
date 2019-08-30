@@ -10,7 +10,7 @@ Since I've been asked if this is possible - well...you can do **Dll Injection** 
 
 I'm writing this tutorial as a _prologue_ - some day... I'll try to publish one about hotpatching executables and...it requires stuff from here.
 
-<u>Disclaimer:</u> almost all AV programs detect this as a possible malware simply because this behaviour is specific to some viruses/keygens/etc. - and they prefer to be rather paranoid than ineffective. Even if this technique has a _bad reputation_ it has <u>legit</u> uses like hotpatching & logging - and this is what I'm going to write about.
+##### almost all AV programs detect this as a possible malware simply because this behaviour is specific to some viruses/keygens/etc. - and they prefer to be rather paranoid than ineffective. Even if this technique has a _bad reputation_ it has <u>legit</u> uses like hotpatching & logging - and this is what I'm going to write about.
 
 ## Some theory
 
@@ -21,7 +21,7 @@ It is usually done using 2 programs:
 *   an **Injector** (written in any language)
 *   a **Dll** (compiled to a native language)
 
-The purpose of the **injector** is to...inject the Dll into the target process.  
+The purpose of the **injector** is to...inject the Dll into the target process.
 In order to do so:
 
 1.  get the **handle** of the process (**OpenProcess()**)
