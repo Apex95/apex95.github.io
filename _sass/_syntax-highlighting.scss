@@ -30,6 +30,7 @@ div.highlighter-rouge {
     .highlighter-rouge & {
 	  background-color: $grey-color-code;
           color: $red-color;
+          border: none;
     }
 
     .c     { color: #998; font-style: italic } // Comment
