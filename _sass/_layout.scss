@@ -275,7 +275,7 @@ a.category-link {
         margin-top: 50px;
         
         @include media-query($on-laptop) {
-            font-size: 28px;
+            font-size: 26px;
         }
         
         font-family: $base-font-family;
@@ -283,6 +283,7 @@ a.category-link {
 
     h3 {
         font-size: 23px;
+        margin-top: 40px;
 
         @include media-query($on-laptop) {
             font-size: 22px;
