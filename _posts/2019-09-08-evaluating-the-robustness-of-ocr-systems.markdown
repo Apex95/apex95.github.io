@@ -113,7 +113,7 @@ Just for fun, here's what happens if the score function is inverted, which trans
 
 Promising results were achieved while testing against Tesseract 4.0. In the following figure is presented an early (non-final) sample in which the word "**Random**" is not recognized by Tesseract:
 
-{% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/tess-results-ui.png" description="The first word is sucessfully hidden from the OCR system" %}
+{% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/tess-results-ui.png" description="The first word is successfully hidden from the OCR system" %}
 
 
 ## Tests on Google's Cloud Vision Platform
