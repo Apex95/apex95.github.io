@@ -43,7 +43,7 @@ Modern OCR systems are more complex than basic convolutional neural networks as 
 
 {% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/binarization.png" description="Result of the binarization procedure, using an adaptive threshold" %}
 
-An OCR system usually applies a binarization procedure (e.g.: **Otsu**'s method) to the image before running it thorough the main classifier in order to separate the text from the background, the ideal output being pure black text on a clean white background.
+An OCR system usually applies a binarization procedure (e.g.: **Otsu**'s method) to the image before running it through the main classifier in order to separate the text from the background, the ideal output being pure black text on a clean white background.
 
 This proves troublesome because it restricts the samples generator from altering pixels using small values: as an example, converting a black pixel to a grayish color will be reverted in the binarization process thus generating no feedback.
 
