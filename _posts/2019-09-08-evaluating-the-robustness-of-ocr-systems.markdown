@@ -6,7 +6,7 @@ categories: ai
 thumbnail: /imgs/thumbnails/adversarial_samples_ocr.png
 ---
 
-In this article, I'm going to discuss about my Bachelor's degree final project, which is about evaluating the robustness of **OCR systems** (such as **Tesseract** or **Google's Cloud Vision**) when adversarial samples are presented as inputs. It's somewhere in-between **fuzzing** and **adversarial samples crafting**, on a black box. 
+In this article, I'm going to discuss about my Bachelor's degree final project, which is about evaluating the robustness of **OCR systems** (such as **Tesseract** or **Google's Cloud Vision**) when adversarial samples are presented as inputs. It's somewhere in-between **fuzzing** and **adversarial samples crafting**, on a black box, the main objective being the creation of **OCR-proof** images, with minimal amounts of noise.
 
 It's an old project that I recently presented at an [International Security Summer School](https://spritz.math.unipd.it/events/2019/PIU2019/PagesOutput/SSS/index.html) hosted by the University of Padua. I decided to also publish it here mainly because of the positive feedback received when presented at the summer school.
 
