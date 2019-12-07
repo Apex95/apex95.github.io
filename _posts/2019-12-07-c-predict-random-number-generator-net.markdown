@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "C# Predict the Random Number Generator of .NET"
-date:   2019-09-08 00:45:05 +0300
+date:   2019-12-07 00:45:05 +0300
 categories: security
 thumbnail: /imgs/thumbnails/predict_random_net.png
 ---
