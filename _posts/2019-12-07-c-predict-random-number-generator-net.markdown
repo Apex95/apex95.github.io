@@ -8,7 +8,7 @@ thumbnail: /imgs/thumbnails/predict_random_net.png
 
 This post targets to underline the **predictability** of the random... or better said **pseudo-random number generator** (PRNG) exposed by the **.NET** framework (aka the `Random()` class), under certain assumptions. Because of the nature of the implementation, **100% accuracy** can be obtained with a fairly simple idea and a rather short code snippet.
 
-##### The presented method definitely isn't something new in the domain of cryptography, however the purpose of the article is to bring awareness about this specific weakness of the algorithm in critical sections of your projects.
+##### The presented method definitely isn't something new in the domain of cryptography, however the purpose of the article is to bring awareness about this specific weakness.
 
 The following scenario is considered:
 
