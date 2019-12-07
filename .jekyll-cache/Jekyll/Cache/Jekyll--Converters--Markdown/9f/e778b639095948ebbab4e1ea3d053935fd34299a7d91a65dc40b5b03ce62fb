@@ -1,0 +1,37 @@
+I"�<p>I found this feature while looking inside <strong>Graphics</strong> class and since it was so simple to use, I decided to post it here.</p>
+
+<p>As I said, it doesn’t require more than 15 lines of code - this function: <strong>Graphics.CopyFromScreen</strong> does all the ‘hard work’ so we only need to put this into a <strong>Bitmap</strong> and save/display it.</p>
+
+<h2 id="to-the-code">To the code!</h2>
+
+<p>There are 3 steps that you need to follow:</p>
+
+<ul>
+  <li>create a <strong>Bitmap</strong> that’s exactly the screen’s size</li>
+  <li>using that Bitmap, create a <strong>Graphics</strong> object (<strong>Graphics.FromImage</strong>)</li>
+  <li>use <strong>CopyFromScreen()</strong> and save the <strong>Bitmap</strong></li>
+</ul>
+
+<p>The code looks like this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">takeScreenShot</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Bitmap</span> <span class="n">bmp</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Bitmap</span><span class="p">(</span><span class="n">Screen</span><span class="p">.</span><span class="n">PrimaryScreen</span><span class="p">.</span><span class="n">Bounds</span><span class="p">.</span><span class="n">Width</span><span class="p">,</span> <span class="n">Screen</span><span class="p">.</span><span class="n">PrimaryScreen</span><span class="p">.</span><span class="n">Bounds</span><span class="p">.</span><span class="n">Height</span><span class="p">);</span>
+    <span class="k">using</span> <span class="p">(</span><span class="n">Graphics</span> <span class="n">g</span> <span class="p">=</span> <span class="n">Graphics</span><span class="p">.</span><span class="nf">FromImage</span><span class="p">(</span><span class="n">bmp</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">g</span><span class="p">.</span><span class="nf">CopyFromScreen</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">Screen</span><span class="p">.</span><span class="n">PrimaryScreen</span><span class="p">.</span><span class="n">Bounds</span><span class="p">.</span><span class="n">Size</span><span class="p">);</span>
+        <span class="n">bmp</span><span class="p">.</span><span class="nf">Save</span><span class="p">(</span><span class="s">"screenshot.png"</span><span class="p">);</span>  <span class="c1">// saves the image
+</span>
+    <span class="p">}</span>                 
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+:ET

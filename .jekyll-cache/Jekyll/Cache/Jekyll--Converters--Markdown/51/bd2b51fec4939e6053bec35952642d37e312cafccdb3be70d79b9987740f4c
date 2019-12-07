@@ -1,0 +1,101 @@
+I"F<p>All the methods that are called by <strong>events</strong> require two arguments:<br />
+<strong>object</strong> sender<br />
+<strong>EventArgs</strong> e</p>
+
+<p>The event calls a method using those 2 parameters, so we can’t <em>directly</em> add a custom argument.</p>
+
+<p>If we have this code and we want to display the string ‘<strong>s</strong>’ in a MessageBox…</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">Form1_Load</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="kt">string</span> <span class="n">s</span> <span class="p">=</span> <span class="s">"Hello!"</span><span class="p">;</span>
+      <span class="n">button</span><span class="p">.</span><span class="n">Click</span> <span class="p">+=</span> <span class="k">new</span> <span class="nf">EventHandler</span><span class="p">(</span><span class="n">show_msg</span><span class="p">);</span>  <span class="c1">// our string is not included in the call
+</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">show_msg</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">,</span> <span class="kt">string</span> <span class="n">s</span><span class="p">)</span> 
+<span class="c1">// this gives an error, because the function is called with only 2 arguments, but it expects 3
+</span>
+<span class="p">{</span>
+      <span class="n">MessageBox</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Clearly this will not work because we are limited to those two parameters.</p>
+
+<h2 id="the-solution">The Solution</h2>
+
+<p>The easiest solution is to use a <strong>delegate</strong> to call our method.</p>
+
+<p>We get the shortest code using the <strong>lambda operator</strong>, whose symbol is <strong>=&gt;</strong>.</p>
+<ul>
+  <li>It is recommended for beginners because of its simplicity.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">Form1_Load</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="kt">string</span> <span class="n">s</span> <span class="p">=</span> <span class="s">"Hello!"</span><span class="p">;</span>
+      <span class="n">button</span><span class="p">.</span><span class="n">Click</span> <span class="p">+=</span> <span class="p">(</span><span class="n">sender2</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="nf">show_msg</span><span class="p">(</span><span class="n">sender2</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">show_msg</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">,</span> <span class="kt">string</span> <span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="n">MessageBox</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Without using the lambda operator, it can be rewritten using a <strong>delegate</strong></p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre></td><td class="code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">Form1_Load</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+       <span class="kt">string</span> <span class="n">s</span> <span class="p">=</span> <span class="s">"Hello!"</span><span class="p">;</span>
+
+       <span class="n">button</span><span class="p">.</span><span class="n">Click</span> <span class="p">+=</span> <span class="k">delegate</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender2</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e2</span><span class="p">)</span>
+       <span class="p">{</span>
+             <span class="nf">show_msg</span><span class="p">(</span><span class="n">sender2</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+       <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">private</span> <span class="k">void</span> <span class="nf">show_msg</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">,</span> <span class="kt">string</span> <span class="n">s</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="n">MessageBox</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>That’s all :).</p>
+:ET

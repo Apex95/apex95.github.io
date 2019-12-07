@@ -1,0 +1,118 @@
+I"� <p>This tutorial focuses on <strong>sending text</strong> from a C# program to any other window by using 2 functions provided by <strong>user32.dll</strong>. The big advantage of this method is that the window you’re sending the text to <strong>doesn’t require focus</strong>.</p>
+
+<p>Don’t forget to include these namespaces:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Runtime.InteropServices</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="1-findwindowex">1. FindWindowEx</h2>
+
+<p>This method gets all the child elements from a parent element: for example it can get the handle of a textbox(child) from the window(parent).</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"user32.dll"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">FindWindowEx</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hwndParent</span><span class="p">,</span> <span class="n">IntPtr</span> <span class="n">hwndChildAfter</span><span class="p">,</span> <span class="kt">string</span> <span class="n">lpszClass</span><span class="p">,</span> <span class="kt">string</span> <span class="n">lpszWindow</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="2-sendmessage">2. SendMessage</h2>
+
+<p>This one simply sends a message to the specified handle (it might be a window, a textbox, anything…).<br />
+We’ll use this to send the data we want.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"User32.dll"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="kt">int</span> <span class="nf">SendMessage</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hWnd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">uMsg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wParam</span><span class="p">,</span> <span class="kt">string</span> <span class="n">lParam</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="how-it-works">How it works</h2>
+
+<p>In this tutorial I’ll send some text to <strong>Notepad</strong> - it’s just an example, but this method works for any program. Basically you get the window’s handle from the process and then, by using <strong>FindWindowEx</strong> you get the children’s handle (that’s the textbox). Finally, you send the text to that child.</p>
+
+<ul>
+  <li>you need to know the child element’s name - you can find it with Spy++.</li>
+</ul>
+
+<p>I’ll post below a C# application that changes the text from <strong>notepad</strong>’s window.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+</pre></td><td class="code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Runtime.InteropServices</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Test</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">progam</span>
+    <span class="p">{</span>
+        <span class="c1">//include FindWindowEx
+</span>
+        <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"user32.dll"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">FindWindowEx</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hwndParent</span><span class="p">,</span> <span class="n">IntPtr</span> <span class="n">hwndChildAfter</span><span class="p">,</span> <span class="kt">string</span> <span class="n">lpszClass</span><span class="p">,</span> <span class="kt">string</span> <span class="n">lpszWindow</span><span class="p">);</span>
+
+        <span class="c1">//include SendMessage
+</span>
+        <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"user32.dll"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="kt">int</span> <span class="nf">SendMessage</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hWnd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">uMsg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">wParam</span><span class="p">,</span> <span class="kt">string</span> <span class="n">lParam</span><span class="p">);</span>
+
+        <span class="c1">//this is a constant indicating the window that we want to send a text message
+</span>
+        <span class="k">const</span> <span class="kt">int</span> <span class="n">WM_SETTEXT</span> <span class="p">=</span> <span class="m">0X000C</span><span class="p">;</span>
+
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">//getting notepad's process | at least one instance of notepad must be running
+</span>
+            <span class="n">Process</span> <span class="n">notepadProccess</span> <span class="p">=</span> <span class="n">Process</span><span class="p">.</span><span class="nf">GetProcessesByName</span><span class="p">(</span><span class="s">"notepad"</span><span class="p">)[</span><span class="m">0</span><span class="p">];</span> 
+
+            <span class="c1">//getting notepad's textbox handle from the main window's handle
+</span>
+            <span class="c1">//the textbox is called 'Edit'
+</span>
+            <span class="n">IntPtr</span> <span class="n">notepadTextbox</span> <span class="p">=</span> <span class="nf">FindWindowEx</span><span class="p">(</span><span class="n">notepadProccess</span><span class="p">.</span><span class="n">MainWindowHandle</span><span class="p">,</span> <span class="n">IntPtr</span><span class="p">.</span><span class="n">Zero</span><span class="p">,</span> <span class="s">"Edit"</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>  
+            <span class="c1">//sending the message to the textbox
+</span>
+            <span class="nf">SendMessage</span><span class="p">(</span><span class="n">notepadTextbox</span><span class="p">,</span> <span class="n">WM_SETTEXT</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="s">"This is the new Text!!!"</span><span class="p">);</span>  
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>Using this method, you won’t need to actually give focus to the window - but you’ll have to know some additional information about the <strong>program’s structure</strong> - that’s because you need to know what child to select, where is that child located, etc..</p>
+
+<p>But as I said before, you can find this out by using <strong>Spy++</strong> (from Visual Studio).</p>
+:ET

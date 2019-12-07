@@ -1,0 +1,242 @@
+I"LH<p>Since I’ve been asked if this is possible - well…you can do <strong>Dll Injection</strong> using <strong>C#</strong> but the injected Dll must be written in a language that doesn’t depend on a CLR (<strong>C/C++</strong> would be a good option here, but it’s ok to write the injector in <strong>C#</strong>).</p>
+
+<p>I’m writing this tutorial as a <em>prologue</em> - some day… I’ll try to publish one about hotpatching executables and…it requires stuff from here.</p>
+
+<h5 id="almost-all-av-programs-detect-this-as-a-possible-malware-simply-because-this-behaviour-is-specific-to-some-viruseskeygensetc---and-they-prefer-to-be-rather-paranoid-than-ineffective-even-if-this-technique-has-a-bad-reputation-it-has-legit-uses-like-hotpatching--logging---and-this-is-what-im-going-to-write-about">almost all AV programs detect this as a possible malware simply because this behaviour is specific to some viruses/keygens/etc. - and they prefer to be rather paranoid than ineffective. Even if this technique has a <em>bad reputation</em> it has <u>legit</u> uses like hotpatching &amp; logging - and this is what I’m going to write about.</h5>
+
+<h2 id="some-theory">Some theory</h2>
+
+<p><strong>Dll Injection</strong> is a technique used to make a running process (executable) load a Dll without requiring a restart (name makes it kinda obvious :p).</p>
+
+<p>It is usually done using 2 programs:</p>
+
+<ul>
+  <li>an <strong>Injector</strong> (written in any language)</li>
+  <li>a <strong>Dll</strong> (compiled to a native language)</li>
+</ul>
+
+<p>The purpose of the <strong>injector</strong> is to…inject the Dll into the target process.
+In order to do so:</p>
+
+<ol>
+  <li>get the <strong>handle</strong> of the process (<strong>OpenProcess()</strong>)</li>
+  <li>obtain the address of this method: <strong>LoadLibraryA()</strong> (from <strong>kernel32.dll</strong>) by using <strong>GetProcAddress()</strong>; we’re trying to make the target process call it in order to load our library; DON’T hardcode this address - since Windows Vista came out, it will be different everytime.</li>
+  <li>use <strong>VirtualAllocEx</strong> to allocate a few bytes of memory on the target process</li>
+  <li>write there the name/path of our library (<strong>WriteProcessMemory()</strong>)</li>
+  <li>with <strong>CreateRemoteThread()</strong> spawn the <strong>thread</strong> which will run <strong>LoadLibraryA()</strong> with the pointer to the allocated address as an argument (that pointer actually indicates the name of the dll).</li>
+</ol>
+
+<p>One more thing: when the Dll is loaded, its <strong>DllMain()</strong> method (entry point) will be called with <strong>DLL_PROCESS_ATTACH</strong> as <strong>reason</strong> (<strong>fdwReason</strong>).</p>
+
+<h2 id="writing-the-dll">Writing the Dll</h2>
+
+<p>For this tutorial I used a dummy-dll which displays a <strong>MessageBox</strong> once it’s successfully loaded.</p>
+
+<p><em>Note: always return <strong>true</strong> at the end - otherwise some processes will crash when injecting.</em></p>
+
+<p>I’m using this Dll:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre><span class="cp">#include&lt;Windows.h&gt;
+</span><span class="k">extern</span> <span class="s">"C"</span> <span class="kr">__declspec</span><span class="p">(</span><span class="n">dllexport</span><span class="p">)</span> <span class="n">bool</span> <span class="n">WINAPI</span> <span class="nf">DllMain</span><span class="p">(</span><span class="n">HINSTANCE</span> <span class="n">hInstDll</span><span class="p">,</span> <span class="n">DWORD</span> <span class="n">fdwReason</span><span class="p">,</span> <span class="n">LPVOID</span> <span class="n">lpvReserved</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">fdwReason</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">case</span> <span class="n">DLL_PROCESS_ATTACH</span><span class="p">:</span>
+        <span class="p">{</span>
+            <span class="n">MessageBox</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span> <span class="s">"Hello World!"</span><span class="p">,</span> <span class="s">"Dll says:"</span><span class="p">,</span> <span class="n">MB_OK</span><span class="p">);</span>
+	    <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">case</span> <span class="n">DLL_PROCESS_DETACH</span><span class="p">:</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="k">case</span> <span class="n">DLL_THREAD_ATTACH</span><span class="p">:</span>
+            <span class="k">break</span><span class="p">;</span>
+
+        <span class="k">case</span> <span class="n">DLL_THREAD_DETACH</span><span class="p">:</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="writing-the-injector">Writing the Injector</h2>
+
+<p>Ok, the fancy part. I kinda explained how all this works in the first part of the tutorial so just remember: get the handle, allocate some memory on the process, write there the name of the dll and finally, create a thread that will call <strong>LoadLibraryA</strong> and load your dll.</p>
+
+<p>Also, check the comments in code and refer to the “theory” part of this article whenever you feel the need to.</p>
+
+<p>Here be sourcecode!</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+</pre></td><td class="code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Runtime.InteropServices</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">BasicInject</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">OpenProcess</span><span class="p">(</span><span class="kt">int</span> <span class="n">dwDesiredAccess</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bInheritHandle</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwProcessId</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">,</span> <span class="n">CharSet</span> <span class="p">=</span> <span class="n">CharSet</span><span class="p">.</span><span class="n">Auto</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">GetModuleHandle</span><span class="p">(</span><span class="kt">string</span> <span class="n">lpModuleName</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32"</span><span class="p">,</span> <span class="n">CharSet</span> <span class="p">=</span> <span class="n">CharSet</span><span class="p">.</span><span class="n">Ansi</span><span class="p">,</span> <span class="n">ExactSpelling</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span> <span class="n">SetLastError</span> <span class="p">=</span> <span class="k">true</span><span class="p">)]</span>
+    <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">GetProcAddress</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hModule</span><span class="p">,</span> <span class="kt">string</span> <span class="n">procName</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">,</span> <span class="n">SetLastError</span> <span class="p">=</span> <span class="k">true</span><span class="p">,</span> <span class="n">ExactSpelling</span> <span class="p">=</span> <span class="k">true</span><span class="p">)]</span>
+    <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">VirtualAllocEx</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hProcess</span><span class="p">,</span> <span class="n">IntPtr</span> <span class="n">lpAddress</span><span class="p">,</span>
+        <span class="kt">uint</span> <span class="n">dwSize</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">flAllocationType</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">flProtect</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">,</span> <span class="n">SetLastError</span> <span class="p">=</span> <span class="k">true</span><span class="p">)]</span>
+    <span class="k">static</span> <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">WriteProcessMemory</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hProcess</span><span class="p">,</span> <span class="n">IntPtr</span> <span class="n">lpBaseAddress</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">nSize</span><span class="p">,</span> <span class="k">out</span> <span class="n">UIntPtr</span> <span class="n">lpNumberOfBytesWritten</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">)]</span>
+    <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">CreateRemoteThread</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hProcess</span><span class="p">,</span>
+        <span class="n">IntPtr</span> <span class="n">lpThreadAttributes</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">dwStackSize</span><span class="p">,</span> <span class="n">IntPtr</span> <span class="n">lpStartAddress</span><span class="p">,</span> <span class="n">IntPtr</span> <span class="n">lpParameter</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">dwCreationFlags</span><span class="p">,</span> <span class="n">IntPtr</span> <span class="n">lpThreadId</span><span class="p">);</span>
+
+    <span class="c1">// privileges
+</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_CREATE_THREAD</span> <span class="p">=</span> <span class="m">0x0002</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_QUERY_INFORMATION</span> <span class="p">=</span> <span class="m">0x0400</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_VM_OPERATION</span> <span class="p">=</span> <span class="m">0x0008</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_VM_WRITE</span> <span class="p">=</span> <span class="m">0x0020</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_VM_READ</span> <span class="p">=</span> <span class="m">0x0010</span><span class="p">;</span>
+
+    <span class="c1">// used for memory allocation
+</span>
+    <span class="k">const</span> <span class="kt">uint</span> <span class="n">MEM_COMMIT</span> <span class="p">=</span> <span class="m">0x00001000</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">uint</span> <span class="n">MEM_RESERVE</span> <span class="p">=</span> <span class="m">0x00002000</span><span class="p">;</span>
+    <span class="k">const</span> <span class="kt">uint</span> <span class="n">PAGE_READWRITE</span> <span class="p">=</span> <span class="m">4</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// the target process - I'm using a dummy process for this
+</span>
+        <span class="c1">// if you don't have one, open Task Manager and choose wisely
+</span>
+        <span class="n">Process</span> <span class="n">targetProcess</span> <span class="p">=</span> <span class="n">Process</span><span class="p">.</span><span class="nf">GetProcessesByName</span><span class="p">(</span><span class="s">"testApp"</span><span class="p">)[</span><span class="m">0</span><span class="p">];</span>
+
+        <span class="c1">// geting the handle of the process - with required privileges
+</span>
+        <span class="n">IntPtr</span> <span class="n">procHandle</span> <span class="p">=</span> <span class="nf">OpenProcess</span><span class="p">(</span><span class="n">PROCESS_CREATE_THREAD</span> <span class="p">|</span> <span class="n">PROCESS_QUERY_INFORMATION</span> <span class="p">|</span> <span class="n">PROCESS_VM_OPERATION</span> <span class="p">|</span> <span class="n">PROCESS_VM_WRITE</span> <span class="p">|</span> <span class="n">PROCESS_VM_READ</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="n">targetProcess</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span>
+
+        <span class="c1">// searching for the address of LoadLibraryA and storing it in a pointer
+</span>
+        <span class="n">IntPtr</span> <span class="n">loadLibraryAddr</span> <span class="p">=</span> <span class="nf">GetProcAddress</span><span class="p">(</span><span class="nf">GetModuleHandle</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">),</span> <span class="s">"LoadLibraryA"</span><span class="p">);</span>
+
+        <span class="c1">// name of the dll we want to inject
+</span>
+        <span class="kt">string</span> <span class="n">dllName</span> <span class="p">=</span> <span class="s">"test.dll"</span><span class="p">;</span>
+
+        <span class="c1">// alocating some memory on the target process - enough to store the name of the dll
+</span>
+        <span class="c1">// and storing its address in a pointer
+</span>
+        <span class="n">IntPtr</span> <span class="n">allocMemAddress</span> <span class="p">=</span> <span class="nf">VirtualAllocEx</span><span class="p">(</span><span class="n">procHandle</span><span class="p">,</span> <span class="n">IntPtr</span><span class="p">.</span><span class="n">Zero</span><span class="p">,</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)((</span><span class="n">dllName</span><span class="p">.</span><span class="n">Length</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">*</span> <span class="n">Marshal</span><span class="p">.</span><span class="nf">SizeOf</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="kt">char</span><span class="p">))),</span> <span class="n">MEM_COMMIT</span> <span class="p">|</span> <span class="n">MEM_RESERVE</span><span class="p">,</span> <span class="n">PAGE_READWRITE</span><span class="p">);</span>
+
+        <span class="c1">// writing the name of the dll there
+</span>
+        <span class="n">UIntPtr</span> <span class="n">bytesWritten</span><span class="p">;</span>
+        <span class="nf">WriteProcessMemory</span><span class="p">(</span><span class="n">procHandle</span><span class="p">,</span> <span class="n">allocMemAddress</span><span class="p">,</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">dllName</span><span class="p">),</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)((</span><span class="n">dllName</span><span class="p">.</span><span class="n">Length</span> <span class="p">+</span> <span class="m">1</span><span class="p">)</span> <span class="p">*</span> <span class="n">Marshal</span><span class="p">.</span><span class="nf">SizeOf</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="kt">char</span><span class="p">))),</span> <span class="k">out</span> <span class="n">bytesWritten</span><span class="p">);</span>
+
+        <span class="c1">// creating a thread that will call LoadLibraryA with allocMemAddress as argument
+</span>
+        <span class="nf">CreateRemoteThread</span><span class="p">(</span><span class="n">procHandle</span><span class="p">,</span> <span class="n">IntPtr</span><span class="p">.</span><span class="n">Zero</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">loadLibraryAddr</span><span class="p">,</span> <span class="n">allocMemAddress</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">IntPtr</span><span class="p">.</span><span class="n">Zero</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+:ET

@@ -1,0 +1,70 @@
+I"<p>This post targets to underline the <strong>predictability</strong> of the random… or better said pseudo-random number generator exposed by the <strong>.NET</strong> framework (aka the <code class="highlighter-rouge">Random()</code> class), under certain assumptions. Because of the nature of the implementation, <strong>100%</strong> accuracy can be obtained although</p>
+
+<p>We’ll consider the following case:</p>
+
+<p>using System;</p>
+
+<p>public class Program
+{
+	public static int revertOutput(double output)
+	{
+		return (int)(output * Int32.MaxValue);
+	}</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static double computeDiffAndOffset(double r1, double r2)
+{
+	double diff = r1 - r2;
+	
+	if (diff == Int32.MaxValue)
+		diff=- 1/(double)Int32.MaxValue;
+	if (diff &lt; 0)
+		return diff + 1;
+	else
+		return diff;
+}
+
+public static void Main()
+{
+	// targeted Random class
+	Random r = new Random();
+	
+	// array used for storing states of the subtractive generator
+	double[] SeedArray = new double[56];
+	
+	// leaking the state by observing the first 55 random numbers
+	for (int i = 1; i &lt; 56; i++)
+		SeedArray[i] = r.NextDouble();
+	
+	// the offset is known from the original implementation
+	int offset = 21;
+	
+	// indices used to address certain states in the array
+	int index1 = 1, index2 = index1 + offset;
+	
+	// number of random doubles to predict
+	for (int i = 0; i &lt; 1000; i++)
+	{
+		if (index1 &gt;= 56)
+			index1 = 1;
+		
+		if (index2 &gt;= 56)
+			index2 = 1;
+		
+		double predictedValue = computeDiffAndOffset(SeedArray[index1], SeedArray[index2]);
+
+		double correctRandom =  r.NextDouble();
+		
+		if (Math.Abs(predictedValue - correctRandom) &gt; 0.00001)
+		{
+			Console.WriteLine("failed");
+			Console.WriteLine(predictedValue + " vs " + correctRandom);
+		}
+
+		SeedArray[index1] = predictedValue;
+		
+		index1++;
+		index2++;
+	}
+} }
+</code></pre></div></div>
+:ET

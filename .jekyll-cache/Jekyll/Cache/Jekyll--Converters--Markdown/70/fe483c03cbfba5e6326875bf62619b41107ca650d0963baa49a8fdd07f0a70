@@ -1,0 +1,208 @@
+I"�3<p>So… I’ll try to explain here the concept of <strong>gradient descent</strong> as simple as possible in order to provide some insight of what’s happening from a mathematical perspective and why the formula works. I’ll try to keep it short and split this into 2 <em>chapters</em>: <strong>theory</strong> and <strong>example</strong> - take it as a ELI5 <em>5 minutes</em> linear regression tutorial.</p>
+
+<p>Feel free to skip the mathy stuff and jump directly to the <strong>example</strong> if you feel that it might be easier to understand.</p>
+
+<h2 id="theory-and-formula">Theory and Formula</h2>
+
+<p>For the sake of simplicity, we’ll work in the <strong>1D</strong> space: we’ll optimize a function that has only one <strong>coefficient</strong> so it is easier to plot and comprehend.
+The function can look like this:</p>
+
+<script type="math/tex; mode=display">f(x) = w \cdot x + 2</script>
+
+<p>where we have to determine the value of <script type="math/tex">w</script> such that the function successfully matches / approximates a set of known points.</p>
+
+<p>Since our interest is to find the best coefficient, we’ll consider <script type="math/tex">w</script> as a <strong>variable</strong> in our formulas and while computing the derivatives while <script type="math/tex">x</script> is treated as a <strong>constant</strong>. In other words, we don’t compute the <strong>derivative</strong> with respect to <script type="math/tex">x</script> since we don’t want to find values for it - we already have a set of inputs for the function, we’re not allowed to change them.</p>
+
+<p>To properly grasp the gradient descent, as an optimization method, you need to know the following mathematical fact:</p>
+
+<ul>
+  <li>The <strong>derivative</strong> of a function is <span style="color:green">positive</span> when the function <span style="color:green">increases</span> and is <span style="color:red">negative</span> when the function <span style="color:red">decreases</span>.</li>
+</ul>
+
+<p>And writing this mathematically…</p>
+
+<script type="math/tex; mode=display">\frac{\mathrm{d} }{\mathrm{d} w}f(w) {\color{Green}> 0} \rightarrow  f(w) {\color{Green}\nearrow }</script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\frac{\mathrm{d} }{\mathrm{d} w}f(w) {\color{Red}< 0} \rightarrow  f(w) {\color{Red}\swarrow } %]]></script>
+
+<p>This is happening because the derivative can be seen as the slope of a function’s plot at a given point. I won’t go into details here, but check out the graph below - it should help.</p>
+
+<p><em>Why is this important?</em></p>
+
+<p>Because, as you probably know already, <strong>gradient descent</strong> attempts to <span style="color:red">minimize</span> the <strong>error function</strong> (aka cost function).</p>
+
+<p>Now, assuming we use the <strong>MSE</strong> (<em>Mean Squared Error</em>) function, we have something that looks like this:</p>
+
+<script type="math/tex; mode=display">\hat{y_i} = f(x_i)</script>
+
+<script type="math/tex; mode=display">MSE = \frac{1}{n} \cdot \sum_{i=1}^{i=n}{(y_i - \hat{y_i})^2}</script>
+
+<p>Where: <script type="math/tex">y_i</script> is the correct value, <script type="math/tex">\hat{y_i}</script> is the current (computed) value and <script type="math/tex">n</script> is the number of points we’re using to compute the <script type="math/tex">MSE</script>.</p>
+
+<p><em>Observation: the <strong>MSE</strong> is <strong>always positive</strong> (since it’s a sum of squared values) and therefore has a <strong>known minimum</strong>, which is <strong>0</strong> - so it can be <span style="color:red">minimized</span> using the aforementioned derivatives method.</em></p>
+
+<p>Take a look at the plot below: the <strong>sign</strong> of the <strong>slope</strong> provides useful information of where the <strong>minimum</strong> of the function is. We can use the value of the <strong>slope</strong> (the derivative) to adjust the value of the coefficient <strong>w</strong> (i.e.: <code class="highlighter-rouge">w = w - slope</code>).</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/gradient-descent-simply-explained-with-example/mse-slope-plot.png" alt="The sign of the slope can be used to locate the function's minimum value." />
+  <figcaption><p>The sign of the slope can be used to locate the function’s minimum value.</p>
+</figcaption>
+</figure>
+
+<p>Time to compute the derivative. Before that, I must warn you: it’s quite a <em>long</em> formula but I tried to do it step by step. Behold!</p>
+
+<script type="math/tex; mode=display">\frac{\mathrm{d}}{\mathrm{d} w}MSE = \frac{\mathrm{d}}{\mathrm{d} w} (\frac{1}{n} \cdot \sum_{i=1}^{i=n}{(y_i - \hat{y_i})^2}) =</script>
+
+<script type="math/tex; mode=display">= \frac{1}{n} \cdot \frac{\mathrm{d}}{\mathrm{d} w} (\sum_{i=1}^{i=n}{(y_i - \hat{y_i})^2}) =</script>
+
+<script type="math/tex; mode=display">= \frac{1}{n} \cdot \sum_{i=1}^{i=n}{\frac{\mathrm{d}}{\mathrm{d} w}((y_i - \hat{y_i})^2}) =</script>
+
+<script type="math/tex; mode=display">= \frac{1}{n} \cdot \sum_{i=1}^{i=n}{\frac{\mathrm{d}}{\mathrm{d} w}((y_i - \hat{y_i})^2}) =</script>
+
+<script type="math/tex; mode=display">= \frac{2}{n} \cdot \sum_{i=1}^{i=n}{(y_i - \hat{y_i})} \cdot (-1) \cdot \frac{\mathrm{d \hat{y_i}}}{\mathrm{d} w}</script>
+
+<p>Phew. 
+From here, you’d have to replace <script type="math/tex">\frac{\mathrm{d \hat{y_i}}}{\mathrm{d} w}</script> with the derivative of the function you chose to optimize. For <script type="math/tex">\hat{y} = w \cdot x + 2</script>, we get:</p>
+
+<script type="math/tex; mode=display">= \frac{2}{n} \cdot \sum_{i=1}^{i=n}{(y_i - \hat{y_i})} \cdot (-1) \cdot x</script>
+
+<p>And that’s about it. You can now update the values of your coefficient <script type="math/tex">w</script> using the following formula:</p>
+
+<script type="math/tex; mode=display">w = w - learning\_rate \cdot \frac{\mathrm{d }}{\mathrm{d} w}MSE(w)</script>
+
+<h2 id="example">Example</h2>
+
+<p>We’ll do the example in a <strong>2D</strong> space, in order to represent a basic <strong>linear regression</strong> (a <strong>Perceptron</strong>). 
+Given the function below:</p>
+
+<script type="math/tex; mode=display">f(x) = w_1 \cdot x + w_2</script>
+
+<p>we have to find <script type="math/tex">w_1</script> and <script type="math/tex">w_2</script>, using <strong>gradient descent</strong>, so it approximates the following set of points:</p>
+
+<script type="math/tex; mode=display">f(1) = 5, f(2) = 7</script>
+
+<p>We start by writing the <strong>MSE</strong>:</p>
+
+<script type="math/tex; mode=display">MSE = \frac{1}{n} \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x + w_2))^2}</script>
+
+<p>And then the differentiation part. Since there are <strong>2 coefficients</strong>, we compute <strong>partial derivatives</strong> - each one corresponds to its coefficient.</p>
+
+<p>For <script type="math/tex">w_1</script>:</p>
+
+<script type="math/tex; mode=display">\frac{\partial}{\partial w_1} (\frac{1}{n} \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x_i + w_2))^2}) =</script>
+
+<script type="math/tex; mode=display">= \frac{1}{n} \cdot \sum_{i=1}^{i=2}{(y_i - \frac{\partial}{\partial w_1}(w_1 \cdot x_i + w_2))^2} =</script>
+
+<script type="math/tex; mode=display">= \frac{1}{n} \cdot 2 \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x_i + w_2)) \cdot (-1) \cdot x_i} =</script>
+
+<script type="math/tex; mode=display">= -\frac{2}{n} \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x_i + w_2)) \cdot x_i}</script>
+
+<p>For <script type="math/tex">w_2</script>:</p>
+
+<script type="math/tex; mode=display">\frac{\partial}{\partial w_2} (\frac{1}{n} \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x_i + w_2))^2}) =</script>
+
+<script type="math/tex; mode=display">= -\frac{2}{n} \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x_i + w_2))}</script>
+
+<p>Now, we pick some <strong>random</strong> values for our coefficients. Let’s say <script type="math/tex">w_1 = 9</script> and <script type="math/tex">w_2 = 10</script>.</p>
+
+<p>We compute:</p>
+
+<script type="math/tex; mode=display">f(1) = 9 \cdot 1 + 10 = 19, f(2) = 9 \cdot 2 + 10 = 28</script>
+
+<p>Obviously, these are not the outputs we’re looking for, so we’ll continue by adjusting the coefficients (we’ll consider a <strong>0.15</strong> learning rate):</p>
+
+<script type="math/tex; mode=display">w_1 = w_1 - learning\_rate \cdot \frac{\partial}{\partial w_1} MSE =</script>
+
+<script type="math/tex; mode=display">= 9 + 0.15 \cdot \frac{2}{2} \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x_i + w_2)) \cdot x_i} =</script>
+
+<script type="math/tex; mode=display">= 9 + 0.15 \cdot ((5 - (9 \cdot 1 + 10)) \cdot 1 + (7 - (9 \cdot 2 + 10)) \cdot 2) =</script>
+
+<script type="math/tex; mode=display">= 9 - 0.15 \cdot 56 = 0.6</script>
+
+<script type="math/tex; mode=display">w_2 = w_2 - learning\_rate \cdot \frac{\partial}{\partial w_2} MSE =</script>
+
+<script type="math/tex; mode=display">= 10 + 0.15 \cdot \frac{2}{2} \cdot \sum_{i=1}^{i=2}{(y_i - (w_1 \cdot x_i + w_2))} =</script>
+
+<script type="math/tex; mode=display">= 10 + 0.15 \cdot ((5 - (9 \cdot 1 + 10)) + (7 - (9 \cdot 2 + 10))) =</script>
+
+<script type="math/tex; mode=display">= 10 - 0.15 \cdot 35 = 4.75</script>
+
+<p>Recalculating the output of our function, we observe that the outputs are somehow closer to our expected values.</p>
+
+<script type="math/tex; mode=display">f(1) = 0.6 \cdot 1 + 4.75 = 5.35, f(2) = 0.6 \cdot 2 + 1.25 = 5.95</script>
+
+<p>Running a second step of optimization:</p>
+
+<script type="math/tex; mode=display">w_1 = 0.6 + 0.15 \cdot ((5 - (0.6 \cdot 1 + 4.75)) \cdot 1 + (7 - (0.6 \cdot 2 + 4.75)) \cdot 2) =</script>
+
+<script type="math/tex; mode=display">= 0.6 + 0.15 \cdot 1.75 = 0.86</script>
+
+<script type="math/tex; mode=display">w_2 = 4.75 + 0.15 \cdot ((5 - (0.6 \cdot 1 + 4.75)) + (7 - (0.6 \cdot 2 + 4.75))) =</script>
+
+<script type="math/tex; mode=display">= 4.75 + 0.15 \cdot 0.7 = 4.85</script>
+
+<p>Now, this is going to take multiple iterations in order to converge and we’re not going to do everything by hand.
+Writing this formula as a Python script yields the following results:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1: w1 = 9.000, w2 = 10.000, MSE: 318.5 
+   f(1) = 19.000, f(2) = 28.000
+------------------------------------------------
+2: w1 = 0.600, w2 = 4.750, MSE: 0.6125 
+   f(1) = 5.350, f(2) = 5.950
+------------------------------------------------
+3: w1 = 0.862, w2 = 4.855, MSE: 0.345603125 
+   f(1) = 5.718, f(2) = 6.580
+------------------------------------------------
+4: w1 = 0.881, w2 = 4.810, MSE: 0.330451789063 
+   f(1) = 5.691, f(2) = 6.572
+------------------------------------------------
+5: w1 = 0.906, w2 = 4.771, MSE: 0.316146225664 
+   f(1) = 5.676, f(2) = 6.582
+------------------------------------------------
+6: w1 = 0.929, w2 = 4.732, MSE: 0.302460106908 
+   f(1) = 5.662, f(2) = 6.591
+------------------------------------------------
+7: w1 = 0.953, w2 = 4.694, MSE: 0.289366466781 
+   f(1) = 5.647, f(2) = 6.600
+------------------------------------------------
+8: w1 = 0.976, w2 = 4.657, MSE: 0.276839656487 
+   f(1) = 5.633, f(2) = 6.609
+------------------------------------------------
+9: w1 = 0.998, w2 = 4.621, MSE: 0.264855137696 
+   f(1) = 5.619, f(2) = 6.617
+
+
+[...]
+
+
+------------------------------------------------
+195: w1 = 1.984, w2 = 3.026, MSE: 7.04866766459e-05 
+     f(1) = 5.010, f(2) = 6.994
+------------------------------------------------
+196: w1 = 1.984, w2 = 3.026, MSE: 6.74352752985e-05 
+     f(1) = 5.010, f(2) = 6.994
+------------------------------------------------
+197: w1 = 1.984, w2 = 3.025, MSE: 6.45159705491e-05 
+     f(1) = 5.010, f(2) = 6.994
+------------------------------------------------
+198: w1 = 1.985, w2 = 3.025, MSE: 6.17230438739e-05 
+     f(1) = 5.009, f(2) = 6.994
+------------------------------------------------
+199: w1 = 1.985, w2 = 3.024, MSE: 5.90510243065e-05 
+     f(1) = 5.009, f(2) = 6.994
+------------------------------------------------
+200: w1 = 1.985, w2 = 3.024, MSE: 5.64946777215e-05 
+     f(1) = 5.009, f(2) = 6.994
+</code></pre></div></div>
+
+<p>It converges to <script type="math/tex">w_1 = 2</script> and <script type="math/tex">w_2 = 3</script> which are, indeed, the coefficients we were looking for.</p>
+
+<p>In practice, I recommend experimenting with <strong>smaller</strong> learning rates and more iterations - large learning rates can lead to <strong>divergence</strong> (the coefficients stray from their correct values and tend to plus or minus infinity).</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I guess this is all. Reading it now, I think it might take more than 5 minutes but… I guess it’s still a short article when compared to others that discuss the same subject :))</p>
+
+<p>I hope this proves useful as a starting point and you’ve got something out of it. <strong>Backpropagation</strong> of errors in <strong>nerual networks</strong> works in a similar fashion, although the number of dimensions is way larger than what was presented here. Aaand it contains some additional features in order to handle <strong>non-convex</strong> functions (and avoid getting stuck in <strong>local minima</strong>). Maybe in other article we’ll take a look at those, too.</p>
+:ET

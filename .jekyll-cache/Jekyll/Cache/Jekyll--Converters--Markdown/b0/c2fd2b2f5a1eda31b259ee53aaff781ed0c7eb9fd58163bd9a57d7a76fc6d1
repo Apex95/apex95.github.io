@@ -1,0 +1,189 @@
+I"%2<p>If you’re reading this right now you’re probably developing some application that has 2 or more processes and you want those processes to share some data with each other.</p>
+
+<p>There are multiple ways to <strong>pass data between processes</strong> (<strong>IPC</strong>), each one being better in specific situations. This article will cover one method: using <strong>Memory Mapped Files</strong> (or <strong>mmf</strong>).</p>
+
+<h2 id="advantages-of-memory-mapped-files">Advantages of Memory Mapped Files</h2>
+
+<p>The main advantage of this method is that data doesn’t need to be duplicated and sent to another process - it’s just shared (so you’re actually saving some memory and cpu cycles).</p>
+
+<p>Basically, a <strong>memory mapped file</strong> is a space allocated on the <strong>user-mode</strong> portion of memory which is then made ‘public’ by the <strong>kernel</strong>, so other processes can access that region too - there’s no actual file on your disk. Each process can read whatever it’s stored in there; reading is fine, but when writing, try having a different <strong>offset</strong> for each process so you won’t run into the problem of having 2 processes writing on the same address.</p>
+
+<p>To conclude, it is a good idea to use <strong>memory mapped files</strong> when:</p>
+
+<ul>
+  <li>you need to pass large amounts of data</li>
+  <li>some processes need to access shared data repeatedly</li>
+  <li>your application has <em>a lot</em> of processes</li>
+</ul>
+
+<h2 id="including-non-nullable-types">Including non-nullable types</h2>
+
+<p><strong>1:</strong><br />
+While trying to implement this, I noticed that you can’t use <strong>MemoryMappedViewAccessor</strong> to read/write anything that isn’t a <strong>non-nullable type</strong> (<strong>string</strong>, <strong>class</strong> etc.), you get this error:</p>
+
+<p><span style="color:red;"><em>The type must be a non-nullable value type in order to use it as parameter ‘T’ in the generic type or method ‘System.IO.UnmanagedMemoryAccessor.Write<t>(long, ref T)'</t></em></span></p>
+
+<p>If you try to include something like a <strong>string</strong> (variable size) inside a <strong>struct</strong> and then pass that to the <strong>MemoryMappedViewAccessor</strong>, this error pops up:</p>
+
+<p><span style="color:red;"><em>The specified Type must be a struct containing no references.</em></span></p>
+
+<p>In order to avoid these, we’ll use <strong>MemoryMappedViewStream</strong> which does the same thing, but this one takes as argument a <strong>byte[]</strong>. So we can take an <strong>object</strong> and <strong>serialize</strong> it to a byte array (w/ <strong>BinaryFormatter</strong>), write it in the memory, and when needed, read it again and <strong>deserialize</strong> it. Using this method you’re no longer limited to <strong>non-nullable</strong> types.</p>
+
+<p><strong>TL;DR:</strong><br />
+goto 1;</p>
+
+<h2 id="implementing-this">Implementing this</h2>
+
+<p>To make this implementation…different…let’s also include an example: we have <strong>2</strong> processes (<strong>Proc1</strong> and <strong>Proc2</strong>) and we want to send a <strong>Message</strong> object that contains 2 <strong>strings</strong> from <strong>Proc1</strong> to <strong>Proc2</strong>.</p>
+
+<p>Btw, the class <strong>Message</strong> looks like this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="p">[</span><span class="n">Serializable</span><span class="p">]</span>  <span class="c1">// mandatory
+</span>
+<span class="k">class</span> <span class="nc">Message</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">title</span><span class="p">;</span> 
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">content</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p><strong>Proc1</strong> will create an instance of <strong>Message</strong> and write it in the shared memory:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+</pre></td><td class="code"><pre><span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">MMF_MAX_SIZE</span> <span class="p">=</span> <span class="m">1024</span><span class="p">;</span>  <span class="c1">// allocated memory for this memory mapped file (bytes)
+</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">MMF_VIEW_SIZE</span> <span class="p">=</span> <span class="m">1024</span><span class="p">;</span> <span class="c1">// how many bytes of the allocated memory can this process access
+</span>
+
+    <span class="c1">// creates the memory mapped file which allows 'Reading' and 'Writing'
+</span>
+    <span class="n">MemoryMappedFile</span> <span class="n">mmf</span> <span class="p">=</span> <span class="n">MemoryMappedFile</span><span class="p">.</span><span class="nf">CreateOrOpen</span><span class="p">(</span><span class="s">"mmf1"</span><span class="p">,</span> <span class="n">MMF_MAX_SIZE</span><span class="p">,</span> <span class="n">MemoryMappedFileAccess</span><span class="p">.</span><span class="n">ReadWrite</span><span class="p">);</span>
+
+    <span class="c1">// creates a stream for this process, which allows it to write data from offset 0 to 1024 (whole memory)
+</span>
+    <span class="n">MemoryMappedViewStream</span> <span class="n">mmvStream</span> <span class="p">=</span> <span class="n">mmf</span><span class="p">.</span><span class="nf">CreateViewStream</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">MMF_VIEW_SIZE</span><span class="p">);</span>
+
+    <span class="c1">// this is what we want to write to the memory mapped file
+</span>
+    <span class="n">Message</span> <span class="n">message1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Message</span><span class="p">();</span>
+    <span class="n">message1</span><span class="p">.</span><span class="n">title</span> <span class="p">=</span> <span class="s">"test"</span><span class="p">;</span>
+    <span class="n">message1</span><span class="p">.</span><span class="n">content</span> <span class="p">=</span> <span class="s">"hello world"</span><span class="p">;</span>
+
+    <span class="c1">// serialize the variable 'message1' and write it to the memory mapped file
+</span>
+    <span class="n">BinaryFormatter</span> <span class="n">formatter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">BinaryFormatter</span><span class="p">();</span>
+    <span class="n">formatter</span><span class="p">.</span><span class="nf">Serialize</span><span class="p">(</span><span class="n">mmvStream</span><span class="p">,</span> <span class="n">message1</span><span class="p">);</span>
+    <span class="n">mmvStream</span><span class="p">.</span><span class="nf">Seek</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">SeekOrigin</span><span class="p">.</span><span class="n">Begin</span><span class="p">);</span> <span class="c1">// sets the current position back to the beginning of the stream
+</span>
+
+    <span class="c1">// the memory mapped file lives as long as this process is running
+</span>
+    <span class="k">while</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p><strong>Proc2</strong> will have to read the <strong>Message</strong> that <strong>Proc1</strong> wrote. So it will look like this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="code"><pre><span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">MMF_MAX_SIZE</span> <span class="p">=</span> <span class="m">1024</span><span class="p">;</span>  <span class="c1">// allocated memory for this memory mapped file (bytes)
+</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">MMF_VIEW_SIZE</span> <span class="p">=</span> <span class="m">1024</span><span class="p">;</span> <span class="c1">// how many bytes of the allocated memory can this process access
+</span>
+
+    <span class="c1">// creates the memory mapped file
+</span>
+    <span class="n">MemoryMappedFile</span> <span class="n">mmf</span> <span class="p">=</span> <span class="n">MemoryMappedFile</span><span class="p">.</span><span class="nf">OpenExisting</span><span class="p">(</span><span class="s">"mmf1"</span><span class="p">);</span>
+    <span class="n">MemoryMappedViewStream</span> <span class="n">mmvStream</span> <span class="p">=</span> <span class="n">mmf</span><span class="p">.</span><span class="nf">CreateViewStream</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">MMF_VIEW_SIZE</span><span class="p">);</span> <span class="c1">// stream used to read data
+</span>
+
+    <span class="n">BinaryFormatter</span> <span class="n">formatter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">BinaryFormatter</span><span class="p">();</span>
+
+    <span class="c1">// needed for deserialization
+</span>
+    <span class="kt">byte</span><span class="p">[]</span> <span class="n">buffer</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="p">[</span><span class="n">MMF_VIEW_SIZE</span><span class="p">];</span>
+
+    <span class="n">Message</span> <span class="n">message1</span><span class="p">;</span>
+
+    <span class="c1">// reads every second what's in the shared memory
+</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">mmvStream</span><span class="p">.</span><span class="n">CanRead</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// stores everything into this buffer
+</span>
+        <span class="n">mmvStream</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">MMF_VIEW_SIZE</span><span class="p">);</span>
+
+        <span class="c1">// deserializes the buffer &amp; prints the message
+</span>
+        <span class="n">message1</span> <span class="p">=</span> <span class="p">(</span><span class="n">Message</span><span class="p">)</span><span class="n">formatter</span><span class="p">.</span><span class="nf">Deserialize</span><span class="p">(</span><span class="k">new</span> <span class="nf">MemoryStream</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">message1</span><span class="p">.</span><span class="n">title</span> <span class="p">+</span> <span class="s">"\n"</span> <span class="p">+</span> <span class="n">message1</span><span class="p">.</span><span class="n">content</span> <span class="p">+</span> <span class="s">"\n"</span><span class="p">);</span>
+
+        <span class="n">System</span><span class="p">.</span><span class="n">Threading</span><span class="p">.</span><span class="n">Thread</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="m">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="the-end">The end</h2>
+
+<p>That’s all…comments in the code should explain almost everything that needs to be explained. I know there are many tutorials related to this subject on the internet but most of them handle only the simple example with a structure containing ints - aka the example on msdn.</p>
+:ET

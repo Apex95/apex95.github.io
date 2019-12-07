@@ -3,7 +3,7 @@
  */
 
 .highlighter-rouge {
-	background-color: $grey-color-code;
+
         border: none;
         color: $red-color;
 
@@ -29,7 +29,7 @@ div.highlighter-rouge {
     
     
     .highlighter-rouge & {
-	  background-color: $grey-color-code;
+        background-color: $grey-color-code;
           color: $red-color;
           border: none;
     }

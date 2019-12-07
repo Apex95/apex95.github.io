@@ -1,0 +1,52 @@
+I"�<p>Well, you’re probably reading this because you noticed that .NET’s <strong>WebClient</strong> doesn’t support <strong>cookies</strong>. Basically, the cookies which are received through the <strong>WebRequest</strong> are NOT stored and also NOT sent - this is how it works by default.</p>
+
+<h2 id="how-to-fix-this">How to fix this?</h2>
+
+<p>Here, I’ll show you how to make <strong>WebClient</strong> handle <strong>cookies</strong>. All you have to do is to add a <strong>CookieContainer</strong>, this is where the cookies will be stored. Then you’ll just include this CookieContainer in your original request, by overriding <strong>GetWebRequest</strong>.</p>
+
+<p>I’ll post the code and I’ll explain it using comments:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="code"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">ImprovedWebClient</span> <span class="p">:</span> <span class="n">WebClient</span>
+<span class="p">{</span>
+            <span class="n">CookieContainer</span> <span class="n">cookies</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CookieContainer</span><span class="p">();</span>
+            <span class="c1">//^here are automatically stored the cookies
+</span>
+
+            <span class="k">protected</span> <span class="k">override</span> <span class="n">WebRequest</span> <span class="nf">GetWebRequest</span><span class="p">(</span><span class="n">Uri</span> <span class="n">address</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">WebRequest</span> <span class="n">request</span> <span class="p">=</span> <span class="k">base</span><span class="p">.</span><span class="nf">GetWebRequest</span><span class="p">(</span><span class="n">address</span><span class="p">);</span> 
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">request</span> <span class="k">is</span> <span class="n">HttpWebRequest</span><span class="p">)</span>  <span class="c1">//if it is a Http request
+</span>
+                    <span class="p">((</span><span class="n">HttpWebRequest</span><span class="p">)</span><span class="n">request</span><span class="p">).</span><span class="n">CookieContainer</span> <span class="p">=</span> <span class="n">cookies</span><span class="p">;</span>  
+                    <span class="c1">//^we bind that cookie container to the request
+</span>
+
+                <span class="k">return</span> <span class="n">request</span><span class="p">;</span> <span class="c1">// return the modified request (the one with cookies)
+</span>
+            <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>That’s all, now you don’t have to use WebClient anymore, so just use derived class - <strong>ImprovedWebClient</strong>:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="n">ImprovedWebClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">ImprovedWebClient</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+:ET

@@ -1,0 +1,145 @@
+I". <h2 id="first">First</h2>
+
+<p>Before starting to edit registry values/keys, include in your project’s source this namespace <strong>Microsoft.Win32</strong>. It will give you access to the required <strong>Registry</strong> functions.</p>
+
+<p>So, make sure you add this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+</pre></td><td class="code"><pre><span class="k">using</span> <span class="nn">Microsoft.Win32</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>In order to edit anything, you must:</p>
+
+<ol>
+  <li>open the key where you want to edit (set a path)</li>
+  <li>add/delete/edit what you want</li>
+  <li>close the key</li>
+</ol>
+
+<p><strong>Note</strong>: in this tutorial I used Windows’ startup Key (path), but you can use anything you want.</p>
+
+<p>So your snippet will look like this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="c1">//this is how your key will look like
+</span>
+<span class="c1">//the 2nd argument (true) is indicating that the key is writable
+</span>
+<span class="n">RegistryKey</span> <span class="n">key</span> <span class="p">=</span> <span class="n">Registry</span><span class="p">.</span><span class="n">CurrentUser</span><span class="p">.</span><span class="nf">OpenSubKey</span><span class="p">(</span><span class="s">@"Software\Microsoft\Windows\CurrentVersion\Run"</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">//here you put the code to edit/delete values or subkeys
+</span>
+<span class="c1">//which are found in: 'Software\Microsoft\Windows\CurrentVersion\Run'
+</span>
+
+<span class="c1">//and finally, you close the key
+</span>
+<span class="n">key</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="creating-a-key">Creating a Key</h2>
+
+<p>A key is a <strong>subfolder</strong>, in which you can add multiple <strong>values</strong>.<br />
+To create a <strong>key</strong>:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="n">RegistryKey</span> <span class="n">key</span> <span class="p">=</span> <span class="n">Registry</span><span class="p">.</span><span class="n">CurrentUser</span><span class="p">.</span><span class="nf">OpenSubKey</span><span class="p">(</span><span class="s">@"Software\Microsoft\Windows\CurrentVersion\Run"</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">//create a new key 
+</span>
+<span class="n">key</span><span class="p">.</span><span class="nf">CreateSubKey</span><span class="p">(</span><span class="s">"someKey"</span><span class="p">);</span>
+
+<span class="n">key</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="deleting-a-key">Deleting a Key</h2>
+
+<p>In order to delete a key, you have to do the same thing: set the path then simply delete it.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="n">RegistryKey</span> <span class="n">key</span> <span class="p">=</span> <span class="n">Registry</span><span class="p">.</span><span class="n">CurrentUser</span><span class="p">.</span><span class="nf">OpenSubKey</span><span class="p">(</span><span class="s">@"Software\Microsoft\Windows\CurrentVersion\Run"</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">//deleting 'someKey'
+</span>
+<span class="n">key</span><span class="p">.</span><span class="nf">DeleteSubKey</span><span class="p">(</span><span class="s">"someKey"</span><span class="p">);</span>
+
+<span class="n">key</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="addingediting-a-value">Adding/Editing a value</h2>
+
+<p>Before doing this, you have to set the path to the <strong>key</strong> where you want to add that <strong>value</strong>. You can use the code below for adding or editing values.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="n">RegistryKey</span> <span class="n">key</span> <span class="p">=</span> <span class="n">Registry</span><span class="p">.</span><span class="n">CurrentUser</span><span class="p">.</span><span class="nf">OpenSubKey</span><span class="p">(</span><span class="s">@"Software\Microsoft\Windows\CurrentVersion\Run\someKey"</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">//adding/editing a value 
+</span>
+<span class="n">key</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="s">"someValue"</span><span class="p">,</span> <span class="s">"someData"</span><span class="p">);</span> <span class="c1">//sets 'someData' in 'someValue' 
+</span>
+
+<span class="n">key</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="reading-a-value">Reading a value</h2>
+
+<p>You can get a value from a key by knowing its name:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="n">RegistryKey</span> <span class="n">key</span> <span class="p">=</span> <span class="n">Registry</span><span class="p">.</span><span class="n">CurrentUser</span><span class="p">.</span><span class="nf">OpenSubKey</span><span class="p">(</span><span class="s">@"Software\Microsoft\Windows\CurrentVersion\Run\someKey"</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">//getting the value
+</span>
+<span class="kt">string</span> <span class="n">data</span> <span class="p">=</span> <span class="n">key</span><span class="p">.</span><span class="nf">GetValue</span><span class="p">(</span><span class="s">"someValue"</span><span class="p">).</span><span class="nf">ToString</span><span class="p">();</span>  <span class="c1">//returns the text found in 'someValue'
+</span>
+
+<span class="n">key</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="deleting-a-value">Deleting a value</h2>
+
+<p>And finally, when we got bored of values, we can delete them:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="n">RegistryKey</span> <span class="n">key</span> <span class="p">=</span> <span class="n">Registry</span><span class="p">.</span><span class="n">CurrentUser</span><span class="p">.</span><span class="nf">OpenSubKey</span><span class="p">(</span><span class="s">@"Software\Microsoft\Windows\CurrentVersion\Run"</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+
+<span class="c1">//deleting the value
+</span>
+<span class="n">key</span><span class="p">.</span><span class="nf">DeleteValue</span><span class="p">(</span><span class="s">"someValue"</span><span class="p">);</span>
+
+<span class="n">key</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+:ET

@@ -1,0 +1,126 @@
+I"� <p>A <strong>timer</strong> in C # is an object that executes an action after a specified time interval - for example, it can call a method every 5 seconds.<br />
+The best way to understand how it works is to use it in a program.</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-countdown-timer/1.png" alt="Basic .NET Timer Properties" />
+  <figcaption><p>Basic .NET Timer Properties</p>
+</figcaption>
+</figure>
+
+<h2 id="creating-a-timer">Creating a timer</h2>
+
+<p>Go <strong>File</strong> -&gt; <strong>New</strong> -&gt; <strong>Project</strong> and select <strong>Windows Forms Application</strong>. From <strong>ToolBox</strong> choose <strong>Timer</strong> and add it in the program (with drag &amp; drop).</p>
+
+<p>Now, add a <strong>label</strong> - its value will be modified by the <strong>timer</strong>.</p>
+
+<p>Click on the <strong>timer1</strong> and look on the properties window for an option:<br />
+  <strong>Interval</strong> - here we set the time interval, in milliseconds. For a countdown timer, set 1000ms (= 1 second).</p>
+
+<h2 id="making-the-timer-do-something">Making the timer do something</h2>
+
+<p>Double-click on the <strong>timer</strong>, which we inserted near the form - in the code window, you’ll have a new method: <strong>timer1_Tick</strong> . This function will be called <strong>every second</strong>. Here, we’ll add the code to subtract 1 from our label value - so it’ll look like the label value lowers every second.</p>
+
+<p>I tried to write this code as short as possible, so it might look complicated but all it does is to convert the last value of the label into an int, subtracts 1 from that value, converts it back to string and adds it back to the label.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">timer1_Tick</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="n">label1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">label1</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="p">-</span> <span class="m">1</span><span class="p">).</span><span class="nf">ToString</span><span class="p">();</span>     
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>If you don’t understand the version above, here something easier (both versions do the same thing):</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">timer1_Tick</span> <span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="kt">int</span> <span class="n">timeLeft</span> <span class="p">=</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">label1</span><span class="p">.</span><span class="n">Text</span><span class="p">);</span>  <span class="c1">//getting the last value (the one from the label)
+</span>
+      <span class="n">timeLeft</span> <span class="p">-=</span> <span class="m">1</span><span class="p">;</span> <span class="c1">//subtracting 1
+</span>
+      <span class="n">label1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">timeLeft</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>  <span class="c1">//adding it back to the label.      
+</span>
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="startingstopping-it">Starting/stopping it</h2>
+
+<p>That’s all, it remains to start our timer using <strong>timer1.Start()</strong> and provide an initial value for the label.</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="code"><pre><span class="k">public</span> <span class="nf">Form1</span><span class="p">()</span>
+<span class="p">{</span>
+      <span class="nf">InitializeComponent</span><span class="p">();</span>
+      <span class="n">label1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">"90"</span><span class="p">;</span> <span class="c1">//start from 90 seconds
+</span>
+      <span class="n">timer1</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>  
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>To stop it, use: <strong>timer1.Stop()</strong></p>
+
+<h2 id="complete-code">Complete code</h2>
+
+<p>In the end, you should have something like this:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+</pre></td><td class="code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Windows.Forms</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">timer_tutorial</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Form1</span> <span class="p">:</span> <span class="n">Form</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Form1</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="nf">InitializeComponent</span><span class="p">();</span>
+            <span class="n">label1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">"90"</span><span class="p">;</span>
+            <span class="n">timer1</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">timer1_Tick</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">label1</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">label1</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="p">-</span> <span class="m">1</span><span class="p">).</span><span class="nf">ToString</span><span class="p">();</span> <span class="c1">//lowering the value - explained above
+</span>
+            <span class="k">if</span> <span class="p">(</span><span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">label1</span><span class="p">.</span><span class="n">Text</span><span class="p">)</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>  <span class="c1">//if the countdown reaches '0', we stop it
+</span>
+                <span class="n">timer1</span><span class="p">.</span><span class="nf">Stop</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+:ET

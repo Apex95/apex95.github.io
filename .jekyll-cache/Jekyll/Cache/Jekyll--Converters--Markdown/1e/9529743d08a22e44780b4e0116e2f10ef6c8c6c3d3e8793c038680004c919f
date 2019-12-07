@@ -1,0 +1,111 @@
+I"i <p>Here’s a short trick about how to make a <strong>custom MSBuild Logger</strong>. It’s always a good idea to use MSBuild with your own logger (and not the original one) because it provides easier access to the output log. So, I’ll show here how to do it.</p>
+
+<p>Make sure you have those namespaces included before starting:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="k">using</span> <span class="nn">Microsoft.Build.Framework</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Microsoft.Build.Utilities</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>First create a new class, that will be your <strong>custom logger</strong>, that class must inherit from the original <strong>Logger</strong>. Basically we create a new logger by modifying the one provided by .NET - so you won’t have to create one from zero.</p>
+
+<p>What you might need to know is the way it works: the logger is based on multiple events, and if an event is fired, the corresponding method (eventhandler) is called. In the <strong>custom logger</strong> we’ll create our <strong>own eventhandlers</strong>.</p>
+
+<h2 id="code-for-a-custom-logger">Code for a custom logger</h2>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre></td><td class="code"><pre><span class="k">class</span> <span class="nc">customLogger</span> <span class="p">:</span> <span class="n">Logger</span>  <span class="c1">//customLogger inherits from original Logger
+</span>
+<span class="p">{</span>
+        <span class="c1">//here I override the Initialize method in order to change the eventhandlers
+</span>
+        <span class="k">public</span> <span class="k">override</span> <span class="k">void</span> <span class="nf">Initialize</span><span class="p">(</span><span class="n">IEventSource</span> <span class="n">eventSource</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="n">eventSource</span><span class="p">.</span><span class="n">BuildStarted</span> <span class="p">+=</span> <span class="k">new</span> <span class="nf">BuildStartedEventHandler</span><span class="p">(</span><span class="n">eventSource_BuildStarted</span><span class="p">);</span>
+            <span class="n">eventSource</span><span class="p">.</span><span class="n">WarningRaised</span> <span class="p">+=</span> <span class="k">new</span> <span class="nf">BuildWarningEventHandler</span><span class="p">(</span><span class="n">eventSource_WarningRaised</span><span class="p">);</span>
+            <span class="n">eventSource</span><span class="p">.</span><span class="n">ErrorRaised</span> <span class="p">+=</span> <span class="k">new</span> <span class="nf">BuildErrorEventHandler</span><span class="p">(</span><span class="n">eventSource_ErrorRaised</span><span class="p">);</span>
+            <span class="n">eventSource</span><span class="p">.</span><span class="n">BuildFinished</span> <span class="p">+=</span> <span class="k">new</span> <span class="nf">BuildFinishedEventHandler</span><span class="p">(</span><span class="n">eventSource_BuildFinished</span><span class="p">);</span>
+
+            <span class="c1">//^there are more eventhandlers available - I added only a few
+</span>
+        <span class="p">}</span>
+
+        <span class="c1">//triggered when build started
+</span>
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">eventSource_BuildStarted</span><span class="p">(</span><span class="n">Object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">BuildStartedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span> 
+        <span class="p">}</span>
+
+        <span class="c1">//triggered when a warning is encountered
+</span>
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">eventSource_WarningRaised</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">BuildWarningEventArgs</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Warning at: "</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">LineNumber</span><span class="p">+</span> <span class="s">","</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">ColumnNumber</span> <span class="p">+</span> <span class="s">" - "</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">//triggered when an error is encountered
+</span>
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">eventSource_ErrorRaised</span><span class="p">(</span><span class="n">Object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">BuildErrorEventArgs</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Error at: "</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">LineNumber</span><span class="p">+</span> <span class="s">","</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">ColumnNumber</span> <span class="p">+</span> <span class="s">" - "</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">//triggered when the compiling process is over
+</span>
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">eventSource_BuildFinished</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">BuildFinishedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Result: "</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="how-to-use-it">How to use it?</h2>
+
+<p>You can use it the same way you use the <strong>original logger</strong>:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="code"><pre><span class="n">Engine</span> <span class="n">buildEngine</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Engine</span><span class="p">();</span>
+<span class="n">customLogger</span> <span class="n">myCustomLogger</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">customLogger</span><span class="p">();</span>
+<span class="n">buildEngine</span><span class="p">.</span><span class="nf">RegisterLogger</span><span class="p">(</span><span class="n">myCustomLogger</span><span class="p">);</span> <span class="c1">//attaching the custom logger to the Engine</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+:ET

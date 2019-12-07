@@ -1,0 +1,133 @@
+I"v#<p>This article will focus on <strong>Hamming</strong> codes - mainly, this represents an attempt to explain a little bit better
+how this method can help in <strong>detecting</strong> and <strong>correcting</strong>… <strong>1 bit errors</strong>.</p>
+
+<p>This method is not really useful
+at “higher level” - just because the data we work with is either 100% correct or has way more than 1 bit corrupted - and in this
+case, the Hamming code <em>doesn’t work</em>. It seems to be used in low-level (data link layer) networking and in some DRAMs - to prevent interferences
+from corrupting data.</p>
+
+<p>As an example, we can consider this <strong>byte</strong> of data: <code class="highlighter-rouge">11010010</code></p>
+
+<h2 id="hamming-encoding">Hamming Encoding</h2>
+
+<p>The encoding implies taking the bits of the original message and computing a set of <em>parity/control bits</em> that will help us detect
+possible errors - we’ll know which bit is flipped, so the correction consists in <strong>negating</strong> that one bit. 
+In the end, we insert the parity bits at positions equal to <em>powers of 2</em> (1,2,4,8,…).</p>
+
+<p>The encoded message will look like this: <span style="color:red;">P<sub>1</sub></span><span style="color:red;">P<sub>2</sub></span>D<sub>1</sub><span style="color:red;">P<sub>4</sub></span>D<sub>2</sub>D<sub>3</sub>D<sub>4</sub><span style="color:red;">P<sub>8</sub></span>D<sub>5</sub>D<sub>6</sub>D<sub>7</sub>D<sub>8</sub></p>
+<ul>
+  <li>where <strong>D</strong> is a data bit, from our original message, and <strong>P</strong> a parity bit =&gt; <strong>12 bits</strong>.</li>
+</ul>
+
+<p>In order to determine the formulas for the parity bits it is important to understand the following part:</p>
+
+<p>We say that a bit at position <strong>n</strong>, from our encoded data, is “controlled” by the <strong>parity bits</strong> whose positions, once summed, are equal to <strong>n</strong>.
+This can be written as:</p>
+
+<table border="1" style="border-collapse: collapse;">
+<tr><th>Position (n)</th><th>Bit</th><th>is controlled by parity bit(s)</th></tr>
+<tr><td>1</td><td>P<sub>1</sub></td><td><span style="color:red;">P<sub>1</sub></span></td></tr>
+<tr><td>2</td><td>P<sub>2</sub></td><td><span style="color:red;">P<sub>2</sub></span></td></tr>
+<tr><td>3</td><td>D<sub>1</sub></td><td><span style="color:red;">P<sub>1</sub></span> + <span style="color:red;">P<sub>2</sub></span></td></tr>
+<tr><td>4</td><td>P<sub>4</sub></td><td><span style="color:red;">P<sub>4</sub></span></td></tr>
+<tr><td>5</td><td>D<sub>2</sub></td><td><span style="color:red;">P<sub>1</sub></span> + <span style="color:red;">P<sub>4</sub></span></td></tr>
+<tr><td>6</td><td>D<sub>3</sub></td><td><span style="color:red;">P<sub>2</sub></span> + <span style="color:red;">P<sub>4</sub></span></td></tr>
+<tr><td>7</td><td>D<sub>4</sub></td><td><span style="color:red;">P<sub>1</sub></span> + <span style="color:red;">P<sub>2</sub></span> + <span style="color:red;">P<sub>4</sub></span></td></tr>
+<tr><td>8</td><td>P<sub>8</sub></td><td><span style="color:red;">P<sub>8</sub></span></td></tr>
+<tr><td>9</td><td>D<sub>5</sub></td><td><span style="color:red;">P<sub>1</sub></span> + <span style="color:red;">P<sub>8</sub></span></td></tr>
+<tr><td>10</td><td>D<sub>6</sub></td><td><span style="color:red;">P<sub>2</sub></span> + <span style="color:red;">P<sub>8</sub></span></td></tr>
+<tr><td>11</td><td>D<sub>7</sub></td><td><span style="color:red;">P<sub>1</sub></span> + <span style="color:red;">P<sub>2</sub></span> + <span style="color:red;">P<sub>8</sub></span></td></tr>
+<tr><td>12</td><td>D<sub>8</sub></td><td><span style="color:red;">P<sub>4</sub></span> + <span style="color:red;">P<sub>8</sub></span></td></tr>
+</table>
+
+<p>* notice that the sum of the indexes is equal to the position, for each row.</p>
+
+<p> </p>
+
+<p>From the table, we observe that:</p>
+
+<ul>
+  <li><span style="color:red;">P<sub>1</sub></span> “controls” data bits: D<sub>1</sub>, D<sub>2</sub>, D<sub>4</sub>, D<sub>5</sub>, D<sub>7</sub>.</li>
+  <li><span style="color:red;">P<sub>2</sub></span> “controls” data bits: D<sub>1</sub>, D<sub>3</sub>, D<sub>4</sub>, D<sub>6</sub>, D<sub>7</sub>.</li>
+  <li><span style="color:red;">P<sub>4</sub></span> “controls” data bits: D<sub>2</sub>, D<sub>3</sub>, D<sub>4</sub>, D<sub>8</sub>.</li>
+  <li><span style="color:red;">P<sub>8</sub></span> “controls” data bit: D<sub>5</sub>, D<sub>6</sub>, D<sub>7</sub>, D<sub>8</sub>.</li>
+</ul>
+
+<p>If we know this, we can write the <strong>equations</strong> for the <strong>parity bits</strong>:</p>
+
+<p><span style="color:red;">P<sub>1</sub></span> = D<sub>1</sub> ^ D<sub>2</sub> ^ D<sub>4</sub> ^ D<sub>5</sub> ^ D<sub>7</sub></p>
+
+<p><span style="color:red;">P<sub>2</sub></span> = D<sub>1</sub> ^ D<sub>3</sub> ^ D<sub>4</sub> ^ D<sub>6</sub> ^ D<sub>7</sub></p>
+
+<p><span style="color:red;">P<sub>4</sub></span> = D<sub>2</sub> ^ D<sub>3</sub> ^ D<sub>4</sub> ^ D<sub>8</sub></p>
+
+<p><span style="color:red;">P<sub>8</sub></span> = D<sub>5</sub> ^ D<sub>6</sub> ^ D<sub>7</sub> ^ D<sub>8</sub></p>
+
+<p>* that’s <strong>XOR</strong> between them, ok?</p>
+
+<p> </p>
+
+<p> </p>
+
+<p>If we apply this theory to our <strong>example</strong> <code class="highlighter-rouge">11010010</code>, we get:</p>
+
+<p><span style="color:red;">P<sub>1</sub></span> = 1 ^ 1 ^ 1 ^ 0 ^ 1 = 0</p>
+
+<p><span style="color:red;">P<sub>2</sub></span> = 1 ^ 0 ^ 1 ^ 0 ^ 1 = 1</p>
+
+<p><span style="color:red;">P<sub>4</sub></span> = 1 ^ 0 ^ 1 ^ 0 = 0</p>
+
+<p><span style="color:red;">P<sub>8</sub></span> = 0 ^ 0 ^ 1 ^ 0 = 1</p>
+
+<p>So the encoded data is: <span style="color:red;">01</span>1<span style="color:red;">0</span>101<span style="color:red;">1</span>0010.</p>
+
+<h2 id="hamming-decoding">Hamming Decoding</h2>
+
+<p>This part verifies the original bits and flips one of them if it’s corrupted.
+Keeping the same <strong>example</strong>, we use the value that we determined before, but to make it more interesting, we’ll <strong>corrupt 1 bit</strong>.</p>
+
+<p>original: 011010110<span style="color:green;">0</span>10</p>
+
+<p>corrupted: 011010110<span style="color:red;">1</span>10</p>
+
+<p>* in this case I corrupted a <strong>data bit</strong> - if a <strong>parity bit</strong> gets <strong>corrupted</strong> there’s no need to correct anything, we only care about the data bits.</p>
+
+<p>We have to recalculate the parity bits, but this time we’ll also include their values (taken from the encoded data):</p>
+
+<p><span style="color:red;">P<sub>1</sub></span> = <span style="color:red;">P<sub>1</sub></span> ^ D<sub>1</sub> ^ D<sub>2</sub> ^ D<sub>4</sub> ^ D<sub>5</sub> ^ D<sub>7</sub></p>
+
+<p><span style="color:red;">P<sub>2</sub></span> = <span style="color:red;">P<sub>2</sub></span> ^ D<sub>1</sub> ^ D<sub>3</sub> ^ D<sub>4</sub> ^ D<sub>6</sub> ^ D<sub>7</sub></p>
+
+<p><span style="color:red;">P<sub>4</sub></span> = <span style="color:red;">P<sub>4</sub></span> ^ D<sub>2</sub> ^ D<sub>3</sub> ^ D<sub>4</sub> ^ D<sub>8</sub></p>
+
+<p><span style="color:red;">P<sub>8</sub></span> = <span style="color:red;">P<sub>8</sub></span> ^ D<sub>5</sub> ^ D<sub>6</sub> ^ D<sub>7</sub> ^ D<sub>8</sub></p>
+
+<p>If there were no bits corrupted, each new parity bit should be <strong>0</strong> (because we’re <strong>XOR</strong>-ing 2 identical bits).
+Replacing the values with the ones in the <strong>example</strong>, we get:</p>
+
+<p><span style="color:red;">P<sub>1</sub></span> = <span style="color:red;">0</span> ^ 1 ^ 1 ^ 1 ^ 0 ^ 1 = 0</p>
+
+<p><span style="color:red;">P<sub>2</sub></span> = <span style="color:red;">1</span> ^ 1 ^ 0 ^ 1 ^ 1 ^ 1 = 1</p>
+
+<p><span style="color:red;">P<sub>4</sub></span> = <span style="color:red;">0</span> ^ 1 ^ 0 ^ 1 ^ 0 = 0</p>
+
+<p><span style="color:red;">P<sub>8</sub></span> = <span style="color:red;">1</span> ^ 0 ^ 1 ^ 1 ^ 0 = 1</p>
+
+<p> </p>
+
+<p>This result is somehow obvious since I flipped/corrupted the <strong>6th bit of data</strong>, and from the formulas, only <span style="color:red;">P<sub>2</sub></span> and 
+<span style="color:red;">P<sub>4</sub></span> include that bit.</p>
+
+<p>However, in a general case we won’t know which bit is corrupted…so here’s how these <strong>parity bits</strong> become useful. We use them to create the 
+<strong>sindrome</strong>, so we arrange these bits like this:</p>
+
+<p><span style="color:red;">P<sub>8</sub>P<sub>4</sub>P<sub>2</sub>P<sub>1</sub></span></p>
+
+<p>and by replacing, we get this number in binary: <code class="highlighter-rouge">1010</code> (10 in decimal) =&gt; the <strong>10th</strong> bit, in the encoded data, is corrupted and needs some flippin’.
+Aand…finally, we get the original encoded message: <code class="highlighter-rouge">011010110010</code>. From here, we extract the data bits =&gt; <code class="highlighter-rouge">11010010</code>.</p>
+
+<h2 id="the-end">The end</h2>
+
+<p>That’s all…probably not the most interesting article, but my teachers seem to love this subject (especially during the finals), 
+so…just trying to help.</p>
+:ET

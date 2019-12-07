@@ -1,0 +1,2 @@
+I"�<p>Possible loop in the recognition process: the same text gets recognized multiple times. The bottom-left and the top-right corners are ‘merged’ into an oblique text row so the recognition process is sent back to already processed text.</p>
+:ET
