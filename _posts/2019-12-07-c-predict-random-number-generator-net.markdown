@@ -130,7 +130,7 @@ public class Program
 {% endhighlight %}
 
 
-You should get something like this when running it (well, different numbers because you'll get a different seed - but you get the point). Tested it on **.NET 4.7.2**.
+You should get something like this when running it (well, different numbers because you'll have a different seed - but you get the point). Tested it on **.NET 4.7.2**.
 
 ```
 Predicted: 0.562743733899083 | Correct: 0.562743733899083

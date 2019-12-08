@@ -10,11 +10,11 @@ Okay, this is a really short article, but I felt the need to write this because 
 
 ## Problem
 
-First: getting the **external IP** address of a machine shouldn't be done locally (**Dns.GetHostAddresses(Dns.GetHostName())** <- this is evil).
+First: getting the **public IP** address of a machine shouldn't be done locally (**Dns.GetHostAddresses(Dns.GetHostName())** <- this is evil).
 
 _Why?_
 
-This method is good only if you need the local IP address. If you need the external one consider that not every machine is **directly** connected to the internet. Some might be sitting behind a **firewall** or a **router**, but the framework won't know it, so it will return the local IP address instead of the external one.
+This method is good only if you need the local IP address. If you need the public one consider that not every machine is **directly** connected to the internet. Some might be sitting behind a **firewall** or a **router**, but the framework won't know it and will return an address which is valid only inside your network. In order to get the public IP address, which allows computers from the internet to communicate with you, you need to query some entity from outside your network.
 
 ## Solution
 

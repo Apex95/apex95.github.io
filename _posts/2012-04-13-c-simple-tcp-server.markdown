@@ -120,4 +120,4 @@ We have the **tcp client** which connects to our **server** and sends data. Whil
 
 Take a look at [how to code an asynchronous tcp server](https://codingvision.net/networking/c-asynchronous-tcp-server) if you're interested in a version which accepts **multiple clients**.
 
-If you don't have a clinet to connect to the server, you can use Telnet, available on any Windows System: go to **Command Prompt** and type: **telnet 127.0.0.1 9999**.
+If you don't have a client to connect to the server, you can use Telnet, available on any Windows System: go to **Command Prompt** and type: **telnet 127.0.0.1 9999**.

@@ -8,7 +8,7 @@ thumbnail: /imgs/thumbnails/formTitleBar.png
 
 ## 1\. Removing the title bar and border
 
-In this tutorial I will show you how you can make a window (**Form**) with no **title bar** or **border** - which we can also move with the cursor.
+In this tutorial I will show you how you can make a draggable window (**Form**) with no **title bar** or **border**. By default, when you remove the border of a Form, you can't move or drag it anymore and this behavior must be implemented separately.
 
 I assume you already have the program ready - at least the design part, so I'll skip to what interests you. :D
 

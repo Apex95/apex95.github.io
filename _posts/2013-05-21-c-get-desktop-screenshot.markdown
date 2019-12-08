@@ -6,7 +6,7 @@ categories: miscellaneous
 thumbnail: /imgs/thumbnails/desktopSS.bmp
 ---
 
-I found this feature while looking inside **Graphics** class and since it was so simple to use, I decided to post it here.
+I found this feature while looking inside **Graphics** class and since it was so simple to use, I decided to post it here. It basically allows you to take print screens programmatically and save them as local images or forward them through the network, etc.
 
 As I said, it doesn't require more than 15 lines of code - this function: **Graphics.CopyFromScreen** does all the 'hard work' so we only need to put this into a **Bitmap** and save/display it.
 
