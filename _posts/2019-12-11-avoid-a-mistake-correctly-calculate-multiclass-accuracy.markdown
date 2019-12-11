@@ -14,7 +14,7 @@ $$ {\color{Red}{ACC = \frac{TP + TN}{TP + TN + FP +FN}}} $$
 
 Then, they calculated a **'per-class' accuracy** (for class $$i$$, they had $$ ACC_i $$) and **macro-averaged** the results like below:
 
-$$ ACC = \frac{\sum_{i=0}^{i=N}{ACC_i}}{N} $$
+$$ ACC = \frac{\sum_{i=1}^{i=N}{ACC_i}}{N} $$
 
 To their surprise, the resulted accuracy for the **multiclass classifier** was **erroneous** and highly different (when compared to `accuracy_score()` from **sklearn**). However, the accuracy of the **binary classifier** was correct.
 
