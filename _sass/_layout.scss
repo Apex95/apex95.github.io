@@ -325,6 +325,20 @@ a.category-link {
       background-position: center right;
       padding-right: 20px;
     }
+
+    table {
+      margin: 30px auto;
+      border-spacing: 0px;
+    }
+
+    thead {
+      background-color: #EEEEEE;
+    }
+
+    td, th {
+      padding: 3px 5px 3px 5px;
+      text-align: center;
+    }
 }
 
 
