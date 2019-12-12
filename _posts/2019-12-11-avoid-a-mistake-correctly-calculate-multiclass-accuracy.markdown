@@ -18,9 +18,11 @@ $$ ACC = \frac{\sum_{i=1}^{i=N}{ACC_i}}{N} $$
 
 To their surprise, the resulted accuracy for the **multiclass classifier** was **erroneous** and highly different (when compared to `accuracy_score()` from **sklearn**). However, the accuracy of the **binary classifier** was correct.
 
-As there wasn't much time available, I told them to use the following **accuracy formula** and I'll send an explaination:
+As there wasn't much time available, I told them to use the following **accuracy formula** to match the results of **sklearn** and I'll send an explaination later:
 
 $$ {\color{Green}{ACC = \frac{\sum_{i=1}^{i=N}{TP_i}}{\sum_{i = 1}^{i=N}{(TP_i + FP_i)}}}} $$
+
+Some of you might recognize this as **micro-averaged precision**.
 
 The purpose of this article is to serve as a list of DO's and DONT's so we can avoid such mistakes in the future.
 
@@ -55,7 +57,7 @@ Using the <span style="color:green">second formula</span>, the **global accuracy
 
 $$ \color{Green}{ACC = \frac{0+0+0}{(0+200) + (0+200) + (0 + 200)} = 0} $$
 
-Which yields, indeed, a better result. Also identical to the one returned by `accuracy_score()` from **sklearn**.
+Which yields, indeed, a better result. Moreover, it generates the same results as `accuracy_score()` from **sklearn**, given more diverse confusion matrices.
 
 ##### If you compute **'per class' accuracies** using the <span style="color:green">second formula</span> and average the values, you're basically getting a **macro-averaged precision**. Point is, that's not **accuracy** - so don't do that. 
 
