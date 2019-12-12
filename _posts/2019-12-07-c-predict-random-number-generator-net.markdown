@@ -62,7 +62,7 @@ In my implentation, I'm using the following trick to simplify the things: I don'
 
 Here's the code I used, it should help clear things up.
 
-{% highlight csharp linenos %}		
+{% highlight csharp linenos %}
 public class Program
 {
 	/* predicts random numbers, given 2 state descriptors */

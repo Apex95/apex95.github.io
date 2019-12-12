@@ -1,0 +1,210 @@
+I"W<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/9gag.png " alt="C# Get Frames from a GIF" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/files/c-get-frames-from-a-gif">C# Get Frames from a GIF</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is a simple method to extract a certain frame (or all of them) from a GIF, using C#. As always, .NET provides all the functions we need, so it shouldn’t take more than 12 lines of code. Basic Information...
+        </p>
+        
+        <p class="post-meta">Aug 1, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/filePassword.png " alt="C# Password Protected File" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/files/c-password-protected-file">C# Password Protected File</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this article…I’ll talk about how to protect a file with a password (any file type) - without using ZIP or any other archivers. The file will be encrypted and then ‘attached’ to an executable, which will be later used...
+        </p>
+        
+        <p class="post-meta">Dec 8, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/asciiArt.png " alt="C# Ascii Art Tutorial" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/files/c-ascii-art-tutorial">C# Ascii Art Tutorial</a>
+        </h2>
+        
+        <p class="excerpt">
+            If you got here, you probably want to know how Ascii Art works and how to use C# to transform images into text. We’ll do this by making good use of LockBits() and UnlockBits(), and also, a pointer - going...
+        </p>
+        
+        <p class="post-meta">Apr 18, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/viewexcel.png " alt="C# Read from Excel file" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/files/c-read-from-excel-file">C# Read from Excel file</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this tutorial I’ll show you how to use C# to read an Excel file’s data. - no more than 10 lines of code - isn’t .NET awesome ? The method used is described below… Adding the reference To read...
+        </p>
+        
+        <p class="post-meta">Aug 26, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/xmlFiles.jpg " alt="C# Working with Xml Documents" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/files/c-working-with-xml-documents">C# Working with Xml Documents</a>
+        </h2>
+        
+        <p class="excerpt">
+            XML is the main file type used to save our program’s data. In this tutorial, I’ll show you how to work with XML files in C#. I’ll be working with the following file: 1 2 3 4 5 6 7...
+        </p>
+        
+        <p class="post-meta">May 1, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

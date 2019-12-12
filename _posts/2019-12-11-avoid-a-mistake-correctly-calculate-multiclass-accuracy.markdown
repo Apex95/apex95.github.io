@@ -36,6 +36,7 @@ Take a look at the following classifier, described using a **confusion matrix**:
 **Class #0** | 0 | 100 | 100
 **Class #1** | 100 | 0 | 100
 **Class #2** | 100 | 100 | 0
+{: .data-table }
 
 You'll notice that $$TP = 0$$ thus the classifier is doing a really bad job.
 

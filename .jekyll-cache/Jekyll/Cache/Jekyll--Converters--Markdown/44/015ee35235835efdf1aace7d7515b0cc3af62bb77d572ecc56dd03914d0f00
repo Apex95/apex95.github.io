@@ -1,0 +1,142 @@
+I"�(<p>So…I received a challenge from a <em>friend</em> (lost a bet…) regarding how to load a <strong>managed (C#) dll</strong> in a <strong>native (C++) process</strong> by using the <strong>Common Language Runtime (CLR)</strong>. Basically, it refers to calling a <strong>C# method</strong> from <strong>C/C++</strong>. After a few tries, I came up with this…it seems to work with <strong>.Net Framework 4.0</strong>.</p>
+
+<p>The trick was to host the <strong>CLR</strong> in the C++ <strong>process</strong> and then using it to load the managed dll.</p>
+
+<p><em>// This tutorial contains C/C++; you have been warned.</em></p>
+
+<h2 id="1-making-a-c-dll">1) Making a C# Dll…</h2>
+
+<p>This is the only part where we’ll be using C# - so enjoy it as much as you can! We’ll make a dummy dll, that will be later loaded into a native application.</p>
+
+<p>I came up with this <em>sophisticated</em> code (feel free to improvise), but the function that you want to call must <strong>return</strong> something (preferably <strong>int</strong>).</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="code"><pre><span class="k">using</span> <span class="nn">System.Windows.Forms</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">dllNamespace</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">dllClass</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">static</span> <span class="kt">int</span> <span class="nf">ShowMsg</span><span class="p">(</span><span class="kt">string</span> <span class="n">msg</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">MessageBox</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="n">msg</span><span class="p">);</span>
+            <span class="k">return</span> <span class="m">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="2-hosting-the-clr-in-a-native-process">2) Hosting the CLR in a native process</h2>
+
+<p>First things first, you’ll need to include these 2 lines:</p>
+
+<figure class="highlight"><pre><code class="language-csharp" data-lang="csharp"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="code"><pre><span class="err">#</span><span class="n">include</span> <span class="p">&lt;</span><span class="n">metahost</span><span class="p">.</span><span class="n">h</span><span class="p">&gt;</span>
+<span class="err">#</span><span class="n">pragma</span> <span class="nf">comment</span><span class="p">(</span><span class="n">lib</span><span class="p">,</span> <span class="s">"mscoree.lib"</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p>We have to call <strong>CLRCreateInstance()</strong> in order to gain access to <strong>ICLRMetaHost</strong>. This interface contains various methods that will provide general information about .NET Framework.</p>
+
+<p>From there, it is required to focus on one version of the framework (in this tutorial I’m working with <strong>v4.0.30319</strong>) - calling <strong>ICLRMetaHost::GetRuntime()</strong> will return a pointer to another interface (<strong>ICLRRuntimeInfo</strong>), which contains…more methods. (this is the upgraded version of <strong>ICorRuntimeHost</strong>).</p>
+
+<p>The next step is calling <strong>ICLRRuntimeInfo::GetInterface</strong> which loads the <strong>CLR</strong> into the current process and allows us to use some runtime pointers.</p>
+
+<p>Finally, start the runtime host (if it’s not running already) using <strong>ICLRRuntimeHost::Start()</strong>.</p>
+
+<h2 id="3-calling-a-method-from-the-managed-dll">3) Calling a method from the Managed Dll</h2>
+
+<p>This is done via the runtime host that we struggled to load earlier.<br />
+Using <strong>ICLRRuntimeHost::ExecuteInDefaultAppDomain()</strong> with a bunch of arguments does the job pretty well.</p>
+
+<p>The method looks like this:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="n">HRESULT</span> <span class="nf">ExecuteInDefaultAppDomain</span> <span class="p">(</span>
+    <span class="p">[</span><span class="n">in</span><span class="p">]</span> <span class="n">LPCWSTR</span> <span class="n">pwzAssemblyPath</span><span class="p">,</span>  <span class="c1">// absolute path to the managed dll (not relative!)
+</span>
+    <span class="p">[</span><span class="n">in</span><span class="p">]</span> <span class="n">LPCWSTR</span> <span class="n">pwzTypeName</span><span class="p">,</span>  <span class="c1">// name of the class for example: dllNamespace.dllClass
+</span>
+    <span class="p">[</span><span class="n">in</span><span class="p">]</span> <span class="n">LPCWSTR</span> <span class="n">pwzMethodName</span><span class="p">,</span>  <span class="c1">// name of the method 
+</span>
+    <span class="p">[</span><span class="n">in</span><span class="p">]</span> <span class="n">LPCWSTR</span> <span class="n">pwzArgument</span><span class="p">,</span>   <span class="c1">// argument(s)
+</span>
+    <span class="p">[</span><span class="n">out</span><span class="p">]</span> <span class="n">DWORD</span> <span class="o">*</span><span class="n">pReturnValue</span>   <span class="c1">// this is what the method returns
+</span>
+<span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<h2 id="sourcecode">SourceCode</h2>
+
+<p>This is the whole sourcecode:</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+</pre></td><td class="code"><pre><span class="cp">#include &lt;metahost.h&gt;
+#pragma comment(lib, "mscoree.lib")
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">ICLRMetaHost</span><span class="o">*</span> <span class="n">metaHost</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">ICLRRuntimeInfo</span><span class="o">*</span> <span class="n">runtimeInfo</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+    <span class="n">ICLRRuntimeHost</span><span class="o">*</span> <span class="n">runtimeHost</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">CLRCreateInstance</span><span class="p">(</span><span class="n">CLSID_CLRMetaHost</span><span class="p">,</span> <span class="n">IID_ICLRMetaHost</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">metaHost</span><span class="p">)</span> <span class="o">==</span> <span class="n">S_OK</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">metaHost</span><span class="o">-&gt;</span><span class="n">GetRuntime</span><span class="p">(</span><span class="s">L"v4.0.30319"</span><span class="p">,</span> <span class="n">IID_ICLRRuntimeInfo</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">runtimeInfo</span><span class="p">)</span> <span class="o">==</span> <span class="n">S_OK</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">runtimeInfo</span><span class="o">-&gt;</span><span class="n">GetInterface</span><span class="p">(</span><span class="n">CLSID_CLRRuntimeHost</span><span class="p">,</span> <span class="n">IID_ICLRRuntimeHost</span><span class="p">,</span> <span class="p">(</span><span class="n">LPVOID</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">runtimeHost</span><span class="p">)</span> <span class="o">==</span> <span class="n">S_OK</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">runtimeHost</span><span class="o">-&gt;</span><span class="n">Start</span><span class="p">()</span> <span class="o">==</span> <span class="n">S_OK</span><span class="p">)</span>
+	        <span class="p">{</span>		
+		    <span class="n">DWORD</span> <span class="n">pReturnValue</span><span class="p">;</span>
+		    <span class="n">runtimeHost</span><span class="o">-&gt;</span><span class="n">ExecuteInDefaultAppDomain</span><span class="p">(</span><span class="s">L"C:</span><span class="se">\\</span><span class="s">random.dll"</span><span class="p">,</span> <span class="s">L"dllNamespace.dllClass"</span><span class="p">,</span> <span class="s">L"ShowMsg"</span><span class="p">,</span> <span class="s">L"It works!!"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pReturnValue</span><span class="p">);</span>
+
+		    <span class="n">runtimeInfo</span><span class="o">-&gt;</span><span class="n">Release</span><span class="p">();</span>
+		    <span class="n">metaHost</span><span class="o">-&gt;</span><span class="n">Release</span><span class="p">();</span>
+		    <span class="n">runtimeHost</span><span class="o">-&gt;</span><span class="n">Release</span><span class="p">();</span>
+                <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span> 
+</pre></td></tr></tbody></table></code></pre></figure>
+
+<p><u>Short advice:</u> always check that each <strong>HRESULT</strong> returned is equivalent to <strong>S_OK</strong>.</p>
+
+<p><strong>P.S.:</strong> due to some problems with my compiler, I couldn’t test this code properly - last time, it worked pretty well…hope it still does so.</p>
+:ET
