@@ -57,7 +57,7 @@ $$ \color{Green}{ACC = \frac{0+0+0}{(0+200) + (0+200) + (0 + 200)} = 0} $$
 
 Which yields, indeed, a better result. Also identical to the one returned by `accuracy_score()` from **sklearn**.
 
-##### This is a favorable example, in which, if you compute **'per class' accuracies** using the <span style="color:green">second formula</span> and average the values, you'll get the correct **global accuracy**. This does **not hold** for **other examples**, so don't do that.
+##### If you compute **'per class' accuracies** using the <span style="color:green">second formula</span> and average the values, you're basically getting a **macro-averaged precision**. Point is, that's not **accuracy** - so don't do that. 
 
 ## Conclusion
 
