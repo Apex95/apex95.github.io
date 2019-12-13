@@ -22,7 +22,8 @@ Here's the structure of the subkey you should create:
 
 The method below creates all the **subkeys** needed:
 
-```csharpstatic void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to your application
+```csharp
+static void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to your application
 {
       RegistryKey key = Registry.ClassesRoot.OpenSubKey("myApp");  //open myApp protocol's subkey
 
@@ -38,7 +39,8 @@ The method below creates all the **subkeys** needed:
       }
 
       key.Close();
-}```
+}
+```
 
 ## 2.Get the arguments in the Application
 
@@ -46,7 +48,8 @@ Now when you access a url like this: **myApp:SomeValue** Windows will automatica
 
 Finally get the arguments supplied, by using **Environment.GetCommandLineArgs()**.
 
-```csharpstatic void Main()
+```csharp
+static void Main()
 {
       string[] args = Environment.GetCommandLineArgs();
 
@@ -65,4 +68,5 @@ Finally get the arguments supplied, by using **Environment.GetCommandLineArgs()*
       }
 
       Console.ReadLine(); //pauses the program - so you can see the result
-}```
+}
+```

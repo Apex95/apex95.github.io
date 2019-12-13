@@ -44,7 +44,8 @@ To make this implementation...different...let's also include an example: we have
 
 Btw, the class **Message** looks like this:
 
-```csharp[Serializable]  // mandatory
+```csharp
+[Serializable]  // mandatory
 class Message
 {
     public string title; 
@@ -54,7 +55,8 @@ class Message
 
 **Proc1** will create an instance of **Message** and write it in the shared memory:
 
-```csharpstatic void Main(string[] args)
+```csharp
+static void Main(string[] args)
 {
     const int MMF_MAX_SIZE = 1024;  // allocated memory for this memory mapped file (bytes)
     const int MMF_VIEW_SIZE = 1024; // how many bytes of the allocated memory can this process access
@@ -77,11 +79,13 @@ class Message
 
     // the memory mapped file lives as long as this process is running
     while(true);
-}```
+}
+```
 
 **Proc2** will have to read the **Message** that **Proc1** wrote. So it will look like this:
 
-```csharpstatic void Main(string[] args)
+```csharp
+static void Main(string[] args)
 {
     const int MMF_MAX_SIZE = 1024;  // allocated memory for this memory mapped file (bytes)
     const int MMF_VIEW_SIZE = 1024; // how many bytes of the allocated memory can this process access
@@ -109,7 +113,8 @@ class Message
 
         System.Threading.Thread.Sleep(1000);
     }
-}```
+}
+```
 
 ## The end
 

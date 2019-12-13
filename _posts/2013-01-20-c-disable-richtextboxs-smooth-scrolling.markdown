@@ -16,12 +16,14 @@ Basically you need to handle all the vertical scrolling: this means check if use
 
 Before starting, you'll need to include this namespace:
 
-```csharpusing System.Runtime.InteropServices;
+```csharp
+using System.Runtime.InteropServices;
 ```
 
 The following line sends a message to the RichTextBox which will tell it to scroll up or down:
 
-```csharpSendMessage(this.Handle, WM_VSCROLL, (IntPtr)wParam, IntPtr.Zero);
+```csharp
+SendMessage(this.Handle, WM_VSCROLL, (IntPtr)wParam, IntPtr.Zero);
 
 //wParam (3rd parameter) can be 0 or 1
 // 0 to scroll up
@@ -32,7 +34,8 @@ Now, you must create your own control, which inherits from **RichTextBox** and t
 
 It should look like this one (thanks to <font color="darkred">Mark</font> for improvements):
 
-```csharpclass editedRichTextBox : RichTextBox
+```csharp
+class editedRichTextBox : RichTextBox
 {
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
@@ -59,4 +62,5 @@ It should look like this one (thanks to <font color="darkred">Mark</font> for im
         }
         base.WndProc(ref m);
     }
-} ```
+}
+```

@@ -19,22 +19,22 @@ Before starting, you need to change your project's profile to **.NET Framework 4
 Now, go to _Solution Explorer->References->Add Reference->.NET_ and import **System.Web** .  
 Also make sure you have the following lines included in your project's header:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Net;
 using System.IO;
-using System.Text;{% endhighlight %}
+using System.Text;```
 
 Creating the server is quite simple - we'll use .NET's **HttpListener**:
 
-{% highlight csharp linenos %}HttpListener server = new HttpListener();  // this is the http server
+```csharpHttpListener server = new HttpListener();  // this is the http server
 server.Prefixes.Add("http://127.0.0.1/");  //we set a listening address here (localhost)
 server.Prefixes.Add("http://localhost/");
 
-server.Start();   // and start the server{% endhighlight %}
+server.Start();   // and start the server```
 
 The server is made, now we need to identify incoming connections and serve the requested files. For each connection, we send only one file and because we might have multiple connections, we'll need an endless loop to handle them one by one.
 
-{% highlight csharp linenos %}while (true)
+```csharpwhile (true)
 {
           HttpListenerContext context = server.GetContext();  
           //context: provides access to httplistener's response
@@ -59,7 +59,7 @@ The server is made, now we need to identify incoming connections and serve the r
           st.Write(buffer, 0, buffer.Length); // and this will send all the content to the browser
 
           context.Response.Close();  // here we close the connection
-}{% endhighlight %}
+}```
 
 Well, this is all, now all you need to do is to create some html pages and place them into your executable's directory.  
 Then run the application and access  
@@ -69,7 +69,7 @@ You should be able to see your file in the browser's window.
 
 ## The complete code
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Net;
 using System.IO;
 using System.Text;
@@ -115,6 +115,6 @@ namespace test
     }
 
 }
-{% endhighlight %}
+```
 
 Remember that this server isn't able to parse server-side languages like PHP or ASP.NET, it just sends the file's content to the browser. If you're interested in embedding ASP.NET into a http server [see this tutorial](http://www.codingvision.net/networking/c-http-server-with-aspnet/).

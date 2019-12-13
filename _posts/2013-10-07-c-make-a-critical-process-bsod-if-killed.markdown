@@ -28,7 +28,8 @@ _*** STOP: 0x000000F4_
 
 First things first, import **NtSetInformationProcess** via PInvoke, with the following code:
 
-```csharp[DllImport("ntdll.dll", SetLastError = true)]
+```csharp
+[DllImport("ntdll.dll", SetLastError = true)]
 private static extern int NtSetInformationProcess(IntPtr hProcess, int processInformationClass, ref int processInformation, int processInformationLength);
 ```
 
@@ -43,11 +44,14 @@ Before calling this method, you also need _Debug Privileges_ - these privileges 
 
 In order to obtain them, you must call this method:
 
-```csharpProcess.EnterDebugMode();```
+```csharp
+Process.EnterDebugMode();
+```
 
 Now you can safely call **NtSetInformationProcess()** and since that wouldn't require additional explanation, I'll provide the complete code:
 
-```csharpusing System;
+```csharp
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -66,4 +70,5 @@ public class CriticalProcess
         // setting the BreakOnTermination = 1 for the current process
         NtSetInformationProcess(Process.GetCurrentProcess().Handle, BreakOnTermination, ref isCritical, sizeof(int));
     }
-}```
+}
+```

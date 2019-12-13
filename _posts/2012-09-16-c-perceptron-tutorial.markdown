@@ -64,7 +64,8 @@ _Adjusting weight for bias (which is 1)_
 
 Coding time! I wrote for this tutorial a simple perceptron that learns the **AND gate**, using the formulas above. Take a look:
 
-```csharpusing System;
+```csharp
+using System;
 
 namespace test
 {
@@ -117,5 +118,4 @@ namespace test
     }
 
 }
-
 ```

@@ -17,7 +17,7 @@ The problem is that the **GetFilePath()** function returns only the path to the 
 
 If you don't know how to do this, I wrote the code below - just add it to your source:
 
-{% highlight csharp linenos %}class WorkerRequest : SimpleWorkerRequest   //the fix, use this instead of SimpleWorkerRequest
+```csharpclass WorkerRequest : SimpleWorkerRequest   //the fix, use this instead of SimpleWorkerRequest
     {
         string page = string.Empty;
         public WorkerRequest(string page, string query, TextWriter output) : base(page, query, output)
@@ -29,7 +29,7 @@ If you don't know how to do this, I wrote the code below - just add it to your s
         {
             return base.GetFilePath() + page;
         }
-    }{% endhighlight %}
+    }```
 
 Now, instead of using **SimpleWorkerRequest**, you must use **WorkerRequest** (the fixed version) to parse your pages.
 

@@ -22,13 +22,17 @@ Start by creating a **Forms Project**, make sure you have checked **Allow unsafe
 
 In **form1_load** add the following line to load the image from the executable's directory:
 
-```csharpImage img = Image.FromFile("image.png");```
+```csharp
+Image img = Image.FromFile("image.png");
+```
 
 Then, we transform this image into a **Bitmap**, and resize it to **100x100** pixels - don't use HD images there, because it will take some time to check every pixel:
 
-```csharpBitmap bmp = new Bitmap(img, 100, 100);
+```csharp
+Bitmap bmp = new Bitmap(img, 100, 100);
 // you can increase the Ascii Art's quality by increasing the bitmap's dimensions
-// this also increases the time taken by the conversion process...```
+// this also increases the time taken by the conversion process...
+```
 
 Now we need a **StringBuilder** in which we store the characters corresponding to the image's pixels.
 
@@ -45,7 +49,8 @@ As you know, an image is created by a group of pixels and each **pixel** takes *
 
 Each pixel must be transformed into a character with the same color and all the characters must be the same width and height (**monospaced**) so we maintain the aspect ratio.
 
-```csharpprivate unsafe StringBuilder convert_image(Bitmap bmp)
+```csharp
+private unsafe StringBuilder convert_image(Bitmap bmp)
 {
             StringBuilder asciiResult = new StringBuilder();   //here we store the ascii-art string
 
@@ -95,13 +100,15 @@ Each pixel must be transformed into a character with the same color and all the 
             bmp.UnlockBits(bmpData);  //removing the image from the memory
 
             return asciiResult;  // returning the ascii-art stringbuilder
-}```
+}
+```
 
 ## 2.Choosing the right character
 
 There's a function in the code above that I'll explain here: **getAsciiChar()**. What it does? It returns a character depending on the transparency of the current pixel (so it looks like true ascii art).
 
-```csharpprivate char getAsciiChar(int alpha)
+```csharp
+private char getAsciiChar(int alpha)
 {
     if (alpha >= 240)
         return '@';
@@ -117,22 +124,26 @@ There's a function in the code above that I'll explain here: **getAsciiChar()**.
         return '|';
 
     return '.';
-} ```
+}
+```
 
 ## 3.Displaying the Ascii-Art
 
 Now we just have to display our image, which is easily done using this:
 
-```csharpprivate void show_image(StringBuilder asciiResult)
+```csharp
+private void show_image(StringBuilder asciiResult)
 {
     StreamWriter sw = new StreamWriter("image.html");
     sw.Write(asciiResult.ToString());
     sw.Close();
-} ```
+}
+```
 
 Finally, we get this:
 
-```csharpusing System;
+```csharp
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;

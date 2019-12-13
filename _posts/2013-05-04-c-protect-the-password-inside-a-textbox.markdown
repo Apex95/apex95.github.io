@@ -28,7 +28,8 @@ _If the Text property is called, it will send an **WM_GETTEXT** message, so it w
 
 I wrote a "safer" **TextBox** here, just to show you the idea, feel free to write your own or simply improve this one.
 
-```csharpclass ProtectedTextBox : TextBox
+```csharp
+class ProtectedTextBox : TextBox
 {
     // the malicious message, that needs to be handled
     private const int WM_GETTEXT = 0x000D;
@@ -63,4 +64,5 @@ I wrote a "safer" **TextBox** here, just to show you the idea, feel free to writ
         else
             base.WndProc(ref m);
     }
-} ```
+}
+```

@@ -18,7 +18,8 @@ This is the only part where we'll be using C# - so enjoy it as much as you can! 
 
 I came up with this _sophisticated_ code (feel free to improvise), but the function that you want to call must **return** something (preferably **int**).
 
-```csharpusing System.Windows.Forms;
+```csharp
+using System.Windows.Forms;
 
 namespace dllNamespace
 {
@@ -30,13 +31,15 @@ namespace dllNamespace
             return 0;
         }
     }
-}```
+}
+```
 
 ## 2) Hosting the CLR in a native process
 
 First things first, you'll need to include these 2 lines:
 
-```csharp#include <metahost.h>
+```csharp
+#include <metahost.h>
 #pragma comment(lib, "mscoree.lib")
 ```
 
@@ -55,19 +58,22 @@ Using **ICLRRuntimeHost::ExecuteInDefaultAppDomain()** with a bunch of arguments
 
 The method looks like this:
 
-```cHRESULT ExecuteInDefaultAppDomain (
+```c
+HRESULT ExecuteInDefaultAppDomain (
     [in] LPCWSTR pwzAssemblyPath,  // absolute path to the managed dll (not relative!)
     [in] LPCWSTR pwzTypeName,  // name of the class for example: dllNamespace.dllClass
     [in] LPCWSTR pwzMethodName,  // name of the method 
     [in] LPCWSTR pwzArgument,   // argument(s)
     [out] DWORD *pReturnValue   // this is what the method returns
-);```
+);
+```
 
 ## SourceCode
 
 This is the whole sourcecode:
 
-```c#include <metahost.h>
+```c
+#include <metahost.h>
 #pragma comment(lib, "mscoree.lib")
 
 int main()

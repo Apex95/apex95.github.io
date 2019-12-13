@@ -15,7 +15,7 @@ If you don't have basic knowledge of how a Tcp server works, it is highly recomm
 As always, the code first and after, the comments:  
 * functions used for sending/receiving data are not included - you should know these, from the basic server stuff.
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,7 +62,7 @@ namespace ServerTest
         }
 
     }
-}{% endhighlight %}
+}```
 
 ## Comments
 
@@ -70,7 +70,7 @@ This is the server, containing almost anything required to work properly.
 
 Now, to understand how it works, take a look at the methods below:
 
-{% highlight csharp linenos %}        private void server_start()
+```csharp        private void server_start()
         {
             ...  
             accept_connection();  
@@ -88,7 +88,7 @@ Now, to understand how it works, take a look at the methods below:
             ...
         }
 
-{% endhighlight %}
+```
 
 - first, the program calls the function **accept_connection()** - used to accept a client's connection to the server. This function will invoke through **BeginAcceptTcpClient** another function called **handle_connection()** which will run on a **different thread** chosen from the **threadpool** - so you don't have to manually create/release threads.
 

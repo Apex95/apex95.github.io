@@ -95,7 +95,8 @@ I used 2 classes just to make everything more "visible" and OOP-ish.
 
 Note: it requires about 2000 epochs to learn.
 
-```csharpusing System;
+```csharp
+using System;
 
 namespace BackPropagationXor
 {

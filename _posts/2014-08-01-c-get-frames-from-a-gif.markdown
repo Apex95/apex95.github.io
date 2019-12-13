@@ -24,7 +24,8 @@ This small function extracts & returns an **array of frames** (**Image**), from 
 
 * Recommend executing this in a worker thread, especially when GIFs have many frames.
 
-```csharpImage[] getFrames(Image originalImg)
+```csharp
+Image[] getFrames(Image originalImg)
 {
     int numberOfFrames = originalImg.GetFrameCount(FrameDimension.Time);
     Image[] frames = new Image[numberOfFrames];
@@ -36,8 +37,11 @@ This small function extracts & returns an **array of frames** (**Image**), from 
     }
 
     return frames;
-}```
+}
+```
 
 It can be called like this:
 
-```csharpImage[] frames = getFrames(Image.FromFile("random.gif"));```
+```csharp
+Image[] frames = getFrames(Image.FromFile("random.gif"));
+```

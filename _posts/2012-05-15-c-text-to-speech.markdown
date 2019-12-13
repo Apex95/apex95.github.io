@@ -16,11 +16,15 @@ Right click on the project's name (in Solution Explorer)->**Add Reference**->**C
 
 Now include the following line, near the first lines of code (where the namespaces are included):
 
-```csharpusing SpeechLib;```
+```csharp
+using SpeechLib;
+```
 
 Double click on the button we created before - this will create a new method, in which we'll add the code that converts text to speech:
 
-```csharpstring helloString = "Hello World";
+```csharp
+string helloString = "Hello World";
 
 SpVoice voice = new SpVoice();
-voice.Speak(helloString, SpeechVoiceSpeakFlags.SVSFDefault); // tries to spell "Hello World"```
+voice.Speak(helloString, SpeechVoiceSpeakFlags.SVSFDefault); // tries to spell "Hello World"
+```

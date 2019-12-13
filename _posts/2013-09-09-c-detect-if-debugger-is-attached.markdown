@@ -16,8 +16,10 @@ It's a neat way to add a little bit of protection to your program, but don't exp
 
 First, include the following lines in your program:
 
-```csharp[DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-static extern bool CheckRemoteDebuggerPresent(IntPtr hProcess, ref bool isDebuggerPresent);```
+```csharp
+[DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+static extern bool CheckRemoteDebuggerPresent(IntPtr hProcess, ref bool isDebuggerPresent);
+```
 
 Now, this method is pretty simple to use since it takes only 2 arguments:
 
@@ -26,7 +28,8 @@ Now, this method is pretty simple to use since it takes only 2 arguments:
 
 Since it's pretty straightforward, I guess there's no need for additional details - in any case you can find the complete source code below:
 
-```csharpusing System;
+```csharp
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -43,7 +46,8 @@ public class DetectDebugger
         Console.WriteLine("Debugger Attached: " + isDebuggerPresent);
         Console.ReadLine();
     }
-}```
+}
+```
 
 ## Debugger.IsAttached ?
 

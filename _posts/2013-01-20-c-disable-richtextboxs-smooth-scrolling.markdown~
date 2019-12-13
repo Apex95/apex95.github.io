@@ -16,23 +16,23 @@ Basically you need to handle all the vertical scrolling: this means check if use
 
 Before starting, you'll need to include this namespace:
 
-{% highlight csharp linenos %}using System.Runtime.InteropServices;
-{% endhighlight %}
+```csharpusing System.Runtime.InteropServices;
+```
 
 The following line sends a message to the RichTextBox which will tell it to scroll up or down:
 
-{% highlight csharp linenos %}SendMessage(this.Handle, WM_VSCROLL, (IntPtr)wParam, IntPtr.Zero);
+```csharpSendMessage(this.Handle, WM_VSCROLL, (IntPtr)wParam, IntPtr.Zero);
 
 //wParam (3rd parameter) can be 0 or 1
 // 0 to scroll up
 // 1 to scroll down 
-{% endhighlight %}
+```
 
 Now, you must create your own control, which inherits from **RichTextBox** and that handles the **WM_MOUSEWHEEL** messages separately - it will send a **WM_VSCOLL** each time we scroll.
 
 It should look like this one (thanks to <font color="darkred">Mark</font> for improvements):
 
-{% highlight csharp linenos %}class editedRichTextBox : RichTextBox
+```csharpclass editedRichTextBox : RichTextBox
 {
     [DllImport("user32.dll", CharSet = CharSet.Auto)]
     private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
@@ -59,4 +59,4 @@ It should look like this one (thanks to <font color="darkred">Mark</font> for im
         }
         base.WndProc(ref m);
     }
-} {% endhighlight %}
+} ```

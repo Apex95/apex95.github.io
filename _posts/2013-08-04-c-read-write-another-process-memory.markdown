@@ -38,19 +38,24 @@ We got the memory address, now...**don't close/restart** the application. If you
 
 In order to read the value from that memory address, we need to import **2 functions** into C#: **OpenProcess()** and **ReadProcessMemory()** from **kernel32.dll**.
 
-```csharp[DllImport("kernel32.dll")]
+```csharp
+[DllImport("kernel32.dll")]
 public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
 [DllImport("kernel32.dll")]
-public static extern bool ReadProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);```
+public static extern bool ReadProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
+```
 
 When a process is opened, you must also specify the desired access (this time, you request access for reading the memory), so this constant is needed:
 
-```csharpconst int PROCESS_WM_READ = 0x0010;```
+```csharp
+const int PROCESS_WM_READ = 0x0010;
+```
 
 Since the whole code is self explanatory, I'll just add short comments where they're needed:
 
-```csharpusing System;
+```csharp
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -80,28 +85,34 @@ public class MemoryRead
         Console.WriteLine(Encoding.Unicode.GetString(buffer) + " (" + bytesRead.ToString() + "bytes)");
         Console.ReadLine();
     }
-}```
+}
+```
 
 ## 3.Write Process' Memory
 
 Writing to a memory address is a little bit different: you'll need **OpenProcess()** and **WriteProcessMemory()**.
 
-```csharp[DllImport("kernel32.dll")]
+```csharp
+[DllImport("kernel32.dll")]
 public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
 [DllImport("kernel32.dll", SetLastError = true)]
-static extern bool WriteProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesWritten);```
+static extern bool WriteProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesWritten);
+```
 
 However, special permissions are required: while opening the process request the following privileges: **PROCESS_VM_WRITE \| PROCESS_VM_OPERATION**.
 
-```csharpconst int PROCESS_VM_WRITE = 0x0020;
-const int PROCESS_VM_OPERATION = 0x0008;```
+```csharp
+const int PROCESS_VM_WRITE = 0x0020;
+const int PROCESS_VM_OPERATION = 0x0008;
+```
 
 **Note:** notepad's textbox is storing the number of bytes it has to read from the memory - that value is updated only when the text is changed by user. If you write to the memory address a longer string, it will be truncated.
 
 The complete code is available below:
 
-```csharpusing System;
+```csharp
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -129,4 +140,5 @@ public class MemoryRead
         WriteProcessMemory((int)processHandle, 0x0046A3B8, buffer, buffer.Length, ref bytesWritten);
         Console.ReadLine();
     }
-}```
+}
+```

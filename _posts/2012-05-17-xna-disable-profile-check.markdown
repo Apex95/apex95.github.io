@@ -28,7 +28,9 @@ The solution is this library **fbDeprofiler.dll** - or another video card. (both
 
 **4.** Finally, add in the game's contructor (**public Game1()**) the following line:
 
-```csharpfbDeprofiler.DeProfiler.Run();```
+```csharp
+fbDeprofiler.DeProfiler.Run();
+```
 
 Now your game will run in **Hidef profile** on any computer with any video card so you don't have to worry anymore about the requirements.
 

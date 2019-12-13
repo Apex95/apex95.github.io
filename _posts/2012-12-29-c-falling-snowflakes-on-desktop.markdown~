@@ -46,7 +46,7 @@ _Note that using a class makes everything much easier._
 
 The code for the class:
 
-{% highlight csharp linenos %}class snowflake : PictureBox
+```csharpclass snowflake : PictureBox
 {
         public snowflake()
         {
@@ -89,7 +89,7 @@ The code for the class:
                 this.Location = new Point(r.Next(-Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Width), r.Next(-Screen.PrimaryScreen.Bounds.Height, Screen.PrimaryScreen.Bounds.Height));
 
         }
-}{% endhighlight %}
+}```
 
 ## 3\. Creating the main program
 
@@ -101,7 +101,7 @@ _Note:_ we must use a timer and not a repetitive structure when we create snowfl
 
 The sourcecode of the main program:
 
-{% highlight csharp linenos %}public partial class main : Form
+```csharppublic partial class main : Form
 {
         public main()
         {
@@ -141,13 +141,13 @@ The sourcecode of the main program:
             Controls.Add(snowflakes[i]);  //each picturebox (snowflake) created must be added to the form
             i++;    
         }
-}{% endhighlight %}
+}```
 
 ## The Complete Code
 
 Here's the complete code:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -237,4 +237,4 @@ namespace FallingSnowFlakes
         }
     }
 }
-{% endhighlight %}
+```

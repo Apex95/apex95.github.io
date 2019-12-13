@@ -16,7 +16,7 @@ To do this, all we have to do is to set the Form's **Opacity** to **0**. Then, u
 
 As an example:
 
-{% highlight csharp linenos %}Timer t1 = new Timer();
+```csharpTimer t1 = new Timer();
 
 private void Form1_Load(object sender, EventArgs e)
 {
@@ -33,13 +33,13 @@ void fadeIn(object sender, EventArgs e)
                 t1.Stop();   //this stops the timer if the form is completely displayed
             else
                 Opacity += 0.05;
-}{% endhighlight %}
+}```
 
 ## Fade Out Effect
 
 This works the same way as the fade in effect: we'll use a **Timer** that lowers the Opacity, that is started when the form is closing. The code should be added in the form-closing event handler.
 
-{% highlight csharp linenos %}private void main_FormClosing(object sender, FormClosingEventArgs e)
+```csharpprivate void main_FormClosing(object sender, FormClosingEventArgs e)
 {
       e.Cancel = true;    //cancel the event so the form won't be closed
 
@@ -60,6 +60,6 @@ void fadeOut(object sender, EventArgs e)
       }
       else
           Opacity -= 0.05;
-}{% endhighlight %}
+}```
 
 Believe it or not, that's all, however pay attention to the events so you won't assign 2 event handlers to the same event.

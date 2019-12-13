@@ -40,7 +40,7 @@ _Note: always return **true** at the end - otherwise some processes will crash w
 
 I'm using this Dll:
 
-{% highlight c linenos %}#include<Windows.h>
+```c#include<Windows.h>
 extern "C" __declspec(dllexport) bool WINAPI DllMain(HINSTANCE hInstDll, DWORD fdwReason, LPVOID lpvReserved)
 {
     switch (fdwReason)
@@ -61,7 +61,7 @@ extern "C" __declspec(dllexport) bool WINAPI DllMain(HINSTANCE hInstDll, DWORD f
             break;
     }
     return true;
-}{% endhighlight %}
+}```
 
 ## Writing the Injector
 
@@ -71,7 +71,8 @@ Also, check the comments in code and refer to the "theory" part of this article 
 
 Here be sourcecode!
 
-{% highlight csharp linenos %}using System;
+```csharp
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -138,4 +139,5 @@ public class BasicInject
 
         return 0;
     }
-}{% endhighlight %}
+}
+```

@@ -33,14 +33,17 @@ A short schema:
 
 First, include this function, from **user32.dll**
 
-```csharp[DllImport("user32.dll", CharSet = CharSet.Auto)]
-private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, ref Point lParam);```
+```csharp
+[DllImport("user32.dll", CharSet = CharSet.Auto)]
+private static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, ref Point lParam);
+```
 
 * notice the **lParam** argument is a **Point** - this will store the scroll's position.
 
 Then, add these **WM contants**, you'll need them when you synchronize the scrolling:
 
-```csharpprivate const int WM_VSCROLL = 0x115;  //tells the control to scroll
+```csharp
+private const int WM_VSCROLL = 0x115;  //tells the control to scroll
 
 private const int WM_GETDLGCODE = 0x87;   //sent when the caret is going out of the 'visible area' (so scroll is needed)
 
@@ -48,13 +51,15 @@ private const int WM_MOUSEFIRST = 0x200;  //scrolls if the mouse leaves the 'vis
 
 private const int EM_GETSCROLLPOS = 0x4DD;  //you send this message and the control returns it's scroll position
 
-private const int EM_SETSCROLLPOS = 0x4DE;//this is used to set the control's scroll position```
+private const int EM_SETSCROLLPOS = 0x4DE;//this is used to set the control's scroll position
+```
 
 Now, you only have to create the custom **RichTextBox** - if its scroll position is changed, it will send a message containing its new position to the other RichTextBox (**anotherRichTextBox**) - the 2nd one doesn't require overriding.
 
 The code would look like this:
 
-```csharppublic class syncRichTextBox : RichTextBox
+```csharp
+public class syncRichTextBox : RichTextBox
 {
       public syncRichTextBox()
       {
@@ -76,4 +81,5 @@ The code would look like this:
 
               }
       }
-}```
+}
+```

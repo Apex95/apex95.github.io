@@ -36,17 +36,17 @@ PHP accepts keys that are not **32 bytes** long and simply extends them to the c
 
 <font size="4">Encryption</font>
 
-{% highlight php linenos %}function encrypt($text, $pkey)
+```phpfunction encrypt($text, $pkey)
 {
 	$key = $pkey;  
 	$IV = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC), MCRYPT_RAND); 
 
 	return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $text, MCRYPT_MODE_CBC, $IV)."-[--IV-[-".$IV); 
-}{% endhighlight %}
+}```
 
 <font size="4">Decryption</font>
 
-{% highlight php linenos %}function decrypt($text, $pkey)
+```phpfunction decrypt($text, $pkey)
 {
 	$key = $pkey;   
 	$text = base64_decode($text); 
@@ -54,7 +54,7 @@ PHP accepts keys that are not **32 bytes** long and simply extends them to the c
 	$text = str_replace("-[--IV-[-".$IV, "", $text);
 
 	return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $text, MCRYPT_MODE_CBC, $IV), "\0");
-}{% endhighlight %}
+}```
 
 ## 3.C# Encryption/Decryption Code
 
@@ -62,7 +62,8 @@ As I said before, C# doesn't accept keys that aren't **32 bytes long** - it will
 
 <font size="4">Encryption</font>
 
-{% highlight csharp linenos %}public static string EncryptMessage(byte[] text, string key)
+```csharp
+public static string EncryptMessage(byte[] text, string key)
 {
     RijndaelManaged aes = new RijndaelManaged();
     aes.KeySize = 256;  
@@ -81,12 +82,14 @@ As I said before, C# doesn't accept keys that aren't **32 bytes long** - it will
     return
 Convert.ToBase64String(Encoding.Default.GetBytes(Encoding.Default.GetString(AESEncrypt.TransformFinalBlock(buffer, 0, buffer.Length)) + IV));
 
-}{% endhighlight %}
+}
+```
 
 
 <font size="4">Decryption</font>
 
-{% highlight csharp linenos %}public static string DecryptMessage(string text, string key)
+```csharp
+public static string DecryptMessage(string text, string key)
 {
     RijndaelManaged aes = new RijndaelManaged();
     aes.KeySize = 256;
@@ -109,4 +112,5 @@ Convert.ToBase64String(Encoding.Default.GetBytes(Encoding.Default.GetString(AESE
     byte[] buffer = Convert.FromBase64String(text);
 
     return Encoding.Default.GetString(AESDecrypt.TransformFinalBlock(buffer, 0, buffer.Length));
-}{% endhighlight %}
+}
+```

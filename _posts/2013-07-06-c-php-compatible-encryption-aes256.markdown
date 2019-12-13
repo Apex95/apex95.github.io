@@ -36,7 +36,8 @@ PHP accepts keys that are not **32 bytes** long and simply extends them to the c
 
 <font size="4">Encryption</font>
 
-```phpfunction encrypt($text, $pkey)
+```php
+function encrypt($text, $pkey)
 {
 	$key = $pkey;  
 	$IV = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC), MCRYPT_RAND); 
@@ -46,7 +47,8 @@ PHP accepts keys that are not **32 bytes** long and simply extends them to the c
 
 <font size="4">Decryption</font>
 
-```phpfunction decrypt($text, $pkey)
+```php
+function decrypt($text, $pkey)
 {
 	$key = $pkey;   
 	$text = base64_decode($text); 
@@ -62,7 +64,8 @@ As I said before, C# doesn't accept keys that aren't **32 bytes long** - it will
 
 <font size="4">Encryption</font>
 
-```csharppublic static string EncryptMessage(byte[] text, string key)
+```csharp
+public static string EncryptMessage(byte[] text, string key)
 {
     RijndaelManaged aes = new RijndaelManaged();
     aes.KeySize = 256;  
@@ -81,12 +84,14 @@ As I said before, C# doesn't accept keys that aren't **32 bytes long** - it will
     return
 Convert.ToBase64String(Encoding.Default.GetBytes(Encoding.Default.GetString(AESEncrypt.TransformFinalBlock(buffer, 0, buffer.Length)) + IV));
 
-}```
+}
+```
 
 
 <font size="4">Decryption</font>
 
-```csharppublic static string DecryptMessage(string text, string key)
+```csharp
+public static string DecryptMessage(string text, string key)
 {
     RijndaelManaged aes = new RijndaelManaged();
     aes.KeySize = 256;
@@ -109,4 +114,5 @@ Convert.ToBase64String(Encoding.Default.GetBytes(Encoding.Default.GetString(AESE
     byte[] buffer = Convert.FromBase64String(text);
 
     return Encoding.Default.GetString(AESDecrypt.TransformFinalBlock(buffer, 0, buffer.Length));
-}```
+}
+```

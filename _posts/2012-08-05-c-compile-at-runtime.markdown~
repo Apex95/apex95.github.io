@@ -14,7 +14,7 @@ Basically when our executable will run, it will compile a small piece of code st
 
 First, write the code of a small valid C# application (preferable Console Project), that we'll compile at Runtime.
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Text;
 namespace Hello
 {
@@ -26,28 +26,28 @@ namespace Hello
         Console.ReadLine();
      }
   }
-}{% endhighlight %}
+}```
 
 ## 2\. Writing the 'compiler'
 
 Create a new application, and make sure you include these 2 lines:
 
-{% highlight csharp linenos %}using Microsoft.CSharp;
-using System.CodeDom.Compiler;{% endhighlight %}
+```csharpusing Microsoft.CSharp;
+using System.CodeDom.Compiler;```
 
 Then, create a **CSharpCodeProvider** object - this will give us access to the .NET Compiler.
 
-{% highlight csharp linenos %}CSharpCodeProvider provider = new CSharpCodeProvider();  
-ICodeCompiler compiler = provider.CreateCompiler();  //the compiler, created from CSharpCodeProvider{% endhighlight %}
+```csharpCSharpCodeProvider provider = new CSharpCodeProvider();  
+ICodeCompiler compiler = provider.CreateCompiler();  //the compiler, created from CSharpCodeProvider```
 
 It remains to adjust the compiler's settings, this can be done by providing some parameters:
 
-{% highlight csharp linenos %}CompilerParameters parameters = new CompilerParameters();
+```csharpCompilerParameters parameters = new CompilerParameters();
 
 parameters.GenerateExecutable = true;  // we want to save it as an .exe
 parameters.GenerateInMemory = false;  // it must be saved on the harddisk, not in memory
 parameters.OutputAssembly = "hello.exe"; // the file's name
-parameters.TreatWarningsAsErrors = false; // ignoring the warnings - my favourite one :){% endhighlight %}
+parameters.TreatWarningsAsErrors = false; // ignoring the warnings - my favourite one :)```
 
 Now the compiler's done.
 
@@ -57,7 +57,7 @@ In the end, use a **string** to store the code you want to compile at Runtime, i
 
 Be sure to escape any quotation mark from the code:
 
-{% highlight csharp linenos %}string code = "using System; using System.Text; namespace Hello { class Program { static void Main(string[] args) { Console.WriteLine(\"Hello World\"); Console.ReadLine(); } } }";
+```csharpstring code = "using System; using System.Text; namespace Hello { class Program { static void Main(string[] args) { Console.WriteLine(\"Hello World\"); Console.ReadLine(); } } }";
 
 CompilerResults result = compiler.CompileAssemblyFromSource(parameters, code);  
 //compiling the code using the given parameters
@@ -68,13 +68,13 @@ if (result.Errors.Count > 0)   //if there are any compiling errors
     {
           Console.WriteLine(er.ToString());  //we show them
     }
-}{% endhighlight %}
+}```
 
 ## 4\. The whole program
 
 This is how your compiler should look like, if you carefully followed the steps:
 
-{% highlight csharp linenos %}static void Main(string[] args)
+```csharpstatic void Main(string[] args)
 {
     CSharpCodeProvider provider = new CSharpCodeProvider();
     ICodeCompiler compiler = provider.CreateCompiler();
@@ -97,4 +97,4 @@ This is how your compiler should look like, if you carefully followed the steps:
             Console.WriteLine(er.ToString());
         }
     }
-}{% endhighlight %}
+}```

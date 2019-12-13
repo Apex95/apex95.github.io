@@ -100,7 +100,8 @@ We'll want our initial payload to perform such a call in order to have an initia
 Start by running the following command so you can view the address of `puts@GOT`:
 
 ```bash
-objdump -R vuln ```
+objdump -R vuln
+```
 
 Pay attention at the second row and write down the address:
 

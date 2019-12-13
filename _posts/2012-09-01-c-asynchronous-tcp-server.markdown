@@ -15,7 +15,8 @@ If you don't have basic knowledge of how a Tcp server works, it is highly recomm
 As always, the code first and after, the comments:  
 * functions used for sending/receiving data are not included - you should know these, from the basic server stuff.
 
-```csharpusing System;
+```csharp
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,7 +63,8 @@ namespace ServerTest
         }
 
     }
-}```
+}
+```
 
 ## Comments
 
@@ -70,7 +72,8 @@ This is the server, containing almost anything required to work properly.
 
 Now, to understand how it works, take a look at the methods below:
 
-```csharp        private void server_start()
+```csharp        
+        private void server_start()
         {
             ...  
             accept_connection();  

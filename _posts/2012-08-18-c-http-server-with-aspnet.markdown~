@@ -19,22 +19,22 @@ Now go to the Solution Explorer, right click on _References->Add Reference->.NET
 
 Also, include the following namespaces:
 
-{% highlight csharp linenos %}using System.Net;
+```csharpusing System.Net;
 using System.IO;
 using System.Web.Hosting;
-using System.Web;{% endhighlight %}
+using System.Web;```
 
 ## 2\. Creating a simple server
 
 Define a **HttpListener** object (that's the server actually) and set it's listening address to **localhost**.
 
-{% highlight csharp linenos %}HttpListener server = new HttpListener();
+```csharpHttpListener server = new HttpListener();
 server.Prefixes.Add("http://localhost/");
-server.Start();  //also start the server{% endhighlight %}
+server.Start();  //also start the server```
 
 Using an endless loop, this server will check for any incoming connections, if any connection is made, it will serve the page to the client, using a **StreamWriter**.
 
-{% highlight csharp linenos %}host asphost = (host)ApplicationHost.CreateApplicationHost(typeof(host), "/", Directory.GetCurrentDirectory());
+```csharphost asphost = (host)ApplicationHost.CreateApplicationHost(typeof(host), "/", Directory.GetCurrentDirectory());
 //the code above will be explained later
 
 while (true)
@@ -54,7 +54,7 @@ while (true)
 
       sw.Flush();
       context.Response.Close(); //closes the connection, once the page was sent
-}{% endhighlight %}
+}```
 
 ## 3\. Embedding the ASP.NET Runtime
 
@@ -62,18 +62,18 @@ The lines above, which I said I'll explain later are used for parsing the ASP.NE
 
 Parsing the file is done using the following snippet:
 
-{% highlight csharp linenos %}class host : MarshalByRefObject 
+```csharpclass host : MarshalByRefObject 
 {
      public void parse_code(string page, string query, ref StreamWriter sw)
      {
          SimpleWorkerRequest swr = new SimpleWorkerRequest(page, query, sw);
          HttpRuntime.ProcessRequest(swr);
      }
-}{% endhighlight %}
+}```
 
 This class called **host**, embeds the **ASP.NET Runtime** service. However this requires a custom AppDomain - otherwise it won't work - so that's the role of the line below:
 
-{% highlight csharp linenos %}host asphost = (host)ApplicationHost.CreateApplicationHost(typeof(host), "/", Directory.GetCurrentDirectory());{% endhighlight %}
+```csharphost asphost = (host)ApplicationHost.CreateApplicationHost(typeof(host), "/", Directory.GetCurrentDirectory());```
 
 3 arguments are required here, first is the type, the second is the virtual path and the third the physical path.
 
@@ -85,7 +85,7 @@ What you might not know is that there is a **bug** in .NET's **SimpleWorkerReque
 
 This is the complete code of the server, that also **fixes the problem**:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Net;
 using System.IO;
 using System.Web;
@@ -144,7 +144,7 @@ namespace test
 
 }
 
-{% endhighlight %}
+```
 
 ## 5\. Fixing the NotFoundException (error)
 

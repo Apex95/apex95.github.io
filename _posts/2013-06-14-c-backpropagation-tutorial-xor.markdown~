@@ -95,7 +95,7 @@ I used 2 classes just to make everything more "visible" and OOP-ish.
 
 Note: it requires about 2000 epochs to learn.
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 
 namespace BackPropagationXor
 {
@@ -208,7 +208,7 @@ namespace BackPropagationXor
         }
     }
 }
-{% endhighlight %}
+```
 
 ## 6\. Proof of concept
 

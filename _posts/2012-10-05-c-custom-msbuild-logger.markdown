@@ -10,7 +10,8 @@ Here's a short trick about how to make a **custom MSBuild Logger**. It's always 
 
 Make sure you have those namespaces included before starting:
 
-```csharpusing Microsoft.Build.Framework;
+```csharp
+using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 ```
 
@@ -20,7 +21,8 @@ What you might need to know is the way it works: the logger is based on multiple
 
 ## Code for a custom logger
 
-```csharpclass customLogger : Logger  //customLogger inherits from original Logger
+```csharp
+class customLogger : Logger  //customLogger inherits from original Logger
 {
         //here I override the Initialize method in order to change the eventhandlers
         public override void Initialize(IEventSource eventSource) 
@@ -56,12 +58,15 @@ What you might need to know is the way it works: the logger is based on multiple
         {
             Console.WriteLine("Result: " + e.Message);
         }
-} ```
+}
+```
 
 ## How to use it?
 
 You can use it the same way you use the **original logger**:
 
-```csharpEngine buildEngine = new Engine();
+```csharp
+Engine buildEngine = new Engine();
 customLogger myCustomLogger = new customLogger();
-buildEngine.RegisterLogger(myCustomLogger); //attaching the custom logger to the Engine```
+buildEngine.RegisterLogger(myCustomLogger); //attaching the custom logger to the Engine
+```

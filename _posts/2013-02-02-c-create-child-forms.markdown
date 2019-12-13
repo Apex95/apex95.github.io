@@ -19,7 +19,8 @@ The main trick here is to treat **child forms** as **Controls**. You'll create a
 
 The following lines of code are used to create a child form:
 
-```csharpForm childForm = new Form(); //initialize a child form
+```csharp
+Form childForm = new Form(); //initialize a child form
 
 childForm.TopLevel = false; //set its TopLevel to false
 

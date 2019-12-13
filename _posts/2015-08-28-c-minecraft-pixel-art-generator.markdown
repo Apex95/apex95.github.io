@@ -40,7 +40,8 @@ This is what I managed to obtain with this program using a palette of **16 color
 
 In order to send commands to your server's **InputStream** you need to tweak a few settings at process level. This means you'll have to start the server from this program, using the **Process** class. Our goal is to make this process read inputs from a custom stream (**Process.StandardInput**) - this stream will be used by our console application to send the set of **/setblock** commands.
 
-```csharp// Process mcServerProc = new Process();
+```csharp
+// Process mcServerProc = new Process();
 
 // this must be set to false or the application will throw an exception
 mcServerProc.StartInfo.UseShellExecute = false; 
@@ -55,19 +56,23 @@ mcServerProc.StartInfo.RedirectStandardError = true;
 
 After the input stream was changed, this method can be used to supply information to the process:
 
-```csharpmcServerProc.StandardInput.WriteLine("command goes here");
+```csharp
+mcServerProc.StandardInput.WriteLine("command goes here");
 ```
 
 If you want to display, in your console, any messages that the server sends, you'll need 2 event handlers (1 for the outputstream and 1 for the errorstream). I wrote them as anonymous functions to keep this sourcecode as short as possible:
 
-```csharpmcServerProc.OutputDataReceived += (sender, e) => { Console.WriteLine(e.Data); };
+```csharp
+mcServerProc.OutputDataReceived += (sender, e) => { Console.WriteLine(e.Data); };
 mcServerProc.ErrorDataReceived += (sender, e) => { Console.WriteLine(e.Data); };
 ```
 
 After this, you'll need to call these 2 functions:
 
-```csharpmcServerProc.BeginOutputReadLine();
-mcServerProc.BeginErrorReadLine();```
+```csharp
+mcServerProc.BeginOutputReadLine();
+mcServerProc.BeginErrorReadLine();
+```
 
 Basically you'll start **cmd.exe** from the C# application and from there launch the server by loading the jar file with a line like this:  
 **java -Xmx1024M -Xms1024M -jar minecraft_server.1.8.8.jar nogui**
@@ -78,7 +83,8 @@ To avoid this make sure you send the command: **stop** before the console closes
 
 Until now we have something that looks like a primitive wrapper:
 
-```csharpusing (Process mcServerProc = new Process())
+```csharp
+using (Process mcServerProc = new Process())
 {
     // path to cmd.exe
     mcServerProc.StartInfo.FileName = Path.Combine(Environment.SystemDirectory, "cmd.exe");
@@ -119,13 +125,15 @@ Until now we have something that looks like a primitive wrapper:
     mcServerProc.StandardInput.WriteLine("stop"); // stops the server
 
     Thread.Sleep(3000);
-}```
+}
+```
 
 ## 2\. Choosing the right block
 
 Ok, that was the easy part, believe it or not. We'll now have to create a list (it's actually a **Dictionary**) that contains the name of the available blocks and their colors.
 
-```csharpstatic Dictionary<Color, string> colorsDictionary = new Dictionary<Color, string>();
+```csharp
+static Dictionary<Color, string> colorsDictionary = new Dictionary<Color, string>();
 
 static void populateDictionary()
 {
@@ -165,7 +173,8 @@ This means the **BlackBlock** is a better choice as it matches the pixel's color
 
 The function will look like this (it returns the index of the block):
 
-```csharpstatic int approximateColor(Color pixelColor)
+```csharp
+static int approximateColor(Color pixelColor)
 {
     double minError = 99999; double currentError = 0;
     int bestColorIndex = 0;
@@ -199,7 +208,8 @@ Once you have the index of the block, you'll have to construct a **/setblock** c
 
 <u>small note:</u> you can use **LockBits()** and **UnlockBits()** for efficiency reasons but the server will still limit your speed. In my opinion, it's not worth it here.
 
-```csharpstatic void renderImage(StreamWriter stdin, Image img)
+```csharp
+static void renderImage(StreamWriter stdin, Image img)
 {
     Bitmap bmp = (Bitmap)img;
 
@@ -233,7 +243,8 @@ This is the complete sourcecode - it was made for fun, so don't expect it to be 
 
 Feel free to use / modify it and if you find it interesting or useful, consider sharing this page or dropping a backlink - it <u>helps a lot</u> xD
 
-```csharpusing System;
+```csharp
+using System;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

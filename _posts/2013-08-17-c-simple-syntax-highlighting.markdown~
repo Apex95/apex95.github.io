@@ -38,7 +38,7 @@ Each Regex **Match** contains its positon and its length - we'll need these for 
 
 The most complicated part is the Regex part - everything else should be pretty straightforward. And since the code is not that complicated, I'll post the complete source:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -123,4 +123,4 @@ namespace Highlighter
         }
     }
 }
-{% endhighlight %}
+```

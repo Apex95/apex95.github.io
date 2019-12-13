@@ -14,7 +14,7 @@ Here, I'll show you how to make **WebClient** handle **cookies**. All you have t
 
 I'll post the code and I'll explain it using comments:
 
-{% highlight csharp linenos %}public class ImprovedWebClient : WebClient
+```csharppublic class ImprovedWebClient : WebClient
 {
             CookieContainer cookies = new CookieContainer();
             //^here are automatically stored the cookies
@@ -30,9 +30,9 @@ I'll post the code and I'll explain it using comments:
                 return request; // return the modified request (the one with cookies)
             }
 }
-{% endhighlight %}
+```
 
 That's all, now you don't have to use WebClient anymore, so just use derived class - **ImprovedWebClient**:
 
-{% highlight csharp linenos %}ImprovedWebClient client = new ImprovedWebClient();
-{% endhighlight %}
+```csharpImprovedWebClient client = new ImprovedWebClient();
+```

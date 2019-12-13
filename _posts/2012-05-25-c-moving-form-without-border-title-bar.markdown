@@ -23,7 +23,9 @@ To move the window, we have to use some **WinAPI** . Don't worry if you don't kn
 
 We'll include in the program:
 
-```csharpusing System.Runtime.InteropServices; ```
+```csharp
+using System.Runtime.InteropServices
+```
 
 After that, two methods must be imported from **user32.dll** :  
 **SendMessage()**  
@@ -31,10 +33,12 @@ After that, two methods must be imported from **user32.dll** :
 
 To do this, we'll add the following code to the program
 
-```csharp[DllImportAttribute("user32.dll")]
+```csharp
+[DllImportAttribute("user32.dll")]
 public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int LPAR);
 [DllImportAttribute ("user32.dll")]
-public static extern bool ReleaseCapture(); ```
+public static extern bool ReleaseCapture();
+```
 
 What is this doing? It imports 2 methods from **user32.dll**:  
 - the first one (**SendMessage()**) checks if the mouse button is clicked, and then sends a message to our program, notifying the window to change it's position acording to our cursor  
@@ -42,7 +46,8 @@ What is this doing? It imports 2 methods from **user32.dll**:
 
 Using them both, we can make a method that when called, moves the window to our cursor position - acts exactly like a title bar. However we'll have to bind this method to the **MouseDown** event of the **Form**.
 
-```csharpconst int WM_NCLBUTTONDOWN = 0xA1; 
+```csharp
+const int WM_NCLBUTTONDOWN = 0xA1; 
 const int HT_CAPTION = 0x2;  //this indicates that the action takes place on the title bar
 
 private void move_window(object sender, MouseEventArgs e)
@@ -52,16 +57,20 @@ private void move_window(object sender, MouseEventArgs e)
                ReleaseCapture();
                SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
         }
-} ```
+}
+```
 
 Now you just have to attach this method to the **MouseDown** event of the Form. You can do this from the Properties Window or, using the following code:
 
-```csharpthis.MouseDown += new MouseEventHandler(move_window);
-//any form has a MouseDown event, we use it to call the function```
+```csharp
+this.MouseDown += new MouseEventHandler(move_window);
+//any form has a MouseDown event, we use it to call the function
+```
 
 In the end, you get (or should get) something like this:
 
-```csharppublic partial class Form1: Form
+```csharp
+public partial class Form1: Form
 {
     [DllImportAttribute("user32.dll")]
     public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int LPAR);
@@ -89,4 +98,5 @@ In the end, you get (or should get) something like this:
 
         InitializeComponent();
     }
-} ```
+}
+```

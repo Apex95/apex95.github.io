@@ -24,33 +24,45 @@ Before we start, here's a _short_ list of the methods we'll need:
 
 *   **CreateDesktop()** - used to actually create the desktop
 
-    ```csharp[DllImport("user32.dll")]
-public static extern IntPtr CreateDesktop(string lpszDesktop, IntPtr lpszDevice, IntPtr pDevmode, int dwFlags, uint dwDesiredAccess, IntPtr lpsa);```
+    ```csharp
+    [DllImport("user32.dll")]
+    public static extern IntPtr CreateDesktop(string lpszDesktop, IntPtr lpszDevice, IntPtr pDevmode, int dwFlags, uint dwDesiredAccess, IntPtr lpsa);
+    ```
 
 *   **SwitchDesktop()** - for switching between the original and the new desktop
 
-    ```csharp[DllImport("user32.dll")]
-private static extern bool SwitchDesktop(IntPtr hDesktop);```
+    ```csharp
+    [DllImport("user32.dll")]
+    private static extern bool SwitchDesktop(IntPtr hDesktop);
+    ```
 
 *   **CloseDesktop()** - closes the desktop handle
 
-    ```csharp[DllImport("user32.dll")]
-public static extern bool CloseDesktop(IntPtr handle);```
+	```csharp
+	[DllImport("user32.dll")]
+	public static extern bool CloseDesktop(IntPtr handle);
+	```
 
 *   **SetThreadDesktop()** - sets the desktop for the calling thread
 
-    ```csharp[DllImport("user32.dll")]
-public static extern bool SetThreadDesktop(IntPtr hDesktop);```
+	```csharp
+	[DllImport("user32.dll")]
+	public static extern bool SetThreadDesktop(IntPtr hDesktop);
+	```
 
 *   **GetThreadDesktop** - gets the desktop defined for the specified thread
 
-    ```csharp[DllImport("user32.dll")]
-public static extern IntPtr GetThreadDesktop(int dwThreadId);```
+	```csharp
+	[DllImport("user32.dll")]
+	public static extern IntPtr GetThreadDesktop(int dwThreadId);
+	```
 
 *   **GetCurrentThreadId()** - gets the current thread's id
 
-    ```csharp[DllImport("kernel32.dll")]
-public static extern int GetCurrentThreadId();```
+	```csharp
+	[DllImport("kernel32.dll")]
+	public static extern int GetCurrentThreadId();
+	```
 
 Basically there will be 2 desktop handles:
 
@@ -63,7 +75,8 @@ Then, you can easily switch between them using **SwitchDesktop(desktopHandle)**.
 
 We also need to define the desired <u>desktop access</u>, which will be an **enum**:
 
-```csharpenum DESKTOP_ACCESS : uint
+```csharp
+enum DESKTOP_ACCESS : uint
 {
     DESKTOP_NONE = 0,
     DESKTOP_READOBJECTS = 0x0001,
@@ -96,7 +109,8 @@ This is the code I came up with, tried to keep it as simple as possible, so you 
 **System.Windows.Forms.dll  
 System.Drawing.dll**
 
-```csharpusing System;
+```csharp
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;

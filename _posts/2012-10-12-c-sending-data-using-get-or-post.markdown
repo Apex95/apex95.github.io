@@ -12,7 +12,8 @@ In this short article, I'll show you how to send data to a website from a C# app
 
 Using the **GET** method is the easiest way to send any text data since all you have to do is to open the Url address with already-defined parameters, with **WebClient**. Notice that WebClient is IDisposable you can use it this way:
 
-```csharpstring username = "john";
+```csharp
+string username = "john";
 string urlAddress = "http://www.yoursite.tld/somepage.php?username=" + username;  
 
 using (WebClient client = new WebClient())
@@ -26,7 +27,8 @@ The code above opens a Url address, with 1 GET parameter: _/somepage.php?usernam
 
 Now if you need to check what the program sent, use a PHP snippet like this one and look in the source of the page:
 
-```php<?php
+```php
+<?php
     $username = $_GET["username"];  //make sure you filter these values, before showing them
     echo $username;  //$username == "john"
 ?>
@@ -38,11 +40,14 @@ Sending data using **POST**, even if it looks similar to GET, you'll need a diff
 
 First, make sure you include this namespace:
 
-```csharpusing System.Collections.Specialized;```
+```csharp
+using System.Collections.Specialized;
+```
 
 Then, you can jump to the code:
 
-```csharpstring username = "john";
+```csharp
+string username = "john";
 string referer = "myprogram";
 string urlAddress = "http://www.yoursite.tld/somepage.php";
 
@@ -62,7 +67,8 @@ using (WebClient client = new WebClient())
 
 Once again, a short PHP snippet that can be used with the example above (the result is shown in the source code, downloaded by WebClient.UploadValues):
 
-```php<?php
+```php
+<?php
     $username = $_POST["username"];  
     $referer = $_POST["referer"];
     echo $username." from ".$referer;  // $username == "john" and $referer == "myprogram"
