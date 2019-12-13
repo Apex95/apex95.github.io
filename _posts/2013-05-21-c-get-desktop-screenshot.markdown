@@ -20,7 +20,7 @@ There are 3 steps that you need to follow:
 
 The code looks like this:
 
-{% highlight csharp linenos %}private void takeScreenShot()
+```csharpprivate void takeScreenShot()
 {
     Bitmap bmp = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
     using (Graphics g = Graphics.FromImage(bmp))
@@ -28,4 +28,4 @@ The code looks like this:
         g.CopyFromScreen(0, 0, 0, 0, Screen.PrimaryScreen.Bounds.Size);
         bmp.Save("screenshot.png");  // saves the image
     }                 
-} {% endhighlight %}
+} ```

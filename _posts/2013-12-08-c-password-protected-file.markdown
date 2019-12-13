@@ -34,7 +34,7 @@ This part explains how to write the decryptor application: the resulting executa
 
 I made it as a **Forms** project only for the sake of design - anyway there's only 1 method that does all the work so it can be easily modified.
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
@@ -83,13 +83,13 @@ namespace decryptor
             }
         }
     }
-}{% endhighlight %}
+}```
 
 ## 2\. Attaching the file to the decryptor
 
 This requires another executable file that will handle encryption and file attachment. I used a **Console Application** for this - to be honest I never intended to publish this as a program, I was just testing - and for testing, the console was enough.
 
-{% highlight csharp linenos %}using System.IO;
+```csharpusing System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -143,7 +143,7 @@ namespace FileAppender
             File.WriteAllBytes(file + ".exe", finalBuffer);
         }
     }
-}{% endhighlight %}
+}```
 
 ## Note
 

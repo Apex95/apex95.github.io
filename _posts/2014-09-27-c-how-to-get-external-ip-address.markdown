@@ -24,13 +24,13 @@ Here's a short example of how you should do it (don't forget to include **System
 
 * this snippet should only give you the idea of how to do this, don't use it as it is.
 
-{% highlight csharp linenos %}string getExternalIP()
+```csharpstring getExternalIP()
 {
     using (WebClient client = new WebClient())
     {
          return client.DownloadString("http://canihazip.com/s");
     }
-}{% endhighlight %}
+}```
 
 _What if the website is **down**?_
 
@@ -38,7 +38,7 @@ Well, this is a risk that can be avoided by using...more websites :) and a bunch
 
 A more reliable example here:
 
-{% highlight csharp linenos %}string getExternalIP()
+```csharpstring getExternalIP()
 {
     using (WebClient client = new WebClient())
     {
@@ -72,7 +72,7 @@ A more reliable example here:
         // if we got here, all the websites are down, which is unlikely
         return "Check internet connection?";
     }
-}{% endhighlight %}
+}```
 
 It can still be improved by doing all the connections at the same time (putting each one in a different thread) - this will reduce the waiting time (if the first websites are down).
 

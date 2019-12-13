@@ -19,7 +19,7 @@ The main trick here is to treat **child forms** as **Controls**. You'll create a
 
 The following lines of code are used to create a child form:
 
-{% highlight csharp linenos %}Form childForm = new Form(); //initialize a child form
+```csharpForm childForm = new Form(); //initialize a child form
 
 childForm.TopLevel = false; //set its TopLevel to false
 
@@ -28,4 +28,4 @@ childForm.Show(); //finally display it
 
 childForm.BringToFront(); //use this to render your newly created form over the controls
 
-{% endhighlight %}
+```

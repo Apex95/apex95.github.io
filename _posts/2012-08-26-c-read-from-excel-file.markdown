@@ -17,28 +17,28 @@ from Solution Explorer, right click on _References->Add reference->.NET_ and loo
 
 Once done, add the following line in your project:
 
-{% highlight csharp linenos %}using Microsoft.Office.Interop.Excel;{% endhighlight %}
+```csharpusing Microsoft.Office.Interop.Excel;```
 
 ## Opening the document
 
 First, we need an **Microsoft.Office.Interop.Excel.Application** object, so we can open the Excel file:
 
-{% highlight csharp linenos %}Microsoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();{% endhighlight %}
+```csharpMicrosoft.Office.Interop.Excel.Application excel = new Microsoft.Office.Interop.Excel.Application();```
 
 Once the file is opened, we have to store the data - this is done using an **WorkBook object**. This method has lots of arguments, fortunately only the first is required (which is the file's path) - so we can add Type.Missing to the others:
 
-{% highlight csharp linenos %}Workbook wbook = excel.Workbooks.Open(Directory.GetCurrentDirectory() + "/" + "filename.xls", 
+```csharpWorkbook wbook = excel.Workbooks.Open(Directory.GetCurrentDirectory() + "/" + "filename.xls", 
                      Type.Missing, Type.Missing, Type.Missing, 
                      Type.Missing, Type.Missing, Type.Missing, 
                      Type.Missing, Type.Missing, Type.Missing, 
                      Type.Missing, Type.Missing, Type.Missing, 
-                     Type.Missing, Type.Missing);{% endhighlight %}
+                     Type.Missing, Type.Missing);```
 
 ## Reading the data
 
 Now, as you probably know, an **Excel document** contains multiple **WorkSheets**. To read a **cell's value**, we have to select the WorkSheet where the cell is found:
 
-{% highlight csharp linenos %}Sheets worksheets = wbook.Worksheets;  //storing all the sheets
+```csharpSheets worksheets = wbook.Worksheets;  //storing all the sheets
 
 Range cell = ((Worksheet)worksheets["Sheet1"]).get_Range("A1", "A1");
 //from the worksheets, we select Sheet1 and then the cell A1
@@ -48,7 +48,7 @@ string cell_value = cell.Value.ToString();  //this is the cell's value
 /* some-code */
 
 wbook.Close(); //closing...
-{% endhighlight %}
+```
 
 ## Result
 
@@ -59,7 +59,7 @@ I wrote a small application which shows the content of a Excel file, using a **d
 
 And the code I wrote:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -117,4 +117,4 @@ namespace Excel
         }
     }
 }
-{% endhighlight %}
+```

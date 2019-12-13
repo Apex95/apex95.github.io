@@ -24,33 +24,33 @@ Before we start, here's a _short_ list of the methods we'll need:
 
 *   **CreateDesktop()** - used to actually create the desktop
 
-    {% highlight csharp linenos %}[DllImport("user32.dll")]
-public static extern IntPtr CreateDesktop(string lpszDesktop, IntPtr lpszDevice, IntPtr pDevmode, int dwFlags, uint dwDesiredAccess, IntPtr lpsa);{% endhighlight %}
+    ```csharp[DllImport("user32.dll")]
+public static extern IntPtr CreateDesktop(string lpszDesktop, IntPtr lpszDevice, IntPtr pDevmode, int dwFlags, uint dwDesiredAccess, IntPtr lpsa);```
 
 *   **SwitchDesktop()** - for switching between the original and the new desktop
 
-    {% highlight csharp linenos %}[DllImport("user32.dll")]
-private static extern bool SwitchDesktop(IntPtr hDesktop);{% endhighlight %}
+    ```csharp[DllImport("user32.dll")]
+private static extern bool SwitchDesktop(IntPtr hDesktop);```
 
 *   **CloseDesktop()** - closes the desktop handle
 
-    {% highlight csharp linenos %}[DllImport("user32.dll")]
-public static extern bool CloseDesktop(IntPtr handle);{% endhighlight %}
+    ```csharp[DllImport("user32.dll")]
+public static extern bool CloseDesktop(IntPtr handle);```
 
 *   **SetThreadDesktop()** - sets the desktop for the calling thread
 
-    {% highlight csharp linenos %}[DllImport("user32.dll")]
-public static extern bool SetThreadDesktop(IntPtr hDesktop);{% endhighlight %}
+    ```csharp[DllImport("user32.dll")]
+public static extern bool SetThreadDesktop(IntPtr hDesktop);```
 
 *   **GetThreadDesktop** - gets the desktop defined for the specified thread
 
-    {% highlight csharp linenos %}[DllImport("user32.dll")]
-public static extern IntPtr GetThreadDesktop(int dwThreadId);{% endhighlight %}
+    ```csharp[DllImport("user32.dll")]
+public static extern IntPtr GetThreadDesktop(int dwThreadId);```
 
 *   **GetCurrentThreadId()** - gets the current thread's id
 
-    {% highlight csharp linenos %}[DllImport("kernel32.dll")]
-public static extern int GetCurrentThreadId();{% endhighlight %}
+    ```csharp[DllImport("kernel32.dll")]
+public static extern int GetCurrentThreadId();```
 
 Basically there will be 2 desktop handles:
 
@@ -63,7 +63,7 @@ Then, you can easily switch between them using **SwitchDesktop(desktopHandle)**.
 
 We also need to define the desired <u>desktop access</u>, which will be an **enum**:
 
-{% highlight csharp linenos %}enum DESKTOP_ACCESS : uint
+```csharpenum DESKTOP_ACCESS : uint
 {
     DESKTOP_NONE = 0,
     DESKTOP_READOBJECTS = 0x0001,
@@ -80,7 +80,7 @@ We also need to define the desired <u>desktop access</u>, which will be an **enu
                     DESKTOP_HOOKCONTROL | DESKTOP_JOURNALRECORD | DESKTOP_JOURNALPLAYBACK |
                     DESKTOP_ENUMERATE | DESKTOP_WRITEOBJECTS | DESKTOP_SWITCHDESKTOP),
 }
-{% endhighlight %}
+```
 
 However, here we'll use **GENERIC_ALL**.
 
@@ -96,7 +96,7 @@ This is the code I came up with, tried to keep it as simple as possible, so you 
 **System.Windows.Forms.dll  
 System.Drawing.dll**
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -189,7 +189,7 @@ namespace AntiKeylogger
         }
     }
 }
-{% endhighlight %}
+```
 
 ## 4\. Additional notes
 

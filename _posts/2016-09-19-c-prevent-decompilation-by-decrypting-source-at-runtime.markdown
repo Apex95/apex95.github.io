@@ -32,7 +32,7 @@ We're not really going to reinvent the wheel here - .NET seems to allow us to us
 an `Assembly`. Just as always, we start with a `CodeDomProvider`, add a bunch of settings using `CompilerParameters` and
 a few sourcecodes.
 
-{% highlight csharp linenos %}
+```csharp
 CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
 
 CompilerParameters parameters = new CompilerParameters();
@@ -52,7 +52,7 @@ parameters.ReferencedAssemblies.Add("System.Drawing.dll");
 // in order to be compiled
 
 CompilerResults result = provider.CompileAssemblyFromSource(parameters, getContents());
-{% endhighlight %}
+```
 
 
 If you look around, there's also an article that provides a little bit more detail about how to compile code at runtime
@@ -70,7 +70,7 @@ to be no output from the compiled assembly.
 
 This is how we can run the compiled code:
 
-{% highlight csharp linenos %}
+```csharp
 Assembly assembly = result.CompiledAssembly;
 
 //taking the entrypoint
@@ -81,7 +81,7 @@ object entryPointInstance = assembly.CreateInstance(methodInfo.Name);
 
 // then invoking it with no arguments (hence the 'null')
 methodInfo.Invoke(entryPointInstance, null);
-{% endhighlight %}
+```
 
 
 ## 3. Encrypting & Attaching Sourcecodes
@@ -99,7 +99,7 @@ It's not the clean way to handle this...don't use it in serious projects; but fo
 
 The method that I use looks like this:
 
-{% highlight csharp linenos %}
+```csharp
 static void appendContents(String fileName)
 {
     // fileName contains the name of the decrypter 
@@ -145,7 +145,7 @@ static void appendContents(String fileName)
         fstream.WriteByte(CHAR_FS);
     }
 }
-{% endhighlight %}
+```
 
 I'll not add `EncryptMessage()`'s code here since it's not related to the actual subject - you can find it below,
 in the complete sourcecode.
@@ -160,7 +160,7 @@ is pure C# code that will be given to the compiler.
 Remember to replace the `"abcdabcdabc..."` decryption key with what the user inputs in order to use the program
 (like a license) - **line 31**.
 
-{%highlight csharp linenos %}
+```csharp
 static String[] getContents()
 {
     // reads all the bytes found in the running executable's file
@@ -202,7 +202,7 @@ static String[] getContents()
     // returning the array of sourcecodes
     return sourceFiles.ToArray();
 }
-{% endhighlight %} 
+``` 
 
 
 ## Final Notes & Complete Sourcecode
@@ -213,7 +213,7 @@ In order to actually use it you should split this into **2** programs - one for 
 You send **only** the latter one to the user - so he won't get the **encryption key** - this or switch to an **asymmetric** algorithm. Also don't forget to remove 
 the hardcoded **decryption key** and ask the user for his own.
 
-{%highlight csharp linenos %}
+```csharp
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -384,7 +384,7 @@ namespace ConsoleApplication1
         }
     }
 }
-{% endhighlight %}
+```
 
 
 ## Proof of concept

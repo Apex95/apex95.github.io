@@ -130,7 +130,7 @@ Now the real deal - applying this for `N_OF_IMAGES` images, each one containing 
 pixels.
 
 
-{% highlight csharp linenos %}
+```csharp
 // for each known image
 for (int k = 0; k < N_OF_IMAGES; k++)
 {
@@ -152,7 +152,7 @@ for (int k = 0; k < N_OF_IMAGES; k++)
     // I use this to convert from likelihoods to probabilities (0-1)
     totalLikelihood += likelihoods[k];
 }
-{% endhighlight %}
+```
 
 ---
 <u>Short note:</u>
@@ -194,7 +194,7 @@ The sourcecode that I used in this article; I guess there's no need for addition
 
 Final note: to me it seems to be working, but it's the first time I'm coding stuff like this, so... it might contain mistakes.
 
-{% highlight csharp linenos %}
+```csharp
 using System;
 using System.Drawing;
 using System.IO;
@@ -279,7 +279,7 @@ namespace Bayes_Classifier
     }
 }
 
-{% endhighlight %}
+```
 
 
 

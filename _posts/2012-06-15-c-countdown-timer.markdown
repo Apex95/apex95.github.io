@@ -26,30 +26,30 @@ Double-click on the **timer**, which we inserted near the form - in the code win
 
 I tried to write this code as short as possible, so it might look complicated but all it does is to convert the last value of the label into an int, subtracts 1 from that value, converts it back to string and adds it back to the label.
 
-{% highlight csharp linenos %}private void timer1_Tick (object sender, EventArgs e)
+```csharpprivate void timer1_Tick (object sender, EventArgs e)
 {
       label1.Text = (int.Parse(label1.Text) - 1).ToString();     
-} {% endhighlight %}
+} ```
 
 If you don't understand the version above, here something easier (both versions do the same thing):
 
-{% highlight csharp linenos %}private void timer1_Tick (object sender, EventArgs e)
+```csharpprivate void timer1_Tick (object sender, EventArgs e)
 {
       int timeLeft = int.Parse(label1.Text);  //getting the last value (the one from the label)
       timeLeft -= 1; //subtracting 1
       label1.Text = timeLeft.ToString();  //adding it back to the label.      
-} {% endhighlight %}
+} ```
 
 ## Starting/stopping it
 
 That's all, it remains to start our timer using **timer1.Start()** and provide an initial value for the label.
 
-{% highlight csharp linenos %}public Form1()
+```csharppublic Form1()
 {
       InitializeComponent();
       label1.Text = "90"; //start from 90 seconds
       timer1.Start();  
-} {% endhighlight %}
+} ```
 
 To stop it, use: **timer1.Stop()**
 
@@ -57,7 +57,7 @@ To stop it, use: **timer1.Stop()**
 
 In the end, you should have something like this:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Windows.Forms;
 
 namespace timer_tutorial
@@ -80,4 +80,4 @@ namespace timer_tutorial
     }
 }
 
-{% endhighlight %}
+```

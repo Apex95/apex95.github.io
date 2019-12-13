@@ -12,7 +12,7 @@ Before starting to edit registry values/keys, include in your project's source t
 
 So, make sure you add this:
 
-{% highlight csharp linenos %}using Microsoft.Win32;{% endhighlight %}
+```csharpusing Microsoft.Win32;```
 
 In order to edit anything, you must:
 
@@ -24,7 +24,7 @@ In order to edit anything, you must:
 
 So your snippet will look like this:
 
-{% highlight csharp linenos %}//this is how your key will look like
+```csharp//this is how your key will look like
 //the 2nd argument (true) is indicating that the key is writable
 RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
 
@@ -32,62 +32,62 @@ RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\C
 //which are found in: 'Software\Microsoft\Windows\CurrentVersion\Run'
 
 //and finally, you close the key
-key.Close();{% endhighlight %}
+key.Close();```
 
 ## Creating a Key
 
 A key is a **subfolder**, in which you can add multiple **values**.  
 To create a **key**:
 
-{% highlight csharp linenos %}RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+```csharpRegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
 
 //create a new key 
 key.CreateSubKey("someKey");
 
 key.Close();
 
-{% endhighlight %}
+```
 
 ## Deleting a Key
 
 In order to delete a key, you have to do the same thing: set the path then simply delete it.
 
-{% highlight csharp linenos %}RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+```csharpRegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
 
 //deleting 'someKey'
 key.DeleteSubKey("someKey");
 
-key.Close();{% endhighlight %}
+key.Close();```
 
 ## Adding/Editing a value
 
 Before doing this, you have to set the path to the **key** where you want to add that **value**. You can use the code below for adding or editing values.
 
-{% highlight csharp linenos %}RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run\someKey", true);
+```csharpRegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run\someKey", true);
 
 //adding/editing a value 
 key.SetValue("someValue", "someData"); //sets 'someData' in 'someValue' 
 
-key.Close();{% endhighlight %}
+key.Close();```
 
 ## Reading a value
 
 You can get a value from a key by knowing its name:
 
-{% highlight csharp linenos %}RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run\someKey", true);
+```csharpRegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run\someKey", true);
 
 //getting the value
 string data = key.GetValue("someValue").ToString();  //returns the text found in 'someValue'
 
-key.Close();{% endhighlight %}
+key.Close();```
 
 ## Deleting a value
 
 And finally, when we got bored of values, we can delete them:
 
-{% highlight csharp linenos %}RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+```csharpRegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
 
 //deleting the value
 key.DeleteValue("someValue");
 
-key.Close();{% endhighlight %}
+key.Close();```

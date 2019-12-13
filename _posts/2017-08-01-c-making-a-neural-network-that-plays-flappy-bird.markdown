@@ -142,7 +142,7 @@ Ok, enough of me talking; I know this is the part that gets the most attention -
 *// I'm publishing only the part that is relevant - because I consider that having a wall of code attached in an article looks rather bad from the reader's point of view.*
 
 
-{% highlight csharp linenos %}
+```csharp
 
 using Floppy_Bird;
 using System;
@@ -553,14 +553,14 @@ namespace ANN_FlappyBird
     }
 }
 
-{% endhighlight %}
+```
 
 
 ## Auxiliary files
 
 The **DataSharer** class:
 
-{% highlight csharp linenos %}
+```csharp
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -632,7 +632,7 @@ namespace ANN_FlappyBird
         }
     }
 }
-{% endhighlight %}
+```
 
 
 

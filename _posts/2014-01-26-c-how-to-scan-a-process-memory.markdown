@@ -31,15 +31,15 @@ Methods that will be required (including the ones above):
 
 **GetSystemInfo()**
 
-{% highlight csharp linenos %}
+```csharp
 [DllImport("kernel32.dll")]
-static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);{% endhighlight %}
+static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);```
 
 Retrieves random information about the system in a structure called **SYSTEM_INFO**. This structure also contains 2 variables: **minimumApplicationAddress** & **maximumApplicationAddress** which store the minimum and the maximum address where the system can allocate memory for User-Mode applications.
 
 **SYSTEM_INFO** looks like this:
 
-{% highlight csharp linenos %}public struct SYSTEM_INFO
+```csharppublic struct SYSTEM_INFO
 {
     public ushort processorArchitecture;
     ushort reserved;
@@ -53,15 +53,15 @@ Retrieves random information about the system in a structure called **SYSTEM_INF
     public ushort processorLevel;
     public ushort processorRevision;
 }
-{% endhighlight %}
+```
 
 &nbsp;
 
 **VirtualQueryEx()**
 
-{% highlight csharp linenos %}
+```csharp
 [DllImport("kernel32.dll", SetLastError=true)]
-static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);{% endhighlight %}
+static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);```
 
     
   This method gets information about a range of memory addresses and returns it into a structure named **MEMORY_BASIC_INFORMATION**. Given a minimum address, we use this to find out if there's a region of memory that's allocated by that program (this way we reduce the search range by directly jumping over memory chunks). Basically this method tells us the range of a memory chunk that starts from the specified address: in order to get to the next memory chunk, we add the length of this region to the current memory address (sum).  
@@ -71,7 +71,7 @@ static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_B
 
 **MEMORY_BASIC_INFORMATION** must be defined this way:
 
-{% highlight csharp linenos %}public struct MEMORY_BASIC_INFORMATION
+```csharppublic struct MEMORY_BASIC_INFORMATION
 {
     public int BaseAddress;
     public int AllocationBase;
@@ -81,14 +81,14 @@ static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_B
     public int Protect; // page protection (must be PAGE_READWRITE)
     public int lType;
 }
-{% endhighlight %}
+```
 
 &nbsp;
 
 **ReadProcessMemory()**
 
-{% highlight csharp linenos %}[DllImport("kernel32.dll")]
-public static extern bool ReadProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);{% endhighlight %}
+```csharp[DllImport("kernel32.dll")]
+public static extern bool ReadProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);```
 
 Used to read a number of bytes starting from a specific memory address.  
 Requires **PROCESS_WM_READ**.
@@ -97,8 +97,8 @@ Requires **PROCESS_WM_READ**.
 
 **OpenProcess()**
 
-{% highlight csharp linenos %}[DllImport("kernel32.dll")]
-public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);{% endhighlight %}
+```csharp[DllImport("kernel32.dll")]
+public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);```
 
 Returns a handle to a specific process - the process must be opened with **PROCESS_QUERY_INFORMATION** and **PROCESS_WM_READ**.
 
@@ -106,7 +106,7 @@ Returns a handle to a specific process - the process must be opened with **PROCE
 
 Once you understand what happens above, we can move to some code - but since there isn't much more to explain, I'll provide the whole source and cover what's left using comments.
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -216,4 +216,4 @@ namespace MemoryScanner
         }
     }
 }
-{% endhighlight %}
+```

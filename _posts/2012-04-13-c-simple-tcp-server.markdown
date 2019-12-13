@@ -14,7 +14,7 @@ For the sake of simplicity we'll make a **synchronous server** using a **Console
 
 I'll post now the code of the TCP server and I'll explain below how it works:
 
-{% highlight csharp linenos %}
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +56,7 @@ namespace ServerTest
         }
     }
 }
-{% endhighlight %}
+```
 
 &nbsp;
 
@@ -68,46 +68,46 @@ namespace ServerTest
 
 2\. Now, we create the server: the following line is used to create a **TcpListener** (which is our server), that will check for any incoming connection, on any IP address on the port **9999**.
 
-{% highlight csharp linenos %}
+```csharp
 TcpListener server = new TcpListener(IPAddress.Any, 9999);
-{% endhighlight %}
+```
 
 3\. Ok, we have the server but it's not doing anything. So, we'll make him accept connections from a Tcp Client:
 
-{% highlight csharp linenos %}
+```csharp
 while (true)
 {
        TcpClient client = server.AcceptTcpClient();
        ...
 }
-{% endhighlight %}
+```
 
 4\. After the client connects, the server will send using the **NetworkStream.** a 'hello' message. Because we can't directly send/receive strings, we have to transform our messange into a **byte array**.
 
-{% highlight csharp linenos %}
+```csharp
 Encoding.Default.GetBytes("hello world");
-{% endhighlight %}
+```
 
 After the message is converted, it can be sent:
 
-{% highlight csharp linenos %}
+```csharp
 NetworkStream ns = client.GetStream();
 ns.Write(hello, 0, hello.Length);
-{% endhighlight %}
+```
 
 5\. The last part consists in reading the messages received from the client.  
 Any incoming message is read using the same **NetworkStream**.
 
-{% highlight csharp linenos %}
+```csharp
 NetworkStream ns = client.GetStream();  
 ns.Read(msg, 0, msg.Length);
-{% endhighlight %}
+```
 
 Finally we transform it into a string, using the same encoding.
 
-{% highlight csharp linenos %}
+```csharp
 Encoding.Default.GetString(msg);
-{% endhighlight %}
+```
 
 &nbsp;
 &nbsp;

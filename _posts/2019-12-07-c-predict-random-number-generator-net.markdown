@@ -62,7 +62,7 @@ In my implentation, I'm using the following trick to simplify the things: I don'
 
 Here's the code I used, it should help clear things up.
 
-{% highlight csharp linenos %}
+```csharp
 public class Program
 {
 	/* predicts random numbers, given 2 state descriptors */
@@ -127,7 +127,7 @@ public class Program
 		}
 	}
 }
-{% endhighlight %}
+```
 
 
 You should get something like this when running it (well, different numbers because you'll have a different seed - but you get the point). Tested it on **.NET 4.7.2**.

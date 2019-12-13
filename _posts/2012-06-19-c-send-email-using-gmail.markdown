@@ -17,36 +17,36 @@ In this tutorial ... we'll send emails :) using C# of course.
 
 We start by including **System.Net** and **System.Net.Mail** in our program.
 
-{% highlight csharp linenos %}using System.Net.Mail;
-using System.Net;{% endhighlight %}
+```csharpusing System.Net.Mail;
+using System.Net;```
 
 Then, set the two addresses:
 
-{% highlight csharp linenos %}MailAddress myemail = new MailAddress("me@gmail.com", "Name");  //used for authentication
+```csharpMailAddress myemail = new MailAddress("me@gmail.com", "Name");  //used for authentication
 MailAddress mail_to = new MailAddress("receiver@yahoo.com", "Receiver");  //the email address of the receiver
 
-string password = "email password here";  //used for authentication{% endhighlight %}
+string password = "email password here";  //used for authentication```
 
 We will create a **SMTP client** that connects to the **Gmail** server:
 
-{% highlight csharp linenos %}SmtpClient client_smtp = new SmtpClient("smtp.gmail.com", 587);   //address and port
+```csharpSmtpClient client_smtp = new SmtpClient("smtp.gmail.com", 587);   //address and port
 
 client_smtp.EnableSsl = true;   //Gmail requires a ssl connection
 client_smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 client_smtp.UseDefaultCredentials = false;
-client_smtp.Credentials = new NetworkCredential(myemail.Address, password); //authentication data{% endhighlight %}
+client_smtp.Credentials = new NetworkCredential(myemail.Address, password); //authentication data```
 
 That's the SMTP client, now we have to write the message:
 
-{% highlight csharp linenos %}MailMessage message = new MailMessage (myemail, mail_to);
+```csharpMailMessage message = new MailMessage (myemail, mail_to);
 message.Subject = "Test";  //subject
 message.Body = "just a test email";  //content
 
-client_smtp.Send(message); {% endhighlight %}
+client_smtp.Send(message); ```
 
 Finally you get this:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Collections.Generic;  
 using System.Linq;  
 using System.Text;  
@@ -82,6 +82,6 @@ namespace smtp_client
     }  
 }
 
-{% endhighlight %}
+```
 
 If the message isn't showing up in about 5 minutes, it might be an error with your application, if so check the code again.

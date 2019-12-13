@@ -99,7 +99,7 @@ Still it provides exact values for 2!, 3!, 4! and 5!
 
 Here goes the code:
 
-{% highlight matlab linenos %}function [y] = lagrange(x, x0, y0)
+```matlabfunction [y] = lagrange(x, x0, y0)
 
     % x0 - vector containing inputs (x values)
     % y0 - vector containing outputs (results for these x values
@@ -124,7 +124,7 @@ Here goes the code:
         y += y0(i) * p;   
     endfor;
 endfunction;
-{% endhighlight %}
+```
 
 ## Conclusions
 

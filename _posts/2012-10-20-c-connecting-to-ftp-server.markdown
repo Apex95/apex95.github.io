@@ -16,21 +16,21 @@ In this tutorial I will show you how to use **C#** to **connect to a FTP server*
 
 Before doing operations on files, you must learn how to connect to the FTP server. For every action, you have to use a **FtpWebRequest** - and with it, you tell the server what to do. When the **FtpWebRequest** is created, you have to provide the path to the file:
 
-{% highlight csharp linenos %}FtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create("ftp://myFtpAddress.tld/myFile.txt");
+```csharpFtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create("ftp://myFtpAddress.tld/myFile.txt");
 // 'ftp://myFtpAddress.tld/myFile.txt' is the path to the file
-{% endhighlight %}
+```
 
 Now, we have to provide the authentication data (username & password). This data must be included into the FTP request:
 
-{% highlight csharp linenos %}ftpRequest.Credentials = new NetworkCredential("username", "password");
-{% endhighlight %}
+```csharpftpRequest.Credentials = new NetworkCredential("username", "password");
+```
 
 This is how your code should look like:
 
-{% highlight csharp linenos %}FtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create("ftp://myFtpAddress.tld/myFile.txt");
+```csharpFtpWebRequest ftpRequest = (FtpWebRequest)WebRequest.Create("ftp://myFtpAddress.tld/myFile.txt");
 
 ftpRequest.Credentials = new NetworkCredential("username", "password");
-{% endhighlight %}
+```
 
 After this, you can start doing operations with files.
 
@@ -38,11 +38,11 @@ After this, you can start doing operations with files.
 
 You have to tell the **FTP Server** what you want to do - in this case, you want to **upload a file**. So, you'll set the **WebRequestMethod** to **UploadFile**:
 
-{% highlight csharp linenos %}ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;{% endhighlight %}
+```csharpftpRequest.Method = WebRequestMethods.Ftp.UploadFile;```
 
 The line above tells the server that you want to upload a file - so it'll wait for **file's content**. The file's content must be sent as a byte array (**byte[]**):
 
-{% highlight csharp linenos %}byte[] fileContent;  //in this array you'll store the file's content
+```csharpbyte[] fileContent;  //in this array you'll store the file's content
 
 using (StreamReader sr = new StreamReader("myFile.txt"))  //'myFile.txt' is the file we want to upload
 {
@@ -53,11 +53,11 @@ using (Stream sw = ftpRequest.GetRequestStream())
 {
        sw.Write(fileContent, 0, fileContent.Length);  //sending the content to the FTP Server
 }
-{% endhighlight %}
+```
 
 The complete code for file upload will look like this:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Net;
 using System.IO;
 using System.Text;
@@ -89,27 +89,27 @@ namespace testProj
         }
     }
 }
-{% endhighlight %}
+```
 
 ## 3.Downloading a file
 
 This is easier, this time the server will send to our program the file's content. But first, we must tell the server that we want to download a file:
 
-{% highlight csharp linenos %}ftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
-{% endhighlight %}
+```csharpftpRequest.Method = WebRequestMethods.Ftp.DownloadFile;
+```
 
 Then, we'll get the **server's response** - that's the file we want. To do this, you can use a **StreamReader** to read from the main Stream.
 
-{% highlight csharp linenos %}using (Stream sw = ftpRequest.GetResponse().GetResponseStream())  //getting the response stream
+```csharpusing (Stream sw = ftpRequest.GetResponse().GetResponseStream())  //getting the response stream
 {
       StreamReader sr = new StreamReader(sw);   //reading from the stream
       Console.WriteLine(sr.ReadToEnd());   //showing the file's content
 }
-{% endhighlight %}
+```
 
 And the complete code:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Net;
 using System.IO;
 using System.Text;
@@ -133,19 +133,19 @@ namespace testProj
         }
     }
 }
-{% endhighlight %}
+```
 
 ## 4.Deleting a file
 
 Once again, tell the server what you want to do (delete a file), using **WebRequestMethods**:
 
-{% highlight csharp linenos %}ftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
-{% endhighlight %}
+```csharpftpRequest.Method = WebRequestMethods.Ftp.DeleteFile;
+```
 
 And that's all ! - no additional code is required to do this.  
 The complete source code:
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Net;
 using System.IO;
 using System.Text;
@@ -165,4 +165,4 @@ namespace testProj
         }
     }
 }
-{% endhighlight %}
+```

@@ -10,23 +10,23 @@ This tutorial focuses on **sending text** from a C# program to any other window 
 
 Don't forget to include these namespaces:
 
-{% highlight csharp linenos %}using System.Diagnostics;
-using System.Runtime.InteropServices;{% endhighlight %}
+```csharpusing System.Diagnostics;
+using System.Runtime.InteropServices;```
 
 ## 1\. FindWindowEx
 
 This method gets all the child elements from a parent element: for example it can get the handle of a textbox(child) from the window(parent).
 
-{% highlight csharp linenos %}[DllImport("user32.dll")]
-public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);{% endhighlight %}
+```csharp[DllImport("user32.dll")]
+public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);```
 
 ## 2\. SendMessage
 
 This one simply sends a message to the specified handle (it might be a window, a textbox, anything...).  
 We'll use this to send the data we want.
 
-{% highlight csharp linenos %}[DllImport("User32.dll")]
-public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);{% endhighlight %}
+```csharp[DllImport("User32.dll")]
+public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, string lParam);```
 
 ## How it works
 
@@ -36,7 +36,7 @@ In this tutorial I'll send some text to **Notepad** - it's just an example, but 
 
 I'll post below a C# application that changes the text from **notepad**'s window.
 
-{% highlight csharp linenos %}using System;
+```csharpusing System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -67,7 +67,7 @@ namespace Test
             SendMessage(notepadTextbox, WM_SETTEXT, 0, "This is the new Text!!!");  
         }
     }
-}{% endhighlight %}
+}```
 
 Using this method, you won't need to actually give focus to the window - but you'll have to know some additional information about the **program's structure** - that's because you need to know what child to select, where is that child located, etc..
 

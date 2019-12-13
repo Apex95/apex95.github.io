@@ -18,7 +18,7 @@ This is the only part where we'll be using C# - so enjoy it as much as you can! 
 
 I came up with this _sophisticated_ code (feel free to improvise), but the function that you want to call must **return** something (preferably **int**).
 
-{% highlight csharp linenos %}using System.Windows.Forms;
+```csharpusing System.Windows.Forms;
 
 namespace dllNamespace
 {
@@ -30,15 +30,15 @@ namespace dllNamespace
             return 0;
         }
     }
-}{% endhighlight %}
+}```
 
 ## 2) Hosting the CLR in a native process
 
 First things first, you'll need to include these 2 lines:
 
-{% highlight csharp linenos %}#include <metahost.h>
+```csharp#include <metahost.h>
 #pragma comment(lib, "mscoree.lib")
-{% endhighlight %}
+```
 
 We have to call **CLRCreateInstance()** in order to gain access to **ICLRMetaHost**. This interface contains various methods that will provide general information about .NET Framework.
 
@@ -55,19 +55,19 @@ Using **ICLRRuntimeHost::ExecuteInDefaultAppDomain()** with a bunch of arguments
 
 The method looks like this:
 
-{% highlight c linenos %}HRESULT ExecuteInDefaultAppDomain (
+```cHRESULT ExecuteInDefaultAppDomain (
     [in] LPCWSTR pwzAssemblyPath,  // absolute path to the managed dll (not relative!)
     [in] LPCWSTR pwzTypeName,  // name of the class for example: dllNamespace.dllClass
     [in] LPCWSTR pwzMethodName,  // name of the method 
     [in] LPCWSTR pwzArgument,   // argument(s)
     [out] DWORD *pReturnValue   // this is what the method returns
-);{% endhighlight %}
+);```
 
 ## SourceCode
 
 This is the whole sourcecode:
 
-{% highlight c linenos %}#include <metahost.h>
+```c#include <metahost.h>
 #pragma comment(lib, "mscoree.lib")
 
 int main()
@@ -90,7 +90,7 @@ int main()
                 }
     return 0;
 } 
-{% endhighlight %}
+```
 
 <u>Short advice:</u> always check that each **HRESULT** returned is equivalent to **S_OK**.
 
