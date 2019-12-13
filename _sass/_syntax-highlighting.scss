@@ -1,6 +1,6 @@
 
 .lineno { background-color: $grey-color-med; }
-.highlight table td { padding: 5px; }
+.highlight table td { padding: 5px; vertical-align: baseline; }
 .highlight table pre { margin: 0; }
 .highlight .c, .highlight .ch, .highlight .cd, .highlight .cm, .highlight .cpf, .highlight .c1 {
   color: #888888;
