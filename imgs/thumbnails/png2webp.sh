@@ -1,3 +1,3 @@
-for file in *.jpeg ; do 
-	cwebp -q 75 "$file" -o "${file%.jpeg}.webp";
+for file in *.png ; do 
+	cwebp -q 75 "$file" -o "${file%.png}.webp";
 done
