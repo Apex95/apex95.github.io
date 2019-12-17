@@ -3,7 +3,7 @@ layout: post
 title:  "C# Make a Critical Process (BSoD if Killed)"
 date:   2013-10-07 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/bsod.png
+thumbnail: /imgs/thumbnails/bsod.webp
 ---
 
 A **critical** process is a type of process that Windows requires to be running - **csrss.exe** is an example of such process. Whenever a process like this finishes its execution (or it's terminated) Windows will respond with an authentic **Blue Screen of Death**.

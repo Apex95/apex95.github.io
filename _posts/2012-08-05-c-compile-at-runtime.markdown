@@ -3,7 +3,7 @@ layout: post
 title:  "C# Compile at Runtime"
 date:   2012-08-05 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/compileRuntime.png
+thumbnail: /imgs/thumbnails/compileRuntime.webp
 ---
 
 To our luck, **.NET Framework** contains some classes that allow us to access the compiler and with it, we can **compile our code at runtime**.

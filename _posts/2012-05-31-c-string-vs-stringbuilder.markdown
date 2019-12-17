@@ -3,7 +3,7 @@ layout: post
 title:  "C# String vs StringBuilder"
 date:   2012-05-31 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/stringVstringBuilder.png
+thumbnail: /imgs/thumbnails/stringVstringBuilder.webp
 ---
 
 **StringBuilder** or **String**? Is there any difference?

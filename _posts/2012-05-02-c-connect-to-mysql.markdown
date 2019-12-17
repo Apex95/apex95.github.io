@@ -3,7 +3,7 @@ layout: post
 title:  "C# Connect to MySql"
 date:   2012-05-02 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/connectMysql.jpg
+thumbnail: /imgs/thumbnails/connectMysql.webp
 ---
 
 **MsSql** or **MySql** ? What to use ?  

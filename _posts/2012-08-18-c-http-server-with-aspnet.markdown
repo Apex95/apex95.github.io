@@ -3,7 +3,7 @@ layout: post
 title:  "C# Http Server With ASP.NET"
 date:   2012-08-18 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/aspnet.png
+thumbnail: /imgs/thumbnails/aspnet.webp
 redirect_from: "/networking/c-http-server-with-asp-net/"
 ---
 

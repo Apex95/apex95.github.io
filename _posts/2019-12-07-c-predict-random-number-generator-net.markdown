@@ -3,7 +3,7 @@ layout: post
 title:  "C# Predict the Random Number Generator of .NET"
 date:   2019-12-07 00:45:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/predict_random_net.png
+thumbnail: /imgs/thumbnails/predict_random_net.webp
 ---
 
 This post targets to underline the **predictability** of the random... or better said **pseudo-random number generator** (PRNG) exposed by the **.NET** framework (aka the `Random()` class), under certain assumptions. Because of the nature of the implementation, **100% accuracy** can be obtained with a fairly simple idea and a rather short code snippet.

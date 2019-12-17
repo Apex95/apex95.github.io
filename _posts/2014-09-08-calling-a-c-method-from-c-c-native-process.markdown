@@ -3,7 +3,7 @@ layout: post
 title:  "Call a C# Method from C/C++ (native process)"
 date:   2014-09-08 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/runtime-host.png
+thumbnail: /imgs/thumbnails/runtime-host.webp
 ---
 
 So...I received a challenge from a _friend_ (lost a bet...) regarding how to load a **managed (C#) dll** in a **native (C++) process** by using the **Common Language Runtime (CLR)**. Basically, it refers to calling a **C# method** from **C/C++**. After a few tries, I came up with this...it seems to work with **.Net Framework 4.0**.

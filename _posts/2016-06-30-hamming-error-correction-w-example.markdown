@@ -3,7 +3,7 @@ layout: post
 title:  "Hamming Error Correction - with Example"
 date:   2016-06-30 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/hamming.jpg
+thumbnail: /imgs/thumbnails/hamming.webp
 ---
 
 This article will focus on **Hamming** codes - mainly, this represents an attempt to explain a little bit better

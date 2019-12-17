@@ -3,7 +3,7 @@ layout: post
 title:  "C# Naive Bayes Basic OCR (w/ Example)"
 date:   2016-11-17 20:02:05 +0300
 categories: ai
-thumbnail: /imgs/thumbnails/naive_bayes_ocr.png
+thumbnail: /imgs/thumbnails/naive_bayes_ocr.webp
 ---
 
 Hello again; I'm back - once again sacrificing my time for homework so I can publish

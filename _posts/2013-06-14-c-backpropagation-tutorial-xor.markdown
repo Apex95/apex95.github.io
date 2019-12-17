@@ -3,7 +3,7 @@ layout: post
 title:  "C# Backpropagation Tutorial (XOR)"
 date:   2013-06-14 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/backpropagation.png
+thumbnail: /imgs/thumbnails/backpropagation.webp
 ---
 
 I've been trying for some time to learn and actually understand how **Backpropagation** (aka **backward propagation of errors**) works and how it trains the neural networks. Since I encountered many problems while creating the program, I decided to write this tutorial and also add a completely functional code that is able to **learn** the **XOR** gate.

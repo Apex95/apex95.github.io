@@ -3,7 +3,7 @@ layout: post
 title:  "C# Edit Registry Keys or Values"
 date:   2012-11-11 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/registry.png
+thumbnail: /imgs/thumbnails/registry.webp
 ---
 
 ## First

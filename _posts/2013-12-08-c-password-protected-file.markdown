@@ -3,7 +3,7 @@ layout: post
 title:  "C# Password Protected File"
 date:   2013-12-08 20:02:05 +0300
 categories: files
-thumbnail: /imgs/thumbnails/filePassword.png
+thumbnail: /imgs/thumbnails/filePassword.webp
 ---
 
 In this article...I'll talk about how to <u>protect a file with a password</u> (any file type) - without using **ZIP** or any other archivers. The file will be encrypted and then 'attached' to an executable, which will be later used to decrypt it using the password provided.

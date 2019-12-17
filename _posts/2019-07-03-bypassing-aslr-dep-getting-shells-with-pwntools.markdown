@@ -3,7 +3,7 @@ layout: post
 title:  "Bypassing ASLR and DEP - Getting Shells with pwntools"
 date:   2019-07-03 00:45:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/ret_buffer_overflow.png
+thumbnail: /imgs/thumbnails/ret_buffer_overflow.webp
 ---
 
 Today, I'd like to take some time and to present a short trick to bypass both **ASLR** (*Address Space Layout Randomization*) and **DEP** (*Data Execution Prevention*) in order to obtain a shell in a **buffer-overflow** vulnerable binary.

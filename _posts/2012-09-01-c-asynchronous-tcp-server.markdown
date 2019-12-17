@@ -3,7 +3,7 @@ layout: post
 title:  "C# Asynchronous Tcp Server"
 date:   2012-09-01 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/asynctcplistener.bmp
+thumbnail: /imgs/thumbnails/asynctcplistener.webp
 ---
 
 This is the model of an **Asynchronous TCP server**, that can have multiple clients connected, each one on it's own **thread** - all of this is done using a relatively short and easy-to-remember code.

@@ -3,7 +3,7 @@ layout: post
 title:  "C# Send Text to Notepad"
 date:   2012-12-09 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/sendtext.png
+thumbnail: /imgs/thumbnails/sendtext.webp
 ---
 
 This tutorial focuses on **sending text** from a C# program to any other window by using 2 functions provided by **user32.dll**. The big advantage of this method is that the window you're sending the text to **doesn't require focus**.

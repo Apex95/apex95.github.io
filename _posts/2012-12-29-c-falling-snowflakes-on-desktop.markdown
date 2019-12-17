@@ -3,7 +3,7 @@ layout: post
 title:  "C# Falling Snowflakes on Desktop"
 date:   2012-12-29 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/snowflake.jpg
+thumbnail: /imgs/thumbnails/snowflake.webp
 ---
 
 Since it's winter, I decided to write about how to create an application that makes **snowflakes fall on your desktop**. It's just like snowing on your desktop, but the application is pretty basic so there's space for improvements - I tried to write a short code so it's easier to understand.

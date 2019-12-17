@@ -3,7 +3,7 @@ layout: post
 title:  "C# Countdown Timer"
 date:   2012-06-15 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/timer1.png
+thumbnail: /imgs/thumbnails/timer1.webp
 ---
 
 A **timer** in C # is an object that executes an action after a specified time interval - for example, it can call a method every 5 seconds.  

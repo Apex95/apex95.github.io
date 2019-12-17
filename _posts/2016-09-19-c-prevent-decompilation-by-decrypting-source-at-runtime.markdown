@@ -3,7 +3,7 @@ layout: post
 title:  "C# Prevent Decompilation by Decrypting Source at Runtime"
 date:   2016-09-19 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/reflector-runtime-decryption.png
+thumbnail: /imgs/thumbnails/reflector-runtime-decryption.webp
 ---
 
 *Hello world!* 

@@ -3,7 +3,7 @@ layout: post
 title:  "C# Text to Speech"
 date:   2012-05-15 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/pcSpeak.jpg
+thumbnail: /imgs/thumbnails/pcSpeak.webp
 ---
 
 **Windows SAPI** is a nice tool that comes with Windows that allows us to transform an input **text into a speech**.

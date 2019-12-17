@@ -3,7 +3,7 @@ layout: post
 title:  "C# Working with Xml Documents"
 date:   2012-05-01 20:02:05 +0300
 categories: files
-thumbnail: /imgs/thumbnails/xmlFiles.jpg
+thumbnail: /imgs/thumbnails/xmlFiles.webp
 ---
 
 **XML** is the main file type used to save our program's data. In this tutorial, I'll show you how to work with XML files in C#.

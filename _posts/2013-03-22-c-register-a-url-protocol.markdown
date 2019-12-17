@@ -3,7 +3,7 @@ layout: post
 title:  "C# Register a Url Protocol"
 date:   2013-03-22 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/protocolArgument.png
+thumbnail: /imgs/thumbnails/protocolArgument.webp
 ---
 
 This tutorial will show you how to register a custom **Url Protocol** for your application. Basically, you can control your application by simply clicking an Url address like this one:

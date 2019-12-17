@@ -3,7 +3,7 @@ layout: post
 title:  "C# Simple Syntax Highlighting"
 date:   2013-08-17 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/syntaxhighlight.png
+thumbnail: /imgs/thumbnails/syntaxhighlight.webp
 ---
 
 Some time ago, I had to make a project that required **syntax highlighting** - luckily I wasn't the one who had to make that part. However the version used in the project was more complicated - so I decided to make a tutorial that will teach you how to make a _basic_ syntax highlighter (with **Regex**).

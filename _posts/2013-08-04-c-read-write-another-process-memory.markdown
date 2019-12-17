@@ -3,7 +3,7 @@ layout: post
 title:  "C# Read/Write another Process' Memory"
 date:   2013-08-04 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/memory.jpg
+thumbnail: /imgs/thumbnails/memory.webp
 ---
 
 Today's tutorial is about...processes' memory! In this article I'll show you how to **read/write** a process' memory using C#. This is a good way to learn a part of **WinAPI** and also understand the basics of memory allocation.

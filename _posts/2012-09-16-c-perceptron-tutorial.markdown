@@ -3,7 +3,7 @@ layout: post
 title:  "C# Perceptron Tutorial"
 date:   2012-09-16 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/perceptron.png
+thumbnail: /imgs/thumbnails/perceptron.webp
 ---
 
 ## Intro

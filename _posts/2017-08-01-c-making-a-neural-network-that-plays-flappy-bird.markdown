@@ -3,7 +3,7 @@ layout: post
 title:  "C# Making a Neural Network that plays Flappy Bird"
 date:   2017-08-01 00:45:05 +0300
 categories: ai
-thumbnail: /imgs/thumbnails/flappy_bird_ann.png
+thumbnail: /imgs/thumbnails/flappy_bird_ann.webp
 ---
 
 All right, people; now that I'm done with the projects & finals for...a couple of days...I thought it would be a good idea

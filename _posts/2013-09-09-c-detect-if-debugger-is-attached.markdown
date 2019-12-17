@@ -3,7 +3,7 @@ layout: post
 title:  "C# Detect if Debugger is Attached"
 date:   2013-09-09 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/detectDebugger.png
+thumbnail: /imgs/thumbnails/detectDebugger.webp
 ---
 
 This method is used to detect if a running process has a **debugger** attached to it. It involves using **CheckRemoteDebuggerPresent**, imported from **kernel32.dll** via PInvoke.

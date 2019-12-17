@@ -3,7 +3,7 @@ layout: post
 title:  "Avoid a Mistake: Correctly Calculate Multiclass Accuracy"
 date:   2019-12-11 00:45:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/correctly_calculate_multiclass_accuracy.png
+thumbnail: /imgs/thumbnails/correctly_calculate_multiclass_accuracy.webp
 ---
 
 Today I held a short laboratory which tackled different metrics used in evaluating classifiers. One of the tasks required that, given the performances of 2 classifiers as **confusion matrices**, the students will calculate the **accuracy** of the 2 models. One model was a **binary classifier** and the other was a **multiclass classifier**.

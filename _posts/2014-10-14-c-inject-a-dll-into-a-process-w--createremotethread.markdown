@@ -3,7 +3,7 @@ layout: post
 title:  "C# Inject a Dll into a Process (w/ CreateRemoteThread)"
 date:   2014-10-14 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/dllInject.jpg
+thumbnail: /imgs/thumbnails/dllInject.webp
 ---
 
 Since I've been asked if this is possible - well...you can do **Dll Injection** using **C#** but the injected Dll must be written in a language that doesn't depend on a CLR (**C/C++** would be a good option here, but it's ok to write the injector in **C#**).
