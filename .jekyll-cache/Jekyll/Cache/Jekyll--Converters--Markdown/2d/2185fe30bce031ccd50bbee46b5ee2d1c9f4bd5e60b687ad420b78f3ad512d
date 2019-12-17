@@ -1,0 +1,93 @@
+I"�<p>A <strong>critical</strong> process is a type of process that Windows requires to be running - <strong>csrss.exe</strong> is an example of such process. Whenever a process like this finishes its execution (or it’s terminated) Windows will respond with an authentic <strong>Blue Screen of Death</strong>.</p>
+
+<p>Theoretically, you can BSoD yourself whenever you want :)</p>
+
+<h5 id="the-complete-code-is-available-at-the-bottom-of-the-page">The complete code is available at the bottom of the page.</h5>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-make-a-critical-process-bsod-if-killed/1.png" alt="We all love it" />
+  <figcaption><p>We all love it</p>
+</figcaption>
+</figure>
+
+<h2 id="technical-details">Technical Details</h2>
+
+<p>Setting a process as a critical process is done by PInvoking <strong>NtSetInformationProcess</strong>, from <strong>ntdll.dll</strong> (it requires <em>Debug Privileges</em>). More information about this method can be found below, in the coding section.</p>
+
+<p>Now, whenever a critical process is terminated, the Kernel will throw up a <strong>BSoD</strong>, with the following bug check:</p>
+
+<p><em>*** STOP: 0x000000F4</em></p>
+
+<p><strong>0x000000F4</strong> is the value for <strong>CRITICAL_OBJECT_TERMINATION</strong>. From now, I think it starts making sense, isn’t it?</p>
+
+<h2 id="coding-part">Coding Part</h2>
+
+<p>First things first, import <strong>NtSetInformationProcess</strong> via PInvoke, with the following code:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"ntdll.dll"</span><span class="p">,</span> <span class="n">SetLastError</span> <span class="p">=</span> <span class="k">true</span><span class="p">)]</span>
+<span class="k">private</span> <span class="k">static</span> <span class="k">extern</span> <span class="kt">int</span> <span class="nf">NtSetInformationProcess</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hProcess</span><span class="p">,</span> <span class="kt">int</span> <span class="n">processInformationClass</span><span class="p">,</span> <span class="k">ref</span> <span class="kt">int</span> <span class="n">processInformation</span><span class="p">,</span> <span class="kt">int</span> <span class="n">processInformationLength</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><u>Method Details</u>:</p>
+
+<ul>
+  <li><strong>IntPtr</strong> hProcess = the process’ handle</li>
+  <li><strong>int processInformationClass</strong> = it’s like a ‘flag’ - we supply this value <strong>0x1D (BreakOnTermination)</strong></li>
+  <li><strong>ref int processInformation</strong> = value for that flag (1 = enabled / 0 = disabled), in this case, 1 means that it’s a critical process</li>
+  <li><strong>int processInformationLength</strong> = is the value supplied for the flag, which in our case is the size of an integer</li>
+</ul>
+
+<p>Before calling this method, you also need <em>Debug Privileges</em> - these privileges also require <em>Administrator Privileges</em>.</p>
+
+<p>In order to obtain them, you must call this method:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">Process</span><span class="p">.</span><span class="nf">EnterDebugMode</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Now you can safely call <strong>NtSetInformationProcess()</strong> and since that wouldn’t require additional explanation, I’ll provide the complete code:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Runtime.InteropServices</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CriticalProcess</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"ntdll.dll"</span><span class="p">,</span> <span class="n">SetLastError</span> <span class="p">=</span> <span class="k">true</span><span class="p">)]</span>
+    <span class="k">private</span> <span class="k">static</span> <span class="k">extern</span> <span class="kt">int</span> <span class="nf">NtSetInformationProcess</span><span class="p">(</span><span class="n">IntPtr</span> <span class="n">hProcess</span><span class="p">,</span> <span class="kt">int</span> <span class="n">processInformationClass</span><span class="p">,</span> <span class="k">ref</span> <span class="kt">int</span> <span class="n">processInformation</span><span class="p">,</span> <span class="kt">int</span> <span class="n">processInformationLength</span><span class="p">);</span>
+
+    <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">isCritical</span> <span class="p">=</span> <span class="m">1</span><span class="p">;</span>  <span class="c1">// we want this to be a Critical Process</span>
+        <span class="kt">int</span> <span class="n">BreakOnTermination</span> <span class="p">=</span> <span class="m">0x1D</span><span class="p">;</span>  <span class="c1">// value for BreakOnTermination (flag)</span>
+
+        <span class="n">Process</span><span class="p">.</span><span class="nf">EnterDebugMode</span><span class="p">();</span>  <span class="c1">//acquire Debug Privileges</span>
+
+        <span class="c1">// setting the BreakOnTermination = 1 for the current process</span>
+        <span class="nf">NtSetInformationProcess</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="nf">GetCurrentProcess</span><span class="p">().</span><span class="n">Handle</span><span class="p">,</span> <span class="n">BreakOnTermination</span><span class="p">,</span> <span class="k">ref</span> <span class="n">isCritical</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

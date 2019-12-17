@@ -25,6 +25,9 @@ permalink: /:categories/:title
 markdown: kramdown
 highlighter: rouge
 
+sass:
+  style: compressed
+
 kramdown:
   input:          GFM
   # https://github.com/jekyll/jekyll/pull/4090

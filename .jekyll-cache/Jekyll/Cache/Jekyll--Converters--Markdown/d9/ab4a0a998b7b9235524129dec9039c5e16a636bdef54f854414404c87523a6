@@ -1,0 +1,169 @@
+I"D!<p>This is the model of an <strong>Asynchronous TCP server</strong>, that can have multiple clients connected, each one on it’s own <strong>thread</strong> - all of this is done using a relatively short and easy-to-remember code.</p>
+
+<p>If you don’t have basic knowledge of how a Tcp server works, it is highly recommended to read first: <a href="https://www.codingvision.net/networking/c-simple-tcp-server" title="C# simple tcp server">how to make a simple tcp server</a>.</p>
+
+<h2 id="the-code">The code</h2>
+
+<p>As always, the code first and after, the comments:</p>
+<ul>
+  <li>functions used for sending/receiving data are not included - you should know these, from the basic server stuff.</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>      
+<span class="k">using</span> <span class="nn">System.Net.Sockets</span><span class="p">;</span>  
+
+<span class="k">using</span> <span class="nn">System.Threading</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">ServerTest</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Program</span> <span class="n">main</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Program</span><span class="p">();</span>
+            <span class="n">main</span><span class="p">.</span><span class="nf">server_start</span><span class="p">();</span>  <span class="c1">//starting the server</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>  
+        <span class="p">}</span>
+
+        <span class="n">TcpListener</span> <span class="n">server</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">TcpListener</span><span class="p">(</span><span class="n">IPAddress</span><span class="p">.</span><span class="n">Any</span><span class="p">,</span> <span class="m">9999</span><span class="p">);</span>   
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">server_start</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">server</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>    
+            <span class="nf">accept_connection</span><span class="p">();</span>  <span class="c1">//accepts incoming connections</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">accept_connection</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">server</span><span class="p">.</span><span class="nf">BeginAcceptTcpClient</span><span class="p">(</span><span class="n">handle_connection</span><span class="p">,</span> <span class="n">server</span><span class="p">);</span>  <span class="c1">//this is called asynchronously and will run in a different thread</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">handle_connection</span><span class="p">(</span><span class="n">IAsyncResult</span> <span class="n">result</span><span class="p">)</span>  <span class="c1">//the parameter is a delegate, used to communicate between threads</span>
+        <span class="p">{</span>
+            <span class="nf">accept_connection</span><span class="p">();</span>  <span class="c1">//once again, checking for any other incoming connections</span>
+            <span class="n">TcpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">server</span><span class="p">.</span><span class="nf">EndAcceptTcpClient</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>  <span class="c1">//creates the TcpClient</span>
+
+            <span class="n">NetworkStream</span> <span class="n">ns</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">GetStream</span><span class="p">();</span>
+
+            <span class="cm">/* here you can add the code to send/receive data */</span>
+
+        <span class="p">}</span>
+
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="comments">Comments</h2>
+
+<p>This is the server, containing almost anything required to work properly.</p>
+
+<p>Now, to understand how it works, take a look at the methods below:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre>        <span class="k">private</span> <span class="k">void</span> <span class="nf">server_start</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="p">...</span>  
+            <span class="nf">accept_connection</span><span class="p">();</span>  
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">accept_connection</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">server</span><span class="p">.</span><span class="nf">BeginAcceptTcpClient</span><span class="p">(</span><span class="n">handle_connection</span><span class="p">,</span> <span class="n">server</span><span class="p">);</span>  
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">handle_connection</span><span class="p">(</span><span class="n">IAsyncResult</span> <span class="n">result</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nf">accept_connection</span><span class="p">();</span>
+            <span class="n">TcpClient</span> <span class="n">client</span> <span class="p">=</span> <span class="n">server</span><span class="p">.</span><span class="nf">EndAcceptTcpClient</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+            <span class="p">...</span>
+        <span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ul>
+  <li>
+    <p>first, the program calls the function <strong>accept_connection()</strong> - used to accept a client’s connection to the server. This function will invoke through <strong>BeginAcceptTcpClient</strong> another function called <strong>handle_connection()</strong> which will run on a <strong>different thread</strong> chosen from the <strong>threadpool</strong> - so you don’t have to manually create/release threads.</p>
+  </li>
+  <li>
+    <p>when <strong>handle_connection()</strong> is called, it also receives an <strong>IAsyncResult</strong> argument - this argument maintains the connection between the 2 threads. This method will then call again <strong>accept_connection()</strong> - so the program will constantly change the threads.</p>
+  </li>
+  <li>
+    <p>if the connection is closed, the thread used is released automatically and can later be used for a new client; however this threadpool is limited.</p>
+  </li>
+</ul>
+
+<h2 id="in-the-end">In the end…</h2>
+
+<p>This is basically everything you <em>might</em> need to know about the <strong>asynchronous tcp servers</strong> - without involving any unnecessary code. If there are any questions, feel free to leave a comment :)</p>
+:ET
