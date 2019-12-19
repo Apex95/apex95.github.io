@@ -3,8 +3,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% if page.title %}{{ page.title | append: ' | ' | append: site.title | escape }}{% else %}{% if paginator and paginator.page > 1 %} {{'page ' | append: paginator.page | append: ' | ' | append: site.title | escape}} {% else %} {{site.title | append: ' | ' | append: site.indextitle | escape }} {% endif %}  {% endif %}</title>
-  <meta name="description" content="{% if page.iscategory %} {{page.excerpt | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if page.excerpt %} {{ page.content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if paginator and paginator.page == 1 %} {{ site.description }} {% else %} {{ content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% endif %}{% endif %}{% endif %}">
   
   <link rel="preload" as="font" type="font/woff2" href="{{ "/fonts/dosis-v8-latin-regular.woff2" | prepend: site.baseurl }}" crossorigin>
   <link rel="preload" as="font" type="font/woff" href="{{ "/fonts/dosis-v8-latin-regular.woff" | prepend: site.baseurl }}" crossorigin>
@@ -21,11 +19,7 @@
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
 
   
-  <meta property="og:title" content="{% if page.title %}{{ page.title | append: ' | ' | append: site.title | escape }}{% else %}{% if paginator and paginator.page > 1 %} {{'page ' | append: paginator.page | append: ' | ' | append: site.title | escape}} {% else %} {{site.title | append: ' | ' | append: site.indextitle | escape }} {% endif %}  {% endif %}" />
-  <meta property="og:description" content="{% if page.iscategory %} {{page.excerpt | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if page.excerpt %} {{ page.content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %}{{ site.description }}{% endif %}{% endif %}" />
-  <meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}" />
-  <meta property="og:type" content="article" />
-  <meta property="og:site_name" content="{{site.title}}" />
+
 
   <meta name="monetization" content="$coil.xrptipbot.com/RjgZF2dWQpet1Fp80bo9oA">
 
@@ -37,15 +31,7 @@
   {{ styles | scssify }}
   </style>
   
-  <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "BlogPosting",
-    "headline": "{% if page.title %}{{ page.title | append: ' | ' | append: site.title | escape }}{% else %}{% if paginator and paginator.page > 1 %} {{'page ' | append: paginator.page | append: ' | ' | append: site.title | escape}} {% else %} {{site.title | append: ' | ' | append: site.indextitle | escape }} {% endif %}  {% endif %}",
-    "description": "{% if page.iscategory %} {{page.excerpt | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %} {% if page.excerpt %} {{ page.content | strip_html | replace: '\n' ' ' | truncatewords: 40}} {% else %}{{ site.description }}{% endif %}{% endif %}",
-    "url": "{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}"
-  }
-  </script>
+
 
   
 
@@ -58,6 +44,6 @@
 </script>
 
 
-
+{% seo %}
     
 </head>
