@@ -30,7 +30,7 @@ sass:
 
 seo:
   type: BlogPosting
-logo: /favicon.png
+logo: /imgs/logo.png
 
 kramdown:
   input:          GFM
