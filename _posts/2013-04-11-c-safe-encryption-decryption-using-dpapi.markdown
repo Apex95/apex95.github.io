@@ -3,7 +3,7 @@ layout: post
 title:  "C# Safe Encryption/Decryption using DPAPI"
 date:   2013-04-11 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/dpapi.webp
+image: /imgs/thumbnails/dpapi.webp
 ---
 
 **Data Protection API** aka **DPAPI** is a neat service provided by Windows Operating Systems (newer than Windows 2000) that safely encrypts and decrypts user credentials, using the **Triple-DES** algorithm.

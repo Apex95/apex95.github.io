@@ -3,7 +3,7 @@ layout: post
 title:  "C# Get Desktop Screenshot"
 date:   2013-05-21 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/desktopSS.webp
+image: /imgs/thumbnails/desktopSS.webp
 ---
 
 I found this feature while looking inside **Graphics** class and since it was so simple to use, I decided to post it here. It basically allows you to take print screens programmatically and save them as local images or forward them through the network, etc.

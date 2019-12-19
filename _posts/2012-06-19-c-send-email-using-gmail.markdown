@@ -3,7 +3,7 @@ layout: post
 title:  "C# Send email using Gmail"
 date:   2012-06-19 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/smtpConnect.webp
+image: /imgs/thumbnails/smtpConnect.webp
 ---
 
 In this tutorial ... we'll send emails :) using C# of course.

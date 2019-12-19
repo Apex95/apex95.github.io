@@ -9,7 +9,7 @@ layout: default
   <ul class="post-list">
     {% for post in paginator.posts %}
       <li class="current_post">
-        <div class="thumbnail"><img src="{% if post.thumbnail %} {{post.thumbnail}} {% else %} /imgs/thumbnails/no_thumbnail.png {% endif %}"></div>
+        <div class="thumbnail"><img src="{% if post.image %} {{post.image}} {% else %} /imgs/thumbnails/no_thumbnail.png {% endif %}"></div>
         <h2>
           <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         </h2>

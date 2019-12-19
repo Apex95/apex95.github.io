@@ -3,7 +3,7 @@ layout: post
 title:  "C# How To: Get External IP Address"
 date:   2014-09-27 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/getIpAddress.png
+thumbnail: /imgs/thumbnails/getIpAddress.webp
 ---
 
 Okay, this is a really short article, but I felt the need to write this because too many people seem to take the wrong way.
@@ -24,13 +24,15 @@ Here's a short example of how you should do it (don't forget to include **System
 
 * this snippet should only give you the idea of how to do this, don't use it as it is.
 
-```csharpstring getExternalIP()
+```csharp
+string getExternalIP()
 {
     using (WebClient client = new WebClient())
     {
          return client.DownloadString("http://canihazip.com/s");
     }
-}```
+}
+```
 
 _What if the website is **down**?_
 
@@ -38,7 +40,8 @@ Well, this is a risk that can be avoided by using...more websites :) and a bunch
 
 A more reliable example here:
 
-```csharpstring getExternalIP()
+```csharp
+string getExternalIP()
 {
     using (WebClient client = new WebClient())
     {
@@ -72,7 +75,8 @@ A more reliable example here:
         // if we got here, all the websites are down, which is unlikely
         return "Check internet connection?";
     }
-}```
+}
+```
 
 It can still be improved by doing all the connections at the same time (putting each one in a different thread) - this will reduce the waiting time (if the first websites are down).
 

@@ -3,7 +3,7 @@ layout: post
 title:  "C# Ascii Art Tutorial"
 date:   2013-04-18 20:02:05 +0300
 categories: files
-thumbnail: /imgs/thumbnails/asciiArt.webp
+image: /imgs/thumbnails/asciiArt.webp
 ---
 
 If you got here, you probably want to know how **Ascii Art** works and how to use C# to **transform images into text**. We'll do this by making good use of **LockBits()** and **UnlockBits()**, and also, a **pointer** - going unsafe !

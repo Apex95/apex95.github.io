@@ -3,7 +3,7 @@ layout: post
 title:  "C# Fix SimpleWorkerRequest Path Issue"
 date:   2012-09-21 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/aspnet404.jpg
+thumbnail: /imgs/thumbnails/aspnet404.webp
 ---
 
 ## The problem
@@ -17,19 +17,21 @@ The problem is that the **GetFilePath()** function returns only the path to the 
 
 If you don't know how to do this, I wrote the code below - just add it to your source:
 
-```csharpclass WorkerRequest : SimpleWorkerRequest   //the fix, use this instead of SimpleWorkerRequest
-    {
-        string page = string.Empty;
-        public WorkerRequest(string page, string query, TextWriter output) : base(page, query, output)
-        {
-            this.page = page;   
-        }
+```csharp
+class WorkerRequest : SimpleWorkerRequest   //the fix, use this instead of SimpleWorkerRequest
+{
+	string page = string.Empty;
+	public WorkerRequest(string page, string query, TextWriter output) : base(page, query, output)
+	{
+		this.page = page;   
+	}
 
-        public override string GetFilePath()
-        {
-            return base.GetFilePath() + page;
-        }
-    }```
+	public override string GetFilePath()
+	{
+		return base.GetFilePath() + page;
+	}
+}
+```
 
 Now, instead of using **SimpleWorkerRequest**, you must use **WorkerRequest** (the fixed version) to parse your pages.
 

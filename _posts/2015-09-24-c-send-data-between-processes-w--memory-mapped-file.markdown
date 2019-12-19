@@ -3,7 +3,7 @@ layout: post
 title:  "C# Send Data Between Processes (w/ Memory Mapped File)"
 date:   2015-09-24 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/mmf.webp
+image: /imgs/thumbnails/mmf.webp
 ---
 
 If you're reading this right now you're probably developing some application that has 2 or more processes and you want those processes to share some data with each other.

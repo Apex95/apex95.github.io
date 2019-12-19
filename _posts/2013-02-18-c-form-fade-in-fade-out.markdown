@@ -3,7 +3,7 @@ layout: post
 title:  "C# Form Fade In/Fade Out"
 date:   2013-02-18 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/fadeinout.webp
+image: /imgs/thumbnails/fadeinout.webp
 ---
 
 This short tutorial is made to show you how to create a **fade in** / **fade out** effect for a form. Since basic Windows Forms doesn't provide such an option, it must be done manually.

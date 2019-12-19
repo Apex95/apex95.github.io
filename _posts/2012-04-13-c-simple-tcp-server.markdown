@@ -3,7 +3,7 @@ layout: post
 title:  "C# Simple Tcp Server"
 date:   2012-04-13 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/tcpserver.webp
+image: /imgs/thumbnails/tcpserver.webp
 ---
 
 If you got here, you probably want to know how to make a simple server in C#, using the shortest possible code and the easiest method to understand.

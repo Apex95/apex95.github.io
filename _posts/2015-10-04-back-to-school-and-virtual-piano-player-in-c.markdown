@@ -3,7 +3,7 @@ layout: post
 title:  "Virtual Piano Player in C#"
 date:   2015-10-04 20:02:05 +0300
 categories: personal
-thumbnail: /imgs/thumbnails/virtualpiano.webp
+image: /imgs/thumbnails/virtualpiano.webp
 ---
 
 ## Short Announcement (skip this)

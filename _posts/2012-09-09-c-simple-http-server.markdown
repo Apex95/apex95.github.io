@@ -3,7 +3,7 @@ layout: post
 title:  "C# Simple Http Server"
 date:   2012-09-09 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/httpserver.webp
+image: /imgs/thumbnails/httpserver.webp
 ---
 
 In this short tutorial I'll explain how to make a simple **Http Server** using only C#. The server will be able to serve any page that contains **client-side** code (html and javascript).

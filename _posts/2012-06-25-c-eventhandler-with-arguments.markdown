@@ -3,7 +3,7 @@ layout: post
 title:  "C# EventHandler with Arguments"
 date:   2012-06-25 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/eventhandlerArgs.webp
+image: /imgs/thumbnails/eventhandlerArgs.webp
 ---
 
 All the methods that are called by **events** require two arguments:  

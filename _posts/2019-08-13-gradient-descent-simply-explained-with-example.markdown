@@ -3,7 +3,7 @@ layout: post
 title:  "Gradient Descent Simply Explained (with Example)"
 date:   2019-08-13 00:45:05 +0300
 categories: numerical-methods
-thumbnail: /imgs/thumbnails/mse-slope-plot.webp
+image: /imgs/thumbnails/mse-slope-plot.webp
 ---
 
 So... I'll try to explain here the concept of **gradient descent** as simple as possible in order to provide some insight of what's happening from a mathematical perspective and why the formula works. I'll try to keep it short and split this into 2 _chapters_: **theory** and **example** - take it as a ELI5 *5 minutes* linear regression tutorial.

@@ -3,7 +3,7 @@ layout: post
 title:  "C# Disable RichTextBox's Smooth Scrolling"
 date:   2013-01-20 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/smoothscrolling.webp
+image: /imgs/thumbnails/smoothscrolling.webp
 ---
 
 In this article I'll show you how to disable **RichTextBox**'s **Smooth Scrolling** - aka make RichTextBox scroll **line by line**. I know this is a problem for many developers, it was a problem for me too, so that's why I decided to post this code snippet.

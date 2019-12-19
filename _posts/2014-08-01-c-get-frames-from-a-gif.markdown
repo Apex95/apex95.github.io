@@ -3,7 +3,7 @@ layout: post
 title:  "C# Get Frames from a GIF"
 date:   2014-08-01 20:02:05 +0300
 categories: files
-thumbnail: /imgs/thumbnails/9gag.webp
+image: /imgs/thumbnails/9gag.webp
 ---
 
 This is a simple method to extract a certain frame (or all of them) from a **GIF**, using **C#**. As always, **.NET** provides all the functions we need, so it _shouldn't_ take more than **12 lines of code**.

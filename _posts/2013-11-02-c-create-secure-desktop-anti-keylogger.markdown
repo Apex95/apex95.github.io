@@ -3,7 +3,7 @@ layout: post
 title:  "C# Create Secure Desktop (Anti-Keylogger)"
 date:   2013-11-02 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/secureDesktop.webp
+image: /imgs/thumbnails/secureDesktop.webp
 ---
 
 Since the number of **Keyloggers** keeps growing, I decided to publish this little trick hoping that it might be useful for someone. I discovered it when I was looking on how User Acount Control/UAC from Windows 7 protects the data - I was 'amazed' by this idea so I tried to make this accessible for any program.

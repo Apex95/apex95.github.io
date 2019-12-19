@@ -3,7 +3,7 @@ layout: post
 title:  "XNA Disable Profile check"
 date:   2012-05-17 20:02:05 +0300
 categories: xna
-thumbnail: /imgs/thumbnails/fbdeprofiler.webp
+image: /imgs/thumbnails/fbdeprofiler.webp
 ---
 
 **HiDef** is one of the 2 profiles available for developing games in XNA. But...this profile requires a **direct3d/D3D** compatible video card. It apparently checks for **DirectX10** compatibility.  

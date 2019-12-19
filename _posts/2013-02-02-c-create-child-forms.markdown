@@ -3,7 +3,7 @@ layout: post
 title:  "C# Create Child Forms"
 date:   2013-02-02 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/childforms.webp
+image: /imgs/thumbnails/childforms.webp
 ---
 
 **Child Forms** are those forms that are found inside another form (parent form). There are multiple ways to create child forms - most of them require to use a **MDI Container**.  

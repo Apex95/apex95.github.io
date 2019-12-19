@@ -3,7 +3,7 @@ layout: post
 title:  "C#/PHP Compatible Encryption (AES256)"
 date:   2013-07-06 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/sharedEncryption.webp
+image: /imgs/thumbnails/sharedEncryption.webp
 ---
 
 Finding a way to encrypt messages in **C#** and decrypting them in **PHP** or vice versa seems to be a "challenge" for many users. I wrote this tutorial to provide some help with this: below, you can find how to **encrypt / decrypt** messages in **C# / PHP** using **AES256** with **CBC mode**.

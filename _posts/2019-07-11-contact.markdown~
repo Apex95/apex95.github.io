@@ -1,0 +1,14 @@
+---
+layout: page
+title:  "Contact"
+date:   2011-08-13 20:02:05 +0300
+categories: 
+thumbnail: 
+---
+
+## Email
+
+Should you encounter any problem with the website or simply want to express feedback that is not related to an article, you can contact me at the following address:
+
+
+# <script>document.write(atob('{{site.email}}'))</script>

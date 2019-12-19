@@ -3,7 +3,7 @@ layout: post
 title:  "C# Moving form without border/title bar"
 date:   2012-05-25 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/formTitleBar.webp
+image: /imgs/thumbnails/formTitleBar.webp
 ---
 
 ## 1\. Removing the title bar and border

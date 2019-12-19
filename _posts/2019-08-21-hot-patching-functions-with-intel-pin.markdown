@@ -3,7 +3,7 @@ layout: post
 title:  "Hot Patching C/C++ Functions with Intel Pin"
 date:   2019-08-21 00:45:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/patch.webp
+image: /imgs/thumbnails/patch.webp
 ---
 
 5 years ago, I said in one of my articles that I shall return, one day, with a method of **hot patching** functions inside live processes; So... I guess this is that day.

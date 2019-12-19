@@ -3,7 +3,7 @@ layout: post
 title:  "C# Connecting to FTP Server"
 date:   2012-10-20 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/ftpAddress.webp
+image: /imgs/thumbnails/ftpAddress.webp
 ---
 
 In this tutorial I will show you how to use **C#** to **connect to a FTP server** and perform basic operations:

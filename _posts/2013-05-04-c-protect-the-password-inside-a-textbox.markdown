@@ -3,7 +3,7 @@ layout: post
 title:  "C# Protect the Password inside a TextBox"
 date:   2013-05-04 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/passwordTextBox.webp
+image: /imgs/thumbnails/passwordTextBox.webp
 ---
 
 First of all, the **TextBox** Control is not a secure way to hold passwords - so don't use it as it is by default. Even with a **PasswordChar**, the real password is still visible if you use a tool like **Spy++**.  

@@ -3,7 +3,7 @@ layout: post
 title:  "C# Load dll at Runtime"
 date:   2012-06-23 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/libraryRuntime.webp
+image: /imgs/thumbnails/libraryRuntime.webp
 ---
 
 This is a method used to import a **dll** during the program's execution (at the **runtime**) without adding the actual library as a reference.

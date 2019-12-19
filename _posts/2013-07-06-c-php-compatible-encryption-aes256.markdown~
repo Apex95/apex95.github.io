@@ -3,7 +3,7 @@ layout: post
 title:  "C#/PHP Compatible Encryption (AES256)"
 date:   2013-07-06 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/sharedEncryption.png
+thumbnail: /imgs/thumbnails/sharedEncryption.webp
 ---
 
 Finding a way to encrypt messages in **C#** and decrypting them in **PHP** or vice versa seems to be a "challenge" for many users. I wrote this tutorial to provide some help with this: below, you can find how to **encrypt / decrypt** messages in **C# / PHP** using **AES256** with **CBC mode**.
@@ -36,7 +36,8 @@ PHP accepts keys that are not **32 bytes** long and simply extends them to the c
 
 <font size="4">Encryption</font>
 
-```phpfunction encrypt($text, $pkey)
+```php
+function encrypt($text, $pkey)
 {
 	$key = $pkey;  
 	$IV = mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_CBC), MCRYPT_RAND); 
@@ -46,7 +47,8 @@ PHP accepts keys that are not **32 bytes** long and simply extends them to the c
 
 <font size="4">Decryption</font>
 
-```phpfunction decrypt($text, $pkey)
+```php
+function decrypt($text, $pkey)
 {
 	$key = $pkey;   
 	$text = base64_decode($text); 

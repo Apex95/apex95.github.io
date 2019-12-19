@@ -3,7 +3,7 @@ layout: post
 title:  "Call a C# Method from C/C++ (native process)"
 date:   2014-09-08 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/runtime-host.png
+thumbnail: /imgs/thumbnails/runtime-host.webp
 ---
 
 So...I received a challenge from a _friend_ (lost a bet...) regarding how to load a **managed (C#) dll** in a **native (C++) process** by using the **Common Language Runtime (CLR)**. Basically, it refers to calling a **C# method** from **C/C++**. After a few tries, I came up with this...it seems to work with **.Net Framework 4.0**.
@@ -58,19 +58,22 @@ Using **ICLRRuntimeHost::ExecuteInDefaultAppDomain()** with a bunch of arguments
 
 The method looks like this:
 
-```cHRESULT ExecuteInDefaultAppDomain (
+```c
+HRESULT ExecuteInDefaultAppDomain (
     [in] LPCWSTR pwzAssemblyPath,  // absolute path to the managed dll (not relative!)
     [in] LPCWSTR pwzTypeName,  // name of the class for example: dllNamespace.dllClass
     [in] LPCWSTR pwzMethodName,  // name of the method 
     [in] LPCWSTR pwzArgument,   // argument(s)
     [out] DWORD *pReturnValue   // this is what the method returns
-);```
+);
+```
 
 ## SourceCode
 
 This is the whole sourcecode:
 
-```c#include <metahost.h>
+```c
+#include <metahost.h>
 #pragma comment(lib, "mscoree.lib")
 
 int main()

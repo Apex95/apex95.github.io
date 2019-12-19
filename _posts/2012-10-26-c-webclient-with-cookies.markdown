@@ -3,7 +3,7 @@ layout: post
 title:  "C# WebClient with Cookies"
 date:   2012-10-26 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/webclientcookie.webp
+image: /imgs/thumbnails/webclientcookie.webp
 ---
 
 Well, you're probably reading this because you noticed that .NET's **WebClient** doesn't support **cookies**. Basically, the cookies which are received through the **WebRequest** are NOT stored and also NOT sent - this is how it works by default.

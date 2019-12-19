@@ -3,7 +3,7 @@ layout: post
 title:  "C# How to Scan a Process' Memory"
 date:   2014-01-26 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/memorydump.webp
+image: /imgs/thumbnails/memorydump.webp
 ---
 
 ## Intro

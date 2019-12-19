@@ -3,7 +3,7 @@ layout: post
 title:  "Evaluating the Robustness of OCR Systems"
 date:   2019-09-08 00:45:05 +0300
 categories: ai
-thumbnail: /imgs/thumbnails/adversarial_samples_ocr.webp
+image: /imgs/thumbnails/adversarial_samples_ocr.webp
 ---
 
 In this article, I'm going to discuss about my Bachelor's degree final project, which is about evaluating the robustness of **OCR systems** (such as **Tesseract** or **Google's Cloud Vision**) when adversarial samples are presented as inputs. It's somewhere in-between **fuzzing** and **adversarial samples crafting**, on a black box, the main objective being the creation of **OCR-proof** images, with minimal amounts of noise.

@@ -3,7 +3,7 @@ layout: post
 title:  "C# Simple Http Server"
 date:   2012-09-09 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/httpserver.jpg
+thumbnail: /imgs/thumbnails/httpserver.webp
 ---
 
 In this short tutorial I'll explain how to make a simple **Http Server** using only C#. The server will be able to serve any page that contains **client-side** code (html and javascript).
@@ -19,22 +19,27 @@ Before starting, you need to change your project's profile to **.NET Framework 4
 Now, go to _Solution Explorer->References->Add Reference->.NET_ and import **System.Web** .  
 Also make sure you have the following lines included in your project's header:
 
-```csharpusing System;
+```csharp
+using System;
 using System.Net;
 using System.IO;
-using System.Text;```
+using System.Text;
+```
 
 Creating the server is quite simple - we'll use .NET's **HttpListener**:
 
-```csharpHttpListener server = new HttpListener();  // this is the http server
+```csharp
+HttpListener server = new HttpListener();  // this is the http server
 server.Prefixes.Add("http://127.0.0.1/");  //we set a listening address here (localhost)
 server.Prefixes.Add("http://localhost/");
 
-server.Start();   // and start the server```
+server.Start();   // and start the server
+```
 
 The server is made, now we need to identify incoming connections and serve the requested files. For each connection, we send only one file and because we might have multiple connections, we'll need an endless loop to handle them one by one.
 
-```csharpwhile (true)
+```csharp
+while (true)
 {
           HttpListenerContext context = server.GetContext();  
           //context: provides access to httplistener's response
@@ -59,7 +64,8 @@ The server is made, now we need to identify incoming connections and serve the r
           st.Write(buffer, 0, buffer.Length); // and this will send all the content to the browser
 
           context.Response.Close();  // here we close the connection
-}```
+}
+```
 
 Well, this is all, now all you need to do is to create some html pages and place them into your executable's directory.  
 Then run the application and access  
@@ -69,7 +75,8 @@ You should be able to see your file in the browser's window.
 
 ## The complete code
 
-```csharpusing System;
+```csharp
+using System;
 using System.Net;
 using System.IO;
 using System.Text;

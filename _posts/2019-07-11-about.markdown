@@ -3,7 +3,7 @@ layout: page
 title:  "About"
 date:   2011-08-13 20:02:05 +0300
 categories: 
-thumbnail: 
+image: 
 ---
 
 ## About this blog

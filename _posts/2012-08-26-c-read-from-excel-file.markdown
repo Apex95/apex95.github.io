@@ -3,7 +3,7 @@ layout: post
 title:  "C# Read from Excel file"
 date:   2012-08-26 20:02:05 +0300
 categories: files
-thumbnail: /imgs/thumbnails/viewexcel.webp
+image: /imgs/thumbnails/viewexcel.webp
 ---
 
 In this tutorial I'll show you how to use C# to read an **Excel** file's data. - no more than 10 lines of code - isn't .NET awesome ?

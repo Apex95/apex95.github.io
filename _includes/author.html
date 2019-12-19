@@ -7,7 +7,9 @@
 
 
 <div id="author-bio">
+    <span itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img src="{{ author.avatar }}" id="author-avatar" rel="{{ author.name }}">
-    <div id = "author-name">{{ author.name }}</div>
+    <div id = "author-name"><span itemprop="name">{{ author.name }}</span></div>
     <div id = "author-desc">{{ author.bio }} </div>
+    </span>
 </div>

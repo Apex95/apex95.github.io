@@ -3,7 +3,7 @@ layout: post
 title:  "C# Sending data using GET or POST"
 date:   2012-10-12 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/getpost.webp
+image: /imgs/thumbnails/getpost.webp
 ---
 
 In this short article, I'll show you how to send data to a website from a C# application using **GET** or **POST** method. The tutorial also includes how to receive data from a website, by getting the page's source - so it's a neat way to check if the everything is working as intended.

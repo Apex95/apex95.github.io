@@ -3,7 +3,7 @@ layout: post
 title:  "C# Fix SimpleWorkerRequest Path Issue"
 date:   2012-09-21 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/aspnet404.webp
+image: /imgs/thumbnails/aspnet404.webp
 ---
 
 ## The problem

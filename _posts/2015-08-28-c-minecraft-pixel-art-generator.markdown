@@ -3,7 +3,7 @@ layout: post
 title:  "C# Minecraft Pixel Art Generator"
 date:   2015-08-28 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/minecraft.webp
+image: /imgs/thumbnails/minecraft.webp
 ---
 
 _Good morning **class**, (see what I did there:P ?)_

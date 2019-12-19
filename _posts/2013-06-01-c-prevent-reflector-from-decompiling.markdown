@@ -3,7 +3,7 @@ layout: post
 title:  "C# Prevent Reflector from Decompiling"
 date:   2013-06-01 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/reflectorIcon.gif
+image: /imgs/thumbnails/reflectorIcon.gif
 ---
 
 This is a simple way to protect your application from any so-called "cracker", without involving obfuscation. Remember that this works only against **Reflector** (tested on: **v7.5.2.1**), any other decompilers are "immune".

@@ -3,7 +3,7 @@ layout: post
 title:  "C# Synchronize 2 RichTextBoxes' Scroll"
 date:   2013-03-17 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/rtbcontrol.webp
+image: /imgs/thumbnails/rtbcontrol.webp
 ---
 
 I recently had a problem when I tried to synchronize the scrolling between 2 **RichTextBoxes** - that was because these controls behave different than normal TextBoxes. However I managed to solve this...after some time, and I decided to post the solution. The idea is based on overriding one RichTextBox's **WndProc()** and then sending its scroll position to the other one.

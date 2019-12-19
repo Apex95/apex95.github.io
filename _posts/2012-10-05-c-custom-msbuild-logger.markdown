@@ -3,7 +3,7 @@ layout: post
 title:  "C# Custom MSBuild Logger"
 date:   2012-10-05 20:02:05 +0300
 categories: tips-and-tricks
-thumbnail: /imgs/thumbnails/buildlogger.webp
+image: /imgs/thumbnails/buildlogger.webp
 ---
 
 Here's a short trick about how to make a **custom MSBuild Logger**. It's always a good idea to use MSBuild with your own logger (and not the original one) because it provides easier access to the output log. So, I'll show here how to do it.

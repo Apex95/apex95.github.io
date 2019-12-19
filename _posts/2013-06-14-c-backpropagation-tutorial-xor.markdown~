@@ -3,7 +3,7 @@ layout: post
 title:  "C# Backpropagation Tutorial (XOR)"
 date:   2013-06-14 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/backpropagation.png
+thumbnail: /imgs/thumbnails/backpropagation.webp
 ---
 
 I've been trying for some time to learn and actually understand how **Backpropagation** (aka **backward propagation of errors**) works and how it trains the neural networks. Since I encountered many problems while creating the program, I decided to write this tutorial and also add a completely functional code that is able to **learn** the **XOR** gate.
@@ -37,7 +37,7 @@ In this tutorial I'll use a **2-2-1** neural network (2 input neurons, 2 hidden 
 
 ## 3\. Some math...
 
-As any neural network requires an **activation function**, we'll use **sigmoid** activation. The main idea is to adjust that function so it will produce the correct output (and the minimum error). This is done by modifying the **weights** and the **biases**.
+Any **neural network** can be described as a mathematical function which takes an **input**, and computes an **output** using a set of **coefficients** (here, we call them **weights**). The only variables that we can change are the **weights** (think of it as some sort of interpolation). Usually, on the resulted output, an **activation function** is applied for various reasons: 1) it adds nonlinearity and 2) it properly limits the output to a known interval. Here, we use a **sigmoid** activator - more details below.
 
 Its graph looks like this (note that the output values range from **0** to **1**)
 
@@ -51,12 +51,13 @@ $$ f(x) = \frac{1}{1+e^{-x}} $$
 _2) Sigmoid Derivative (its value is used to adjust the weights using gradient descent):_  
 $$ f'(x) = f(x)(1-f(x)) $$
 
-Backpropagation always aims to reduce the error of each output. The algorithm knows what output is correct when the error is getting under a threshold.
+Backpropagation always aims to reduce the error of each output. The algorithm knows the correct final output and will attempt to minimize the error function by tweaking the weights.
 
 For a better understanding of this, take a look at the graph below which shows the error, based on the output:
 
 {% include image.html url="/imgs/posts/c-backpropagation-tutorial-xor/5.png" description="Plotting the error function, considering the case of 1 dimension (1 variable)" %}
 
+We intend to produce an **output value** which ensures a **minimal error** by adjusting only the **weights** of the neural network.  
 I won't dive into the **gradient descent** method, as I wrote a [separate article](https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example) that contains both theory and examples.
 
 ## 4\. Formulas
@@ -95,7 +96,8 @@ I used 2 classes just to make everything more "visible" and OOP-ish.
 
 Note: it requires about 2000 epochs to learn.
 
-```csharpusing System;
+```csharp
+using System;
 
 namespace BackPropagationXor
 {

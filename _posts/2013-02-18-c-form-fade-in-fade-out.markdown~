@@ -3,7 +3,7 @@ layout: post
 title:  "C# Form Fade In/Fade Out"
 date:   2013-02-18 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/fadeinout.png
+thumbnail: /imgs/thumbnails/fadeinout.webp
 ---
 
 This short tutorial is made to show you how to create a **fade in** / **fade out** effect for a form. Since basic Windows Forms doesn't provide such an option, it must be done manually.
@@ -16,7 +16,8 @@ To do this, all we have to do is to set the Form's **Opacity** to **0**. Then, u
 
 As an example:
 
-```csharpTimer t1 = new Timer();
+```csharp
+Timer t1 = new Timer();
 
 private void Form1_Load(object sender, EventArgs e)
 {
@@ -33,13 +34,15 @@ void fadeIn(object sender, EventArgs e)
                 t1.Stop();   //this stops the timer if the form is completely displayed
             else
                 Opacity += 0.05;
-}```
+}
+```
 
 ## Fade Out Effect
 
 This works the same way as the fade in effect: we'll use a **Timer** that lowers the Opacity, that is started when the form is closing. The code should be added in the form-closing event handler.
 
-```csharpprivate void main_FormClosing(object sender, FormClosingEventArgs e)
+```csharp
+private void main_FormClosing(object sender, FormClosingEventArgs e)
 {
       e.Cancel = true;    //cancel the event so the form won't be closed
 
@@ -60,6 +63,7 @@ void fadeOut(object sender, EventArgs e)
       }
       else
           Opacity -= 0.05;
-}```
+}
+```
 
 Believe it or not, that's all, however pay attention to the events so you won't assign 2 event handlers to the same event.

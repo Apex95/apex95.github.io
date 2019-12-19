@@ -3,7 +3,7 @@ layout: post
 title:  "C# Send email using Gmail"
 date:   2012-06-19 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/smtpConnect.png
+thumbnail: /imgs/thumbnails/smtpConnect.webp
 ---
 
 In this tutorial ... we'll send emails :) using C# of course.
@@ -17,36 +17,45 @@ In this tutorial ... we'll send emails :) using C# of course.
 
 We start by including **System.Net** and **System.Net.Mail** in our program.
 
-```csharpusing System.Net.Mail;
-using System.Net;```
+```csharp
+using System.Net.Mail;
+using System.Net;
+```
 
 Then, set the two addresses:
 
-```csharpMailAddress myemail = new MailAddress("me@gmail.com", "Name");  //used for authentication
+```csharp
+MailAddress myemail = new MailAddress("me@gmail.com", "Name");  //used for authentication
 MailAddress mail_to = new MailAddress("receiver@yahoo.com", "Receiver");  //the email address of the receiver
 
-string password = "email password here";  //used for authentication```
+string password = "email password here";  //used for authentication
+```
 
 We will create a **SMTP client** that connects to the **Gmail** server:
 
-```csharpSmtpClient client_smtp = new SmtpClient("smtp.gmail.com", 587);   //address and port
+```csharp
+SmtpClient client_smtp = new SmtpClient("smtp.gmail.com", 587);   //address and port
 
 client_smtp.EnableSsl = true;   //Gmail requires a ssl connection
 client_smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
 client_smtp.UseDefaultCredentials = false;
-client_smtp.Credentials = new NetworkCredential(myemail.Address, password); //authentication data```
+client_smtp.Credentials = new NetworkCredential(myemail.Address, password); //authentication data
+```
 
 That's the SMTP client, now we have to write the message:
 
-```csharpMailMessage message = new MailMessage (myemail, mail_to);
+```csharp
+MailMessage message = new MailMessage (myemail, mail_to);
 message.Subject = "Test";  //subject
 message.Body = "just a test email";  //content
 
-client_smtp.Send(message); ```
+client_smtp.Send(message);
+```
 
 Finally you get this:
 
-```csharpusing System;
+```csharp
+using System;
 using System.Collections.Generic;  
 using System.Linq;  
 using System.Text;  
@@ -81,7 +90,6 @@ namespace smtp_client
         }
     }  
 }
-
 ```
 
 If the message isn't showing up in about 5 minutes, it might be an error with your application, if so check the code again.

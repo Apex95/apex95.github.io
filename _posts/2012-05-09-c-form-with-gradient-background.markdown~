@@ -3,7 +3,7 @@ layout: post
 title:  "C# Form with Gradient Background"
 date:   2012-05-09 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/formGradient.png
+thumbnail: /imgs/thumbnails/formGradient.webp
 ---
 
 **Gradient** is a method which consists in slowly switching from one color to another - it's used very often in application's design.
@@ -25,8 +25,10 @@ Rectangle gradient_rectangle = new Rectangle(0, 0, Width, Height);
 Then using the **LinearGradientBrush** we add the two main colors. Everything else is done by .NET. Really simple, isn't it?  
 To assign the gradient effect to the **Rectangle**, use the following code:
 
-```csharpBrush brush = new LinearGradientBrush(gradient_rectangle, Color.Red, Color.Black, 45f);
-graphics.FillRectangle(brush, gradient_rectangle);  //graphics comes from a PaintEventArgs argument(event)```
+```csharp
+Brush brush = new LinearGradientBrush(gradient_rectangle, Color.Red, Color.Black, 45f);
+graphics.FillRectangle(brush, gradient_rectangle);  //graphics comes from a PaintEventArgs argument(event)
+```
 
 As you can see, the **LinearGradientBrush** takes 4 arguments:  
 - the first is the rectangle we made before  

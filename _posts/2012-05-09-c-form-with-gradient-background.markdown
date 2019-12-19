@@ -3,7 +3,7 @@ layout: post
 title:  "C# Form with Gradient Background"
 date:   2012-05-09 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/formGradient.webp
+image: /imgs/thumbnails/formGradient.webp
 ---
 
 **Gradient** is a method which consists in slowly switching from one color to another - it's used very often in application's design.

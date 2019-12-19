@@ -3,7 +3,7 @@ layout: post
 title:  "Approximating Integrals with the Gaussian Quadrature (w/ example)"
 date:   2015-09-16 20:02:05 +0300
 categories: numerical-methods
-thumbnail: /imgs/thumbnails/gauss.gif
+image: /imgs/thumbnails/gauss.gif
 ---
 
 This is more like a memory dump so I will have a backup in case I'll ever need it again. And if someone else finds this information useful, the better it is.

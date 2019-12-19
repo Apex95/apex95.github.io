@@ -3,7 +3,7 @@ layout: post
 title:  "C# How To: Get External IP Address"
 date:   2014-09-27 20:02:05 +0300
 categories: networking
-thumbnail: /imgs/thumbnails/getIpAddress.webp
+image: /imgs/thumbnails/getIpAddress.webp
 ---
 
 Okay, this is a really short article, but I felt the need to write this because too many people seem to take the wrong way.

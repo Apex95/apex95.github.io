@@ -3,7 +3,7 @@ layout: post
 title:  "Matlab/Octave Lagrange Interpolation Polynomial"
 date:   2015-08-19 20:02:05 +0300
 categories: numerical-methods
-thumbnail: /imgs/thumbnails/plot.webp
+image: /imgs/thumbnails/plot.webp
 ---
 
 _Ok, I've been missing for a few days...months...almost a year. Ran out of ideas and time for new articles (thanks to the university) so I'll publish some stuff related to numerical methods, starting with a basic **interpolation** method using the **Lagrange Polynomial**. And since there's a lot of C# here, I thought it would be a good idea, for "programming diversity", to write this in **Matlab/Octave**. Forgive me guys :/_

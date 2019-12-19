@@ -3,7 +3,7 @@ layout: post
 title:  "C# Register a Url Protocol"
 date:   2013-03-22 20:02:05 +0300
 categories: miscellaneous
-thumbnail: /imgs/thumbnails/protocolArgument.png
+thumbnail: /imgs/thumbnails/protocolArgument.webp
 ---
 
 This tutorial will show you how to register a custom **Url Protocol** for your application. Basically, you can control your application by simply clicking an Url address like this one:
@@ -22,7 +22,8 @@ Here's the structure of the subkey you should create:
 
 The method below creates all the **subkeys** needed:
 
-```csharpstatic void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to your application
+```csharp
+static void RegisterMyProtocol(string myAppPath)  //myAppPath = full path to your application
 {
       RegistryKey key = Registry.ClassesRoot.OpenSubKey("myApp");  //open myApp protocol's subkey
 
@@ -38,7 +39,8 @@ The method below creates all the **subkeys** needed:
       }
 
       key.Close();
-}```
+}
+```
 
 ## 2.Get the arguments in the Application
 
@@ -46,7 +48,8 @@ Now when you access a url like this: **myApp:SomeValue** Windows will automatica
 
 Finally get the arguments supplied, by using **Environment.GetCommandLineArgs()**.
 
-```csharpstatic void Main()
+```csharp
+static void Main()
 {
       string[] args = Environment.GetCommandLineArgs();
 
@@ -65,4 +68,5 @@ Finally get the arguments supplied, by using **Environment.GetCommandLineArgs()*
       }
 
       Console.ReadLine(); //pauses the program - so you can see the result
-}```
+}
+```

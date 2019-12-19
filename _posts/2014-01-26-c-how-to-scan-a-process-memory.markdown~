@@ -3,7 +3,7 @@ layout: post
 title:  "C# How to Scan a Process' Memory"
 date:   2014-01-26 20:02:05 +0300
 categories: security
-thumbnail: /imgs/thumbnails/memorydump.png
+thumbnail: /imgs/thumbnails/memorydump.webp
 ---
 
 ## Intro
@@ -33,7 +33,8 @@ Methods that will be required (including the ones above):
 
 ```csharp
 [DllImport("kernel32.dll")]
-static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);```
+static extern void GetSystemInfo(out SYSTEM_INFO lpSystemInfo);
+```
 
 Retrieves random information about the system in a structure called **SYSTEM_INFO**. This structure also contains 2 variables: **minimumApplicationAddress** & **maximumApplicationAddress** which store the minimum and the maximum address where the system can allocate memory for User-Mode applications.
 
@@ -62,7 +63,8 @@ public struct SYSTEM_INFO
 
 ```csharp
 [DllImport("kernel32.dll", SetLastError=true)]
-static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);```
+static extern int VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out MEMORY_BASIC_INFORMATION lpBuffer, uint dwLength);
+```
 
     
   This method gets information about a range of memory addresses and returns it into a structure named **MEMORY_BASIC_INFORMATION**. Given a minimum address, we use this to find out if there's a region of memory that's allocated by that program (this way we reduce the search range by directly jumping over memory chunks). Basically this method tells us the range of a memory chunk that starts from the specified address: in order to get to the next memory chunk, we add the length of this region to the current memory address (sum).  

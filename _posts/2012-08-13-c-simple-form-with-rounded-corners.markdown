@@ -3,7 +3,7 @@ layout: post
 title:  "C# Simple Form with Rounded Corners"
 date:   2012-08-13 20:02:05 +0300
 categories: interface
-thumbnail: /imgs/thumbnails/formround.webp
+image: /imgs/thumbnails/formround.webp
 ---
 
 This tutorial aims to show how to make a **C# Form** with **rounded corners**, using a very simple method. It's not actually our policy as we won't use code here...
