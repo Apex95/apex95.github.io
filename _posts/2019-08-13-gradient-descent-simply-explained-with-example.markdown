@@ -43,7 +43,7 @@ _Why is this important?_
 
 Because, as you probably know already, **gradient descent** attempts to <span style="color:red">minimize</span> the **error function** (aka cost function).
 
-Now, assuming we use the **MSE** (*Mean Squared Error*) function, we have something that looks like this:
+Now, assuming we use the **MSE** (Mean Squared Error) function, we have something that looks like this:
 
 $$ \hat{y_i} = f(x_i) $$
 
@@ -51,7 +51,7 @@ $$ MSE = \frac{1}{n} \cdot \sum_{i=1}^{i=n}{(y_i - \hat{y_i})^2} $$
 
 Where: $$ y_i $$ is the correct value, $$ \hat{y_i} $$ is the current (computed) value and $$ n $$ is the number of points we're using to compute the $$ MSE $$.
 
-*Observation: the **MSE** is **always positive** (since it's a sum of squared values) and therefore has a **known minimum**, which is **0** - so it can be <span style="color:red">minimized</span> using the aforementioned derivatives method.*
+##### The **MSE** is **always positive** (since it's a sum of squared values) and therefore has a **known minimum**, which is **0** - so it can be <span style="color:red">minimized</span> using the aforementioned method.
 
 Take a look at the plot below: the **sign** of the **slope** provides useful information of where the **minimum** of the function is. We can use the value of the **slope** (the derivative) to adjust the value of the coefficient **w** (i.e.: `w = w - slope`).
 
@@ -85,7 +85,7 @@ $$ w = w - learning\_rate \cdot \frac{\mathrm{d }}{\mathrm{d} w}MSE(w) $$
 
 ## Example
 
-We'll do the example in a **2D** space, in order to represent a basic **linear regression** (a **Perceptron**). 
+We'll do the example in a **2D** space, in order to represent a basic **linear regression** (a **Perceptron** without an activation function). 
 Given the function below:
 
 $$ f(x) = w_1 \cdot x + w_2 $$
