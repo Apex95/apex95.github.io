@@ -240,7 +240,7 @@ payload = 'A'*56 + p64(pop_rdi_ret_address) + p64(sh_libc_address) + p64(system_
 
 r.sendline(payload)
 
-#print(r.recvline()) 
+print(r.recvline()) # hi there
 
 #r.sendline(payload)
 
@@ -250,7 +250,11 @@ r.interactive()
 
 ## Small Proof-Of-Concept
 
-If you followed the steps correctly, you should achieve something like this. Upon receiving an email (thanks Stefan), I noticed that in my script I have one too many `recvline()` instructions - and I'm sending the payload twice; this causes the weird message in the shell about a file not being found (see the last 2 commented lines in the code above). Fixed now.
+Here is a small PoC, representing the final result. 
+
+For reference, the VM runs **64 bit** image of **Ubuntu 16.04 Xenial** with **glibc 2.23** (`md5(libc.so.6): 8c0d248ea33e6ef17b759fa5d81dda9e`), **pwntools 4.0.1** and **Python 2.7**.
+
+##### Upon receiving an email (thanks Stefan), I've noticed that I was sending the payload twice (had 2x `r.sendline(payload)`); this caused the weird message in the shell about a file not being found. I commented it out in the code above but left the image in case someone has this issue too.
 
 {% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_poc_shell.webp" description="Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP" %}
 
