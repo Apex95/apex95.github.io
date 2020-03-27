@@ -254,7 +254,7 @@ Here is a small PoC, representing the final result.
 
 For reference, the VM runs **64 bit** image of **Ubuntu 16.04 Xenial** with **glibc 2.23** (`md5(libc.so.6): 8c0d248ea33e6ef17b759fa5d81dda9e`), **pwntools 4.0.1** and **Python 2.7**.
 
-##### Upon receiving an email (thanks Stefan), I've noticed that I was sending the payload twice (had 2x `r.sendline(payload)`); this caused the weird message in the shell about a file not being found. I commented it out in the code above but left the image in case someone has this issue too.
+##### Upon receiving an email (thanks Stefan), I've noticed that I was sending the payload twice (had 2x `r.sendline(payload)`); this caused the weird "not found" message in the shell. I commented it out in the code above but left the image in case someone has this issue too.
 
 {% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_poc_shell.webp" description="Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP" %}
 
