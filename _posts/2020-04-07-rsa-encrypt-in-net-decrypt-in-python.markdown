@@ -17,11 +17,11 @@ I wasn't able to find too much information about this specific problem in the [`
 
 Alright, the issue seems to be caused by a difference in **endianness** between the two classes, when the RSA parameters are provided. `PKCS1_v1_5` (**python**) uses **little endian** and `RSACryptoServiceProvider` (**.NET**) prefers **big endian**. In my case, this made the encryption method use a different key than the one I though I specified. Nevertheless, it was more fun to debug because of PKCS which always ensured different ciphertexts.
 
-I fixed this by **base64**-encoding the **exponent** and **modulus** in **big-endian** format (in python) and then loading them with `RSACryptoServiceProvider.FromXmlString()`[4](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsa.fromxmlstring?view=netframework-4.8) (in .NET). 
+I fixed this by **base64**-encoding the **exponent** and **modulus** in **big-endian** format (in python) and then loading them with [`RSACryptoServiceProvider.FromXmlString()`](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsa.fromxmlstring?view=netframework-4.8) (in .NET). 
 
 ## Working Example
 
-I hardcode the `(N, E, D)` parameters for a private key in **python** and export the **exponent** and **modulus** to be used later for encryption.
+I hardcoded the `(N, E, D)` parameters for a private key in **python** and export the **exponent** and **modulus** to be used later for encryption.
 
 ```python
 # custom base64 encoding
