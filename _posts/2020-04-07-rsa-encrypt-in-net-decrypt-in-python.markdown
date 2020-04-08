@@ -21,7 +21,7 @@ I fixed this by **base64**-encoding the **exponent** and **modulus** in **big-en
 
 ## Working Example
 
-I hardcoded the `(N, E, D)` parameters for a private key in **python** and export the **exponent** and **modulus** to be used later for encryption.
+I hardcoded the `(N, E, D)` parameters for a private key in **python** and exported the **exponent** and **modulus** to be used later for encryption.
 
 ```python
 # custom base64 encoding
