@@ -8,16 +8,16 @@ image: /imgs/thumbnails/rsa-python-net.png
 
 So... one of my current projects required the following actions: asymmetrically **encrypt** a string in **.NET** using a public key and **decrypt** it in a **python** script using a private key.
 
-The problem that I've encountered was that, apparently, I couldn't achieve compatibility between the two exposed classes: `RSACryptoServiceProvider`[1](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsacryptoserviceprovider?view=netframework-4.8) and `PKCS1_v1_5`[2](https://pycryptodome.readthedocs.io/en/latest/src/cipher/pkcs1_v1_5.html). To be more specific, the python script couldn't decrypt the ciphertext even though proper configurations were made and the provided keys were compatible. Additionally, separate encryption-decryption actions worked inside .NET and python but not in-between them.
+The problem that I've encountered was that, apparently, I couldn't achieve compatibility between the two exposed classes: `RSACryptoServiceProvider`[[1](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsacryptoserviceprovider?view=netframework-4.8)] and `PKCS1_v1_5`[[2](https://pycryptodome.readthedocs.io/en/latest/src/cipher/pkcs1_v1_5.html)]. To be more specific, the python script couldn't decrypt the ciphertext even though proper configurations were made and the provided keys were compatible. Additionally, separate encryption-decryption actions worked inside .NET and python but not in-between them.
 
-I wasn't able to find too much information about this specific problem in the `RSAParameters`[3](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsaparameters?view=netframework-4.8) documentation, hence this post.
+I wasn't able to find too much information about this specific problem in the `RSAParameters`[[3](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsaparameters?view=netframework-4.8)] documentation, hence this post.
 
 
 ## Solution
 
 Alright, the issue seems to be caused by a difference in **endianness** between the two classes, when the RSA parameters are provided. `PKCS1_v1_5` (**python**) uses **little endian** and `RSACryptoServiceProvider` (**.NET**) prefers **big endian**. In my case, this made the encryption method use a different key than the one I though I specified. Nevertheless, it was more fun to debug because of PKCS which always ensured different ciphertexts.
 
-I fixed this by **base64**-encoding the **exponent** and **modulus** in **big-endian** format (in python) and then loading them with `RSACryptoServiceProvider.FromXmlString()`[4](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsa.fromxmlstring?view=netframework-4.8) (in .NET). 
+I fixed this by **base64**-encoding the **exponent** and **modulus** in **big-endian** format (in python) and then loading them with `RSACryptoServiceProvider.FromXmlString()`[[4](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsa.fromxmlstring?view=netframework-4.8)] (in .NET). 
 
 ## Working Example
 
