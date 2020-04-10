@@ -1,2 +1,0 @@
-I".<p>Tesseract’s adaptive classifier incorrectly recognizes an ‘h’ as a ‘b’, in the first image. In the second sample, Tesseract observes a correct ‘h’ character (confidence is larger than a threshold) adjusts the classifier’s configuration and correctly classifies the first ‘h’</p>
-:ET
