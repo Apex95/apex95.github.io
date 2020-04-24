@@ -4,6 +4,7 @@ title:  "Privacy Policy"
 date:   2011-08-13 20:02:05 +0300
 categories: 
 image: 
+sitemap: false
 ---
 
 ## Data Collected

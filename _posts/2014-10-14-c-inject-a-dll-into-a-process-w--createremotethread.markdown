@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Inject a Dll into a Process (w/ CreateRemoteThread)"
 date:   2014-10-14 20:02:05 +0300
-categories: miscellaneous
+categories: security
+redirect_from: /miscellaneous/c-inject-a-dll-into-a-process-w-createremotethread
 image: /imgs/thumbnails/dllInject.webp
 ---
 

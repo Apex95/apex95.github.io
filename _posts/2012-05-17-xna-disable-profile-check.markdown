@@ -2,7 +2,8 @@
 layout: post
 title:  "XNA Disable Profile check"
 date:   2012-05-17 20:02:05 +0300
-categories: xna
+categories: tips-and-tricks
+redirect_from: /xna/xna-disable-profile-check
 image: /imgs/thumbnails/fbdeprofiler.webp
 ---
 
@@ -26,7 +27,7 @@ The solution is this library **fbDeprofiler.dll** - or another video card. (both
 
 **3.** Open your project in Visual Studio, go to **Solution Explorer**, right click on the project's name -> **Add Reference** -> **Browse** and select **fbDeprofiler.dll**.
 
-**4.** Finally, add in the game's contructor (**public Game1()**) the following line:
+**4.** Finally, add in the game's constructor (**public Game1()**) the following line:
 
 ```csharp
 fbDeprofiler.DeProfiler.Run();

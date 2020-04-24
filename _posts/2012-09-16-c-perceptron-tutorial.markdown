@@ -2,11 +2,10 @@
 layout: post
 title:  "C# Perceptron Tutorial"
 date:   2012-09-16 20:02:05 +0300
-categories: miscellaneous
+categories: ai
+redirect_from: /miscellaneous/c-perceptron-tutorial
 image: /imgs/thumbnails/perceptron.webp
 ---
-
-## Intro
 
 The **Perceptron** is basically the simplest learning algorithm, that uses only one neuron.  
 An usual representation of a perceptron (neuron) that has **2 inputs** looks like this:
@@ -19,7 +18,7 @@ Now for a better understanding:
 
 **Weight 1** and **Weight 2** are random values - they're used to adjust the input values so the error is minimum. By modifying them, the perceptron is able to learn.
 
-The **Bias** shoult be treated as another input value, that always has the value of **1** (bias = 1). It must have it's own weight -> **weight 3**.
+The **Bias** should be treated as another input value, that always has the value of **1** (bias = 1). It must have it's own weight -> **weight 3**.
 
 To learn, a perceptron uses **supervised learning**: that means, we need to provide multiple inputs and correct outputs so the weights can be adjusted correctly. Repeating this process will constantly lower the error until the generated output is almost equal with the desired output. When the weights are adjusted, the perceptron will be able to 'guess' the output for new inputs.
 

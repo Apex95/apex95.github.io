@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Backpropagation Tutorial (XOR)"
 date:   2013-06-14 20:02:05 +0300
-categories: miscellaneous
+categories: ai
+redirect_from: /miscellaneous/c-backpropagation-tutorial-xor
 image: /imgs/thumbnails/backpropagation.webp
 ---
 
