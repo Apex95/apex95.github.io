@@ -43,7 +43,7 @@
   });
 </script>
 
-{% if page.noindex %}
+{% if page.noindex or paginator.page > 1 %}
 <meta name="robots" content="noindex, follow"/>
 {% endif %}
 
