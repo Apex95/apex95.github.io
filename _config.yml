@@ -32,6 +32,9 @@ seo:
   type: BlogPosting
 logo: /imgs/logo.png
 
+include:
+  - dan
+
 kramdown:
   input:          GFM
   # https://github.com/jekyll/jekyll/pull/4090
