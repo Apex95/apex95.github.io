@@ -32,8 +32,7 @@ seo:
   type: BlogPosting
 logo: /imgs/logo.png
 
-include:
-  - dan
+include: [".dan"]
 
 kramdown:
   input:          GFM
