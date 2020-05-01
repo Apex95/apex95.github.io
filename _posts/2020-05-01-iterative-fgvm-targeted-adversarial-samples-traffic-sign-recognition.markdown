@@ -23,7 +23,7 @@ For this experiment, I've constructed a basic LeNet5 CNN in PyTorch. It performs
 {% include image.html url="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/gtsrb-results.png" description="Results of the Traffic-Sign Recognition CNN on the GTSRB Test Dataset" %}
 
 
-This is represented using the following PyTorch snippet:
+This network is represented using the following PyTorch snippet:
 
 ```python
 class LeNet(nn.Module):
