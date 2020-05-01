@@ -12,7 +12,7 @@ Inspired by the progress of driverless cars and by the fact that this subject is
 
 
 
-##### I'll try to discuss in this article only the important aspects of this problem. However the Google Colab Notebook with a pretrained model is available here[[2](https://colab.research.google.com/drive/1CndPD5ZsW022qO1xgEAWbmcXJwkJKBAX)].
+##### I'll try to discuss in this article only the important aspects of this problem. However, the Google Colab Notebook with a pretrained model is available here[[2](https://colab.research.google.com/drive/1CndPD5ZsW022qO1xgEAWbmcXJwkJKBAX)].
 
 ## Targeted Network
 
