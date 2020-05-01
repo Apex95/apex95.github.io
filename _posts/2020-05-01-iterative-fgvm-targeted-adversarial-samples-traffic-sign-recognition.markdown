@@ -16,9 +16,14 @@ Inspired by the progress of driverless cars and by the fact that this subject is
 
 ## Targeted Network
 
+For this experiment, I've constructed a basic LeNet5 CNN in PyTorch. It performs 2 convolutions of size 5x5 on 32x32 grayscale images, separated by max-pooling. The dataset is slightly unbalanced, but this was compensated for during the training process.
+
+
+
 {% include image.html url="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/gtsrb-results.png" description="Results of the Traffic-Sign Recognition CNN on the GTSRB Test Dataset" %}
 
-For this experiment, I've constructed a basic LeNet5 CNN in PyTorch with the following format:
+
+This is represented using the following PyTorch snippet:
 
 ```python
 class LeNet(nn.Module):
