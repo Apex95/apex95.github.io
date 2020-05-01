@@ -20,7 +20,7 @@ Inspired by the progress of driverless cars and by the fact that this subject is
 
 For this experiment, I've constructed a basic LeNet5 CNN in PyTorch with the following format:
 
-```Python
+```python
 class LeNet(nn.Module):
   def __init__(self, num_classes=47, affine=True):
 
@@ -76,7 +76,7 @@ In this case, additional constraints are addressed:
 
 The code I ended up with is posted below; further implementation details will also be presented.
 
-```Python
+```python
 targeted_adversarial_class = torch.tensor([INV_TRAFFIC_SIGNS_LABELS['stop']])
 adversarial_sample = torch.rand((1, 1, 32, 32)).requires_grad_() 
 
@@ -115,18 +115,18 @@ for i in range(10000):
 
 The current CNN is trained on 32x32 grayscale images so it makes sense to start with an adversarial sample of same size which consists of random noise distributed over one channel. It is also required to indicate through `requires_grad_()` that this variable should be updated by Autograd.
 
-```Python
+```python
 adversarial_sample = torch.rand((1, 1, 32, 32)).requires_grad_() 
 ```
 
 Next, an optimizer is created that instead of tweaking weights will tweak the `adversarial_sample` defined above:
-```Python
+```python
 adversarial_optimizer = torch.optim.Adam([adversarial_sample], lr=1e-3)
 ```
 
 The loss function is defined using `torch.nn.CrossEntropyLoss()` - which is the same criterion used for training. In this example, I'll try to create a sample that is classified as a stop sign (`targeted_adversarial_class`). 
 
-```Python
+```python
 targeted_adversarial_class = torch.tensor([INV_TRAFFIC_SIGNS_LABELS['stop']])
 
 prediction = net(adversarial_sample)
@@ -147,13 +147,13 @@ The following 3x3 convolution kernel is used to determine the color difference b
 
 
 In PyTorch, I implemented the aforementioned method using `torch.nn.functional.conv2d()` and `torch.nn.functional.pad()`:
-```Python
+```python
 # image smoothing loss
 loss += (torch.nn.functional.conv2d(torch.nn.functional.pad(adversarial_sample, (1,1,1,1), 'reflect'), torch.FloatTensor([[[0, 0, 0], [0, -3, 1], [0, 1, 1]]]).view(1, 1, 3, 3))**2).sum()
 ```
 
 Finally, the image is clamped to create a valid float tensor using:
-```Python
+```python
 adversarial_sample.data = torch.clamp(adversarial_sample.data, 0, 1)
 ```
 
