@@ -140,12 +140,12 @@ prediction = net(adversarial_sample)
 loss = torch.nn.CrossEntropyLoss()(prediction, targeted_adversarial_class)
 ```
 
-This loss function does well in generating adversarial images but the results have a noisy aspect (e.g.: powerful contrasts between small groups of pixels) and might look suspicious. Since this noise can be easily removed using basic filtering, smooth images are wanted. 
+This loss function does well in generating adversarial images but the results have a **noisy** aspect (e.g.: powerful contrasts between small groups of pixels) and might look suspicious. Since this noise can be easily removed using basic filtering, **smooth** images are wanted. 
 
-Defining a smooth-image constraint can be done by minimizing the Mean Squared Error between adjacent pixels. Think of it as applying an edge-detection filter and attempting to minimize the overall result. However, this has an impact on the efficiency of the generated sample as it adds dependencies between pixels. To minimize the loss of freedom, only the adjacent pixels from the bottom-right side are taken into account.
-The following 3x3 convolution kernel is used to determine the color difference between a pixel and its 3 other neighbors:
+Defining a smooth-image constraint can be done by minimizing the **Mean Squared Error** between **adjacent** pixels. Think of it as applying an edge-detection filter and attempting to minimize the overall result. However, this has an impact on the efficiency of the generated sample as it adds dependencies between pixels. To minimize the loss of freedom, only the adjacent pixels from the bottom-right side are taken into account.
+The following 3x3 **convolution** kernel is used to determine the color difference between a pixel and its 3 other neighbors:
 
- | K |   
+K | |   
 ------------ | ------------- | -------------
 0 | 0 | 0
 0 | -3 | 1
