@@ -145,11 +145,11 @@ This loss function does well in generating adversarial images but the results ha
 Defining a smooth-image constraint can be done by minimizing the Mean Squared Error between adjacent pixels. Think of it as applying an edge-detection filter and attempting to minimize the overall result. However, this has an impact on the efficiency of the generated sample as it adds dependencies between pixels. To minimize the loss of freedom, only the adjacent pixels from the bottom-right side are taken into account.
 The following 3x3 convolution kernel is used to determine the color difference between a pixel and its 3 other neighbors:
 
-Kernel | | | 
------------- | ------------ | ------------- | -------------
- | 0 | 0 | 0
- | 0 | -3 | 1
- | 0 | 1 | 1
+ | K |   
+------------ | ------------- | -------------
+0 | 0 | 0
+0 | -3 | 1
+0 | 1 | 1
 {: .data-table }
 
 
