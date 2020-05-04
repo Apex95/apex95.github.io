@@ -6,7 +6,7 @@ categories: ai
 image: /imgs/thumbnails/fgvm-gtsrb-adversarial-sample.png
 ---
 
-Inspired by the progress of driverless cars and by the fact that this subject is not thoroughly discussed I decided to give it a shot at creating smooth targeted adversarial samples that are interpreted as legit traffic signs with a high confidence by a PyTorch Convolutional Neural Network (CNN) classifier trained on the GTSRB[[1](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset)] dataset. I'll be using the Fast Gradient Value Method (**FGVM**) in an iterative manner - which is also called the Basic Iterative Method (BIM). I noticed that most articles only present PyTorch code for non-targeted Fast Gardient Sign Method (FGSM) - which performs well in evading classifiers but is, in my opinion, somehow limited.
+Inspired by the progress of driverless cars and by the fact that this subject is not thoroughly discussed I decided to give it a shot at creating smooth **targeted** adversarial samples that are interpreted as legit traffic signs with a high confidence by a PyTorch Convolutional Neural Network (**CNN**) classifier trained on the GTSRB[[1](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset)] dataset. I'll be using the Fast Gradient Value Method (**FGVM**) in an iterative manner - which is also called the Basic Iterative Method (BIM). I noticed that most articles only present PyTorch code for non-targeted Fast Gardient Sign Method (FGSM) - which performs well in evading classifiers but is, in my opinion, somehow limited.
 
 {% include image.html url="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/fgvm-gtsrb-adversarial-sample.png" description="Smooth targeted adversarial sample generated using the current implementation, being misclassified as a 'Stop' sign." %}
 
@@ -16,7 +16,7 @@ Inspired by the progress of driverless cars and by the fact that this subject is
 
 ## Targeted Network
 
-For this experiment, I've constructed a basic LeNet5 CNN in PyTorch. It performs 2 convolutions of size 5x5 on 32x32 grayscale images, separated by max-pooling. The dataset is slightly unbalanced, but this was compensated for during the training process.
+For this experiment, I've constructed a basic **LeNet5** CNN in PyTorch. It performs 2 convolutions of size 5x5 on 32x32 grayscale images, separated by max-pooling. The dataset is slightly unbalanced, but this was compensated for during the training process.
 
 
 
@@ -65,14 +65,14 @@ The architecture is not optimal for the sake of simplicity; additionally, achiev
 
 ## Targeted Adversarial Samples with Iterative FGVM
 
-When training a neural network the focus is on optimizing parameters (i.e. weights) in order to minimize the loss (e.g. Mean Squared Error, CrossEntropy, etc.) between the current output and desired output while the inputs are fixed. This is done through gradient descent - a more in-depth explanation is available here[[3](https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example)]. As an example, if a neural network models the function below, the $$w$$ (weight) and $$b$$ (bias) variables are adjusted during the training.
+When **training** a neural network the focus is on optimizing parameters (i.e. weights) in order to minimize the **loss** (e.g.: Mean Squared Error, Cross Entropy, etc.) between the **current output** and **desired output** while the inputs are fixed. This is done through **gradient descent** - a more in-depth explanation is available here[[3](https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example)]. As an example, if a neural network models the function below, the $$w$$ (weight) and $$b$$ (bias) variables are adjusted during the training.
 
 $$ f(x) = w \cdot x + b$$
 
 
-When talking about targeted FGVM, $$w$$ and $$b$$ are fixed and the input $$x$$ is adjusted through gradient descent (computed w.r.t. different variables, obviously). Usually this implies minimizing the error between the targeted adversarial output and the current output - basically shifting the current output towards the targeted output.
+When talking about targeted **FGVM**, $$w$$ and $$b$$ are fixed and the input $$x$$ is adjusted through **gradient descent** (computed w.r.t. different variables, obviously). Usually this implies minimizing the error between the **targeted adversarial output** and the **current output** - basically shifting the current output towards the targeted output.
 
-In this case, additional constraints are addressed:
+Moreover, when the input is in image-format, additional constraints must be addressed:
 * images (inputs) must be clamped between 0 and 1 (float representation)
 * images must be smooth in order to mitigate basic noise filtering mechanisms
 
@@ -145,6 +145,8 @@ This loss function does well in generating adversarial images but the results ha
 Defining a smooth-image constraint can be done by minimizing the Mean Squared Error between adjacent pixels. Think of it as applying an edge-detection filter and attempting to minimize the overall result. However, this has an impact on the efficiency of the generated sample as it adds dependencies between pixels. To minimize the loss of freedom, only the adjacent pixels from the bottom-right side are taken into account.
 The following 3x3 convolution kernel is used to determine the color difference between a pixel and its 3 other neighbors:
 
+Kernel | | 
+------------ | ------------- | -------------
 0 | 0 | 0
 0 | -3 | 1
 0 | 1 | 1
