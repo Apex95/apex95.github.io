@@ -59,7 +59,7 @@ For a better understanding of this, take a look at the graph below which shows t
 {% include image.html url="/imgs/posts/c-backpropagation-tutorial-xor/5.png" description="Plotting the error function, considering the case of 1 dimension (1 variable)" %}
 
 We intend to produce an **output value** which ensures a **minimal error** by adjusting only the **weights** of the neural network.  
-I won't dive into the **gradient descent** method, as I wrote a [separate article](https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example) that contains both theory and examples.
+I wrote a separate article which discusses how [gradient descent](https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example) is employed to minimize the error and determine values for weights.
 
 ## 4\. Formulas
 

@@ -23,7 +23,7 @@ I'll be presenting a short summary of the algorithm used by `Random()` and how c
 
 While many pseudo-random implementations (e.g., libc's `rand()`) rely on a [Linear Congruential Generator (LCG)](https://en.wikipedia.org/wiki/Linear_congruential_generator) which generates each number in the sequence by taking into account the previous one, I discovered that **.NET**'s **random number generator** uses a different approach.
 
-By looking at the implementation of the `Random()` class ([available here](https://referencesource.microsoft.com/#mscorlib/system/random.cs)), one can easily observe that pseudo-random number generation is based on a [Subtractive Generator](https://rosettacode.org/wiki/Subtractive_generator), which permits the user to specify a custom seed or use `Environment.TickCount` (system's uptime in milliseconds) as default.
+By looking at the implementation of the [`Random()`](https://referencesource.microsoft.com/#mscorlib/system/random.cs) class, one can easily observe that pseudo-random number generation is based on a [Subtractive Generator](https://rosettacode.org/wiki/Subtractive_generator), which permits the user to specify a custom seed or use `Environment.TickCount` (system's uptime in milliseconds) as default.
 
 The core of the pseudo-random generator is the `InternalSample()` (line #100) method which constructs the sequence of numbers. `Random.nextDouble()` will actually call the `Sample()` method which returns the value of `InternalSample()` divided by `Int32.MaxValue`, as this is claimed to improve the distribution of random numbers.
 Without going into much details regarding the included gimmicks, we can describe the generator as follows:

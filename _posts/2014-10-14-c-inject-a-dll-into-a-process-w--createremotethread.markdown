@@ -11,9 +11,10 @@ image: /imgs/thumbnails/dllInject.webp
 
 Since I've been asked if this is possible - well...you can do **Dll Injection** using **C#** but the injected Dll must be written in a language that doesn't depend on a CLR (**C/C++** would be a good option here, but it's ok to write the injector in **C#**).
 
-I'm writing this tutorial as a _prologue_ - some day... I'll try to publish one about hotpatching executables and...it requires stuff from here.
 
 ##### almost all AV programs detect this as a possible malware simply because this behaviour is specific to some viruses/keygens/etc. - and they prefer to be rather paranoid than ineffective. Even if this technique has a _bad reputation_ it has <u>legit</u> uses like hotpatching & logging - and this is what I'm going to write about.
+
+Fun fact: you can achieve similar results (e.g., memory access) by [hooking and patching a function](https://codingvision.net/security/hot-patching-functions-with-intel-pin) in the original binary (not in C# though).
 
 ## Some theory
 

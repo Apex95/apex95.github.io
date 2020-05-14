@@ -6,7 +6,7 @@ categories: security
 image: /imgs/thumbnails/memory.webp
 ---
 
-Today's tutorial is about...processes' memory! In this article I'll show you how to **read/write** a process' memory using C#. This is a good way to learn a part of **WinAPI** and also understand the basics of memory allocation.
+Today's tutorial is about...processes' memory! In this article I'll show you how to **read/write** a process' memory using C#. This is a good way to learn a part of **WinAPI** and also understand the basics of memory allocation. I'll be considering a fixed (known) memory address for reading and writing just for the sake of simplicity; feel free to also read how to [scan a process' memory] and discover addresses of different variables. 
 
 Before starting, we need a "target" - I choose **notepad.exe**.
 
