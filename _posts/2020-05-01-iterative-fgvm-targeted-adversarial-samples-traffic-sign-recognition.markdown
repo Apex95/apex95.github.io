@@ -6,7 +6,9 @@ categories: ai
 image: /imgs/thumbnails/fgvm-gtsrb-adversarial-sample.png
 ---
 
-Inspired by the progress of driverless cars and by the fact that this subject is not thoroughly discussed I decided to give it a shot at creating smooth **targeted** adversarial samples that are interpreted as legit traffic signs with a high confidence by a PyTorch Convolutional Neural Network (**CNN**) classifier trained on the [GTSRB](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset) dataset. I'll be using the Fast Gradient Value Method (**FGVM**) in an iterative manner - which is also called the Basic Iterative Method (BIM). I noticed that most articles only present PyTorch code for non-targeted Fast Gardient Sign Method (FGSM) - which performs well in evading classifiers but is, in my opinion, somehow limited.
+Inspired by the progress of driverless cars and by the fact that this subject is not thoroughly discussed I decided to give it a shot at creating smooth **targeted** adversarial samples that are interpreted as legit traffic signs with a high confidence by a PyTorch Convolutional Neural Network (**CNN**) classifier trained on the [GTSRB](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset) dataset. 
+
+I'll be using the Fast Gradient Value Method (**FGVM**) in an iterative manner - which is also called the Basic Iterative Method (BIM). I noticed that most articles only present PyTorch code for non-targeted Fast Gardient Sign Method (FGSM) - which performs well in evading classifiers but is, in my opinion, somehow limited.
 
 {% include image.html url="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/fgvm-gtsrb-adversarial-sample.png" description="Smooth targeted adversarial sample generated using the current implementation, being misclassified as a 'Stop' sign." %}
 
