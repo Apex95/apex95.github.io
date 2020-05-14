@@ -1,0 +1,348 @@
+I"jW<p>I’ve been trying for some time to learn and actually understand how <strong>Backpropagation</strong> (aka <strong>backward propagation of errors</strong>) works and how it trains the neural networks. Since I encountered many problems while creating the program, I decided to write this tutorial and also add a completely functional code that is able to <strong>learn</strong> the <strong>XOR</strong> gate.</p>
+
+<p><em>Since it’s a lot to explain, I will try to stay on subject and talk only about the backpropagation algorithm.</em></p>
+
+<h2 id="1-what-is-backpropagation">1. What is Backpropagation?</h2>
+
+<p><strong>Backpropagation</strong> is a supervised-learning method used to train <strong>neural networks</strong> by adjusting the <strong>weights</strong> and the <strong>biases</strong> of each neuron.</p>
+
+<p><strong>Important</strong>: do NOT train for only one example, until the error gets minimal then move to the next example - you have to take each example once, then start again from the beginning.</p>
+
+<p><em>Steps:</em></p>
+
+<ol>
+  <li><em><strong>forward propagation</strong> - calculates the output of the neural network</em></li>
+  <li><em><strong>back propagation</strong> - adjusts the weights and the biases according to the global error</em></li>
+</ol>
+
+<p>In this tutorial I’ll use a <strong>2-2-1</strong> neural network (2 input neurons, 2 hidden and 1 output). Keep an eye on this picture, it might be easier to understand.</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-backpropagation-tutorial-xor/1.png" alt="Cookie-cutter Neural Network Model for learning XOR" />
+  <figcaption><p>Cookie-cutter Neural Network Model for learning XOR</p>
+</figcaption>
+</figure>
+
+<h2 id="2-how-it-works">2. How it works?</h2>
+
+<ol>
+  <li>initialize all weights and biases with random values between 0 and 1</li>
+  <li>calculate the output of the network</li>
+  <li>calculate the global error</li>
+  <li>adjust the weights of the output neuron using the global error</li>
+  <li>calculate the hidden neurons’ errors (split the global error)</li>
+  <li>adjust the hidden neurons’ weights using their errors</li>
+  <li>go to step 2) and repeat this until the error gets minimal</li>
+</ol>
+
+<h2 id="3-some-math">3. Some math…</h2>
+
+<p>Any <strong>neural network</strong> can be described as a mathematical function which takes an <strong>input</strong>, and computes an <strong>output</strong> using a set of <strong>coefficients</strong> (here, we call them <strong>weights</strong>). The only variables that we can change are the <strong>weights</strong> (think of it as some sort of interpolation). Usually, on the resulted output, an <strong>activation function</strong> is applied for various reasons: 1) it adds nonlinearity and 2) it properly limits the output to a known interval. Here, we use a <strong>sigmoid</strong> activator - more details below.</p>
+
+<p>Its graph looks like this (note that the output values range from <strong>0</strong> to <strong>1</strong>)</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-backpropagation-tutorial-xor/2.png" alt="Plot of the Sigmoid activation function" />
+  <figcaption><p>Plot of the Sigmoid activation function</p>
+</figcaption>
+</figure>
+
+<p><strong>Sigmoid formulas</strong> that we’ll use (where <strong>f(x)</strong> is our sigmoid function)</p>
+
+<p><em>1) Basic sigmoid function:</em><br />
+\(f(x) = \frac{1}{1+e^{-x}}\)</p>
+
+<p><em>2) Sigmoid Derivative (its value is used to adjust the weights using gradient descent):</em><br />
+\(f'(x) = f(x)(1-f(x))\)</p>
+
+<p>Backpropagation always aims to reduce the error of each output. The algorithm knows the correct final output and will attempt to minimize the error function by tweaking the weights.</p>
+
+<p>For a better understanding of this, take a look at the graph below which shows the error, based on the output:</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-backpropagation-tutorial-xor/5.png" alt="Plotting the error function, considering the case of 1 dimension (1 variable)" />
+  <figcaption><p>Plotting the error function, considering the case of 1 dimension (1 variable)</p>
+</figcaption>
+</figure>
+
+<p>We intend to produce an <strong>output value</strong> which ensures a <strong>minimal error</strong> by adjusting only the <strong>weights</strong> of the neural network.<br />
+I wrote a separate article which discusses how <a href="https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example">gradient descent</a> is employed to minimize the error and determine values for weights.</p>
+
+<h2 id="4-formulas">4. Formulas</h2>
+
+<p>Calculate the output of a neuron (<strong>f</strong> is the sigmoid function, <strong>f’</strong> is the derivative of f, aka df/dx):<br />
+<strong>actualOutput = f(weights[0] * inputs[0] + weights[1] * inputs[1] + biasWeight)</strong></p>
+
+<p>Calculate the global error (error for the <strong>output neuron</strong>)<br />
+<strong>globalError = f’(output) * (desiredOutput - actualOutput)</strong></p>
+
+<p>Adjust the weights/bias of the <strong>output neuron</strong><br />
+<strong>W13 += globalError * input13<br />
+W23 += globalError * input23<br />
+bias += globalError</strong></p>
+
+<p>Calculate the error for each <strong>hidden neuron</strong><br />
+<strong>error1 = f’(x) * globalError * W13<br />
+error2 = f’(x) * globalError * W23</strong></p>
+
+<p>Adjust the weights of the <strong>hidden neurons</strong></p>
+
+<p><strong>-» first hidden neuron</strong><br />
+<strong>W11 += error1 * input11<br />
+W21 += error1 * input21<br />
+bias1 += error1;</strong></p>
+
+<p><strong>-» second hidden neuron</strong><br />
+<strong>W12 += error2 * input12<br />
+W22 += error2 * input22<br />
+bias2 += error2;</strong></p>
+
+<h2 id="5-the-code">5. The code</h2>
+
+<p>The best part and also the easiest. There are many things backpropagation can do but as an example we can make it learn the <strong>XOR</strong> gate…since it’s so special.<br />
+I used 2 classes just to make everything more “visible” and OOP-ish.</p>
+
+<p>Note: it requires about 2000 epochs to learn.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">BackPropagationXor</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="nf">train</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">class</span> <span class="nc">sigmoid</span>
+        <span class="p">{</span>
+            <span class="k">public</span> <span class="k">static</span> <span class="kt">double</span> <span class="nf">output</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="m">1.0</span> <span class="p">/</span> <span class="p">(</span><span class="m">1.0</span> <span class="p">+</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Exp</span><span class="p">(-</span><span class="n">x</span><span class="p">));</span>
+            <span class="p">}</span>
+
+            <span class="k">public</span> <span class="k">static</span> <span class="kt">double</span> <span class="nf">derivative</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="k">return</span> <span class="n">x</span> <span class="p">*</span> <span class="p">(</span><span class="m">1</span> <span class="p">-</span> <span class="n">x</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">class</span> <span class="nc">Neuron</span>
+        <span class="p">{</span>
+            <span class="k">public</span> <span class="kt">double</span><span class="p">[]</span> <span class="n">inputs</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">double</span><span class="p">[</span><span class="m">2</span><span class="p">];</span>
+            <span class="k">public</span> <span class="kt">double</span><span class="p">[]</span> <span class="n">weights</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">double</span><span class="p">[</span><span class="m">2</span><span class="p">];</span>
+            <span class="k">public</span> <span class="kt">double</span> <span class="n">error</span><span class="p">;</span>
+
+            <span class="k">private</span> <span class="kt">double</span> <span class="n">biasWeight</span><span class="p">;</span>
+
+            <span class="k">private</span> <span class="n">Random</span> <span class="n">r</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Random</span><span class="p">();</span>
+
+            <span class="k">public</span> <span class="kt">double</span> <span class="n">output</span>
+            <span class="p">{</span>
+                <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">sigmoid</span><span class="p">.</span><span class="nf">output</span><span class="p">(</span><span class="n">weights</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">*</span> <span class="n">inputs</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">+</span> <span class="n">weights</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">*</span> <span class="n">inputs</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">+</span> <span class="n">biasWeight</span><span class="p">);</span> <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">public</span> <span class="k">void</span> <span class="nf">randomizeWeights</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">weights</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">=</span> <span class="n">r</span><span class="p">.</span><span class="nf">NextDouble</span><span class="p">();</span>
+                <span class="n">weights</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">=</span> <span class="n">r</span><span class="p">.</span><span class="nf">NextDouble</span><span class="p">();</span>
+                <span class="n">biasWeight</span> <span class="p">=</span> <span class="n">r</span><span class="p">.</span><span class="nf">NextDouble</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">public</span> <span class="k">void</span> <span class="nf">adjustWeights</span><span class="p">()</span>
+            <span class="p">{</span>
+                <span class="n">weights</span><span class="p">[</span><span class="m">0</span><span class="p">]</span> <span class="p">+=</span> <span class="n">error</span> <span class="p">*</span> <span class="n">inputs</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+                <span class="n">weights</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">+=</span> <span class="n">error</span> <span class="p">*</span> <span class="n">inputs</span><span class="p">[</span><span class="m">1</span><span class="p">];</span>
+                <span class="n">biasWeight</span> <span class="p">+=</span> <span class="n">error</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">train</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="c1">// the input values</span>
+            <span class="kt">double</span><span class="p">[,]</span> <span class="n">inputs</span> <span class="p">=</span> 
+            <span class="p">{</span>
+                <span class="p">{</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">},</span>
+                <span class="p">{</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">},</span>
+                <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">},</span>
+                <span class="p">{</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">}</span>
+            <span class="p">};</span>
+
+            <span class="c1">// desired results</span>
+            <span class="kt">double</span><span class="p">[]</span> <span class="n">results</span> <span class="p">=</span> <span class="p">{</span> <span class="m">0</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span> <span class="p">};</span>
+
+            <span class="c1">// creating the neurons</span>
+            <span class="n">Neuron</span> <span class="n">hiddenNeuron1</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Neuron</span><span class="p">();</span>
+            <span class="n">Neuron</span> <span class="n">hiddenNeuron2</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Neuron</span><span class="p">();</span>
+            <span class="n">Neuron</span> <span class="n">outputNeuron</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Neuron</span><span class="p">();</span>
+
+            <span class="c1">// random weights</span>
+            <span class="n">hiddenNeuron1</span><span class="p">.</span><span class="nf">randomizeWeights</span><span class="p">();</span>
+            <span class="n">hiddenNeuron2</span><span class="p">.</span><span class="nf">randomizeWeights</span><span class="p">();</span>
+            <span class="n">outputNeuron</span><span class="p">.</span><span class="nf">randomizeWeights</span><span class="p">();</span>
+
+            <span class="kt">int</span> <span class="n">epoch</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+
+        <span class="n">Retry</span><span class="p">:</span>
+            <span class="n">epoch</span><span class="p">++;</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="m">4</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>  <span class="c1">// very important, do NOT train for only one example</span>
+            <span class="p">{</span>
+                <span class="c1">// 1) forward propagation (calculates output)</span>
+                <span class="n">hiddenNeuron1</span><span class="p">.</span><span class="n">inputs</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">double</span><span class="p">[]</span> <span class="p">{</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="m">0</span><span class="p">],</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="m">1</span><span class="p">]</span> <span class="p">};</span>
+                <span class="n">hiddenNeuron2</span><span class="p">.</span><span class="n">inputs</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">double</span><span class="p">[]</span> <span class="p">{</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="m">0</span><span class="p">],</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="m">1</span><span class="p">]</span> <span class="p">};</span>
+
+                <span class="n">outputNeuron</span><span class="p">.</span><span class="n">inputs</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">double</span><span class="p">[]</span> <span class="p">{</span> <span class="n">hiddenNeuron1</span><span class="p">.</span><span class="n">output</span><span class="p">,</span> <span class="n">hiddenNeuron2</span><span class="p">.</span><span class="n">output</span> <span class="p">};</span>
+
+                <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"{0} xor {1} = {2}"</span><span class="p">,</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="m">0</span><span class="p">],</span> <span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="m">1</span><span class="p">],</span> <span class="n">outputNeuron</span><span class="p">.</span><span class="n">output</span><span class="p">);</span>
+
+                <span class="c1">// 2) back propagation (adjusts weights)</span>
+
+                <span class="c1">// adjusts the weight of the output neuron, based on its error</span>
+                <span class="n">outputNeuron</span><span class="p">.</span><span class="n">error</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">.</span><span class="nf">derivative</span><span class="p">(</span><span class="n">outputNeuron</span><span class="p">.</span><span class="n">output</span><span class="p">)</span> <span class="p">*</span> <span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">-</span> <span class="n">outputNeuron</span><span class="p">.</span><span class="n">output</span><span class="p">);</span>
+                <span class="n">outputNeuron</span><span class="p">.</span><span class="nf">adjustWeights</span><span class="p">();</span>
+
+                <span class="c1">// then adjusts the hidden neurons' weights, based on their errors</span>
+                <span class="n">hiddenNeuron1</span><span class="p">.</span><span class="n">error</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">.</span><span class="nf">derivative</span><span class="p">(</span><span class="n">hiddenNeuron1</span><span class="p">.</span><span class="n">output</span><span class="p">)</span> <span class="p">*</span> <span class="n">outputNeuron</span><span class="p">.</span><span class="n">error</span> <span class="p">*</span> <span class="n">outputNeuron</span><span class="p">.</span><span class="n">weights</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+                <span class="n">hiddenNeuron2</span><span class="p">.</span><span class="n">error</span> <span class="p">=</span> <span class="n">sigmoid</span><span class="p">.</span><span class="nf">derivative</span><span class="p">(</span><span class="n">hiddenNeuron2</span><span class="p">.</span><span class="n">output</span><span class="p">)</span> <span class="p">*</span> <span class="n">outputNeuron</span><span class="p">.</span><span class="n">error</span> <span class="p">*</span> <span class="n">outputNeuron</span><span class="p">.</span><span class="n">weights</span><span class="p">[</span><span class="m">1</span><span class="p">];</span>
+
+                <span class="n">hiddenNeuron1</span><span class="p">.</span><span class="nf">adjustWeights</span><span class="p">();</span>
+                <span class="n">hiddenNeuron2</span><span class="p">.</span><span class="nf">adjustWeights</span><span class="p">();</span>
+            <span class="p">}</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">epoch</span> <span class="p">&lt;</span> <span class="m">2000</span><span class="p">)</span>
+                <span class="k">goto</span> <span class="n">Retry</span><span class="p">;</span>
+
+            <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="6-proof-of-concept">6. Proof of concept</h2>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-backpropagation-tutorial-xor/6.png" alt="The presented model manages to learn the outputs of the XOR gate" />
+  <figcaption><p>The presented model manages to learn the outputs of the XOR gate</p>
+</figcaption>
+</figure>
+
+<h2 id="7-wrong-values">7. Wrong values?</h2>
+
+<p>Yep, this happens sometimes, when the algorithm gets stuck on the <strong>local minima</strong>: the algorithm thinks it has found the minimum error, it doesn’t know that the error could be even smaller.</p>
+
+<p>This is usually solved by resetting the weights of the neural network and training again.</p>
+:ET

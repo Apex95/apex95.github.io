@@ -1,0 +1,89 @@
+I")<p>Today I held a short laboratory which tackled different metrics used in evaluating classifiers. One of the tasks required that, given the performances of 2 classifiers as <strong>confusion matrices</strong>, the students will calculate the <strong>accuracy</strong> of the 2 models. One model was a <strong>binary classifier</strong> and the other was a <strong>multiclass classifier</strong>.</p>
+
+<p>Many students resorted to googling for an <strong>accuracy formula</strong> which returned the following function:</p>
+
+<p>[{\color{Red}{ACC = \frac{TP + TN}{TP + TN + FP +FN}}}]</p>
+
+<p>Then, they calculated a <strong>‘per-class’ accuracy</strong> (for class \(i\), they had \(ACC_i\)) and <strong>macro-averaged</strong> the results like below:</p>
+
+<p>[ACC = \frac{\sum_{i=1}^{i=N}{ACC_i}}{N}]</p>
+
+<p>To their surprise, the resulted accuracy for the <strong>multiclass classifier</strong> was <strong>erroneous</strong> and highly different (when compared to <code class="highlighter-rouge">accuracy_score()</code> from <strong>sklearn</strong>). However, the accuracy of the <strong>binary classifier</strong> was correct.</p>
+
+<p>As there wasn’t much time available, I told them to use the following <strong>accuracy formula</strong> to match the results of <strong>sklearn</strong> and I’ll send an explaination later:</p>
+
+<p>[{\color{Green}{ACC = \frac{\sum_{i=1}^{i=N}{TP_i}}{\sum_{i = 1}^{i=N}{(TP_i + FP_i)}}}}]</p>
+
+<p>Some of you might recognize this as <strong>micro-averaged precision</strong>.</p>
+
+<p>The purpose of this article is to serve as a list of DO’s and DONT’s so we can avoid such mistakes in the future.</p>
+
+<h2 id="what-was-wrong">What was wrong?</h2>
+
+<p>Basically, you’re prone to get invalid results if you <strong>average</strong> accuracy values in an attempt to obtain the <strong>global accuracy</strong>. But… even if you directly calculate the <strong>global accuracy</strong> using the <span style="color:red">above formula</span>, you’d get skewed values.</p>
+
+<p>Take a look at the following classifier, described using a <strong>confusion matrix</strong>:</p>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>\</th>
+      <th>Class #0</th>
+      <th>Class #1</th>
+      <th>Class #2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Class #0</strong></td>
+      <td>0</td>
+      <td>100</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td><strong>Class #1</strong></td>
+      <td>100</td>
+      <td>0</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td><strong>Class #2</strong></td>
+      <td>100</td>
+      <td>100</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You’ll notice that \(TP = 0\) thus the classifier is doing a really bad job.</p>
+
+<p>If we follow the students’ approach and calculate the <strong>‘per-class’ accuracy</strong> (let’s say <strong>Class #0</strong>), we have:</p>
+
+<p>[TP_0 = 0, TN_0 = 200, FP_0 = 200, FN_0 = 200]</p>
+
+<p>[\color{Red}{ACC_0 = \frac{0 + 200}{0+200+200+200} = 0.333(3)}]</p>
+
+<p>This already looks suspicious. You’ll get the same results for the other 2 classes, so… on average, \(\color{Red}{ACC = 0.333(3)}\).
+This is definitely wrong.</p>
+
+<p>If you directly compute <strong>global accuracy</strong> using the <span style="color:red">same formula</span> (summing all \(TP's\), \(TN's\), …), you get the same result because of the symmetry. This happens mainly because of the \(TN\) in the numerator which grows faster than any other term. In other words, as the number of classes grows, this error grows aswell; a similar model, but with <strong>4 classess</strong>, gets a <strong>0.5</strong> accuracy.</p>
+
+<p>Using the <span style="color:green">second formula</span>, the <strong>global accuracy</strong> becomes:</p>
+
+<p>[\color{Green}{ACC = \frac{0+0+0}{(0+200) + (0+200) + (0 + 200)} = 0}]</p>
+
+<p>Which yields, indeed, a better result. Moreover, it generates the same results as <code class="highlighter-rouge">accuracy_score()</code> from <strong>sklearn</strong>, given more diverse confusion matrices.</p>
+
+<h5 id="if-you-compute-per-class-accuracies-using-the-second-formula-and-average-the-values-youre-basically-getting-a-macro-averaged-precision-point-is-thats-not-accuracy---so-dont-do-that">If you compute <strong>‘per class’ accuracies</strong> using the <span style="color:green">second formula</span> and average the values, you’re basically getting a <strong>macro-averaged precision</strong>. Point is, that’s not <strong>accuracy</strong> - so don’t do that.</h5>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I’d recommend avoiding:</p>
+<ul>
+  <li>the idea of calculating a <strong>global accuracy</strong> by averaging <strong>‘per-class’ accuracies</strong></li>
+  <li>the <span style="color:red">red formula</span>, which includes \(TN\), since the <span style="color:green">other one</span> returns correct values for any number of classes</li>
+</ul>
+
+<p>Overall, you can compute <strong>precision</strong>, <strong>recall</strong>, <strong>F1</strong> in a ‘per-class’ manner. But I’m not so sure it also works with the <strong>accuracy</strong>.</p>
+
+:ET

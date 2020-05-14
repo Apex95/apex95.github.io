@@ -1,0 +1,254 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/syntaxhighlight.webp " alt="C# Simple Syntax Highlighting" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/interface/c-simple-syntax-highlighting">C# Simple Syntax Highlighting</a>
+        </h2>
+        
+        <p class="excerpt">
+            Some time ago, I had to make a project that required syntax highlighting - luckily I wasn’t the one who had to make that part. However the version used in the project was more complicated - so I decided to...
+        </p>
+        
+        <p class="post-meta">Aug 17, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/rtbcontrol.webp " alt="C# Synchronize 2 RichTextBoxes' Scroll" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/interface/c-synchronize-2-richtextboxes-scroll">C# Synchronize 2 RichTextBoxes' Scroll</a>
+        </h2>
+        
+        <p class="excerpt">
+            I recently had a problem when I tried to synchronize the scrolling between 2 RichTextBoxes - that was because these controls behave different than normal TextBoxes. However I managed to solve this…after some time, and I decided to post the...
+        </p>
+        
+        <p class="post-meta">Mar 17, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/fadeinout.webp " alt="C# Form Fade In/Fade Out" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/interface/c-form-fade-in-fade-out">C# Form Fade In/Fade Out</a>
+        </h2>
+        
+        <p class="excerpt">
+            This short tutorial is made to show you how to create a fade in / fade out effect for a form. Since basic Windows Forms doesn’t provide such an option, it must be done manually. Note: we’ll use timers instead...
+        </p>
+        
+        <p class="post-meta">Feb 18, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/childforms.webp " alt="C# Create Child Forms" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/interface/c-create-child-forms">C# Create Child Forms</a>
+        </h2>
+        
+        <p class="excerpt">
+            Child Forms are those forms that are found inside another form (parent form). There are multiple ways to create child forms - most of them require to use a MDI Container. Child Forms without MDI Container I, personally, had lots...
+        </p>
+        
+        <p class="post-meta">Feb 2, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/smoothscrolling.webp " alt="C# Disable RichTextBox's Smooth Scrolling" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/interface/c-disable-richtextboxs-smooth-scrolling">C# Disable RichTextBox's Smooth Scrolling</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this article I’ll show you how to disable RichTextBox’s Smooth Scrolling - aka make RichTextBox scroll line by line. I know this is a problem for many developers, it was a problem for me too, so that’s why I...
+        </p>
+        
+        <p class="post-meta">Jan 20, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/formround.webp " alt="C# Simple Form with Rounded Corners" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/interface/c-simple-form-with-rounded-corners">C# Simple Form with Rounded Corners</a>
+        </h2>
+        
+        <p class="excerpt">
+            This tutorial aims to show how to make a C# Form with rounded corners, using a very simple method. It’s not actually our policy as we won’t use code here… 1. Select a background image for the Form(window) - it...
+        </p>
+        
+        <p class="post-meta">Aug 13, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/formTitleBar.webp " alt="C# Moving form without border/title bar" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/interface/c-moving-form-without-border-title-bar">C# Moving form without border/title bar</a>
+        </h2>
+        
+        <p class="excerpt">
+            1. Removing the title bar and border In this tutorial I will show you how you can make a draggable window (Form) with no title bar or border. By default, when you remove the border of a Form, you can’t...
+        </p>
+        
+        <p class="post-meta">May 25, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/formGradient.webp " alt="C# Form with Gradient Background" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/interface/c-form-with-gradient-background">C# Form with Gradient Background</a>
+        </h2>
+        
+        <p class="excerpt">
+            Gradient is a method which consists in slowly switching from one color to another - it’s used very often in application’s design. In this tutorial I’ll show you how to create this effect using only code: First, create a Forms...
+        </p>
+        
+        <p class="post-meta">May 9, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

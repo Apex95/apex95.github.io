@@ -1,0 +1,184 @@
+I"_<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/mse-slope-plot.webp " alt="Gradient Descent Simply Explained (with Example)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/numerical-methods/gradient-descent-simply-explained-with-example">Gradient Descent Simply Explained (with Example)</a>
+        </h2>
+        
+        <p class="excerpt">
+            So… I’ll try to explain here the concept of gradient descent as simple as possible in order to provide some insight of what’s happening from a mathematical perspective and why the formula works. I’ll try to keep it short and...
+        </p>
+        
+        <p class="post-meta">Aug 13, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/gauss.gif " alt="Approximating Integrals with the Gaussian Quadrature (w/ example)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/numerical-methods/approximating-integrals-with-the-gaussian-quadrature-w-example">Approximating Integrals with the Gaussian Quadrature (w/ example)</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is more like a memory dump so I will have a backup in case I’ll ever need it again. And if someone else finds this information useful, the better it is. Intro The Gaussian Quadrature is a method used...
+        </p>
+        
+        <p class="post-meta">Sep 16, 2015</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/plot.webp " alt="Matlab/Octave Lagrange Interpolation Polynomial" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/numerical-methods/matlab-octave-lagrange-interpolation-polynomial">Matlab/Octave Lagrange Interpolation Polynomial</a>
+        </h2>
+        
+        <p class="excerpt">
+            Ok, I’ve been missing for a few days…months…almost a year. Ran out of ideas and time for new articles (thanks to the university) so I’ll publish some stuff related to numerical methods, starting with a basic interpolation method using the...
+        </p>
+        
+        <p class="post-meta">Aug 19, 2015</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

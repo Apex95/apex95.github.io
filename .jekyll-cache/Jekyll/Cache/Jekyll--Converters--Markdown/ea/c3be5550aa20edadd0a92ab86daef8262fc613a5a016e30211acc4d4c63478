@@ -1,0 +1,254 @@
+I"h<p>Inspired by the progress of driverless cars and by the fact that this subject is not thoroughly discussed I decided to give it a shot at creating smooth <strong>targeted</strong> adversarial samples that are interpreted as legit traffic signs with a high confidence by a PyTorch Convolutional Neural Network (<strong>CNN</strong>) classifier trained on the <a href="http://benchmark.ini.rub.de/?section=gtsrb&amp;subsection=dataset">GTSRB</a> dataset. I’ll be using the Fast Gradient Value Method (<strong>FGVM</strong>) in an iterative manner - which is also called the Basic Iterative Method (BIM). I noticed that most articles only present PyTorch code for non-targeted Fast Gardient Sign Method (FGSM) - which performs well in evading classifiers but is, in my opinion, somehow limited.</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/fgvm-gtsrb-adversarial-sample.png" alt="Smooth targeted adversarial sample generated using the current implementation, being misclassified as a 'Stop' sign." />
+  <figcaption><p>Smooth targeted adversarial sample generated using the current implementation, being misclassified as a ‘Stop’ sign.</p>
+</figcaption>
+</figure>
+
+<h5 id="ill-try-to-discuss-in-this-article-only-the-important-aspects-of-this-problem-however-i-also-prepared-a-google-colab-notebook">I’ll try to discuss in this article only the important aspects of this problem. However, I also prepared a <a href="https://colab.research.google.com/drive/1CndPD5ZsW022qO1xgEAWbmcXJwkJKBAX">Google Colab Notebook</a>.</h5>
+
+<h2 id="targeted-network">Targeted Network</h2>
+
+<p>For this experiment, I’ve constructed a basic <strong>LeNet5</strong> CNN in PyTorch. It performs 2 convolutions of size 5x5 on 32x32 grayscale images, separated by max-pooling. The dataset is slightly unbalanced, but this was compensated for during the training process.</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/gtsrb-results.png" alt="Results of the Traffic-Sign Recognition CNN on the GTSRB Test Dataset" />
+  <figcaption><p>Results of the Traffic-Sign Recognition CNN on the GTSRB Test Dataset</p>
+</figcaption>
+</figure>
+
+<p>This network is represented using the following PyTorch snippet:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">LeNet</span><span class="p">(</span><span class="n">nn</span><span class="p">.</span><span class="n">Module</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">47</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+
+      <span class="nb">super</span><span class="p">().</span><span class="n">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="p">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+      <span class="bp">self</span><span class="p">.</span><span class="n">in1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">affine</span><span class="p">)</span>
+
+      <span class="bp">self</span><span class="p">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+      <span class="bp">self</span><span class="p">.</span><span class="n">in2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">affine</span><span class="o">=</span><span class="n">affine</span><span class="p">)</span>
+      
+      <span class="bp">self</span><span class="p">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span>
+      <span class="bp">self</span><span class="p">.</span><span class="n">fc2</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+      <span class="bp">self</span><span class="p">.</span><span class="n">fc3</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+
+  <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">in1</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+      <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">in2</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">out</span><span class="p">)))</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">max_pool2d</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+      
+      <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="n">out</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+      
+      <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fc1</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">fc2</span><span class="p">(</span><span class="n">out</span><span class="p">))</span>
+      <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">fc3</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+      <span class="k">return</span> <span class="n">out</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The architecture is not optimal for the sake of simplicity; additionally, achieving state-of-the-art traffic-sign recognition is not in the scope of this article. Evaluation results on the GTSRB testing set are as follows:</p>
+<ul>
+  <li><strong>Accuracy:</strong> ~95%</li>
+  <li><strong>Precision:</strong> ~93%</li>
+  <li><strong>Recall:</strong> ~93%</li>
+</ul>
+
+<h2 id="targeted-adversarial-samples-with-iterative-fgvm">Targeted Adversarial Samples with Iterative FGVM</h2>
+
+<p>When <strong>training</strong> a neural network the focus is on optimizing parameters (i.e. weights) in order to minimize the <strong>loss</strong> (e.g.: Mean Squared Error, Cross Entropy, etc.) between the <strong>current output</strong> and <strong>desired output</strong> while the inputs are fixed. This is done through <a href="https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example">gradient descent</a>. As an example, if a neural network models the function below, the \(w\) (weight) and \(b\) (bias) variables are adjusted during the training.</p>
+
+\[f(x) = w \cdot x + b\]
+
+<p>When talking about targeted <strong>FGVM</strong>, \(w\) and \(b\) are fixed and the input \(x\) is adjusted through <strong>gradient descent</strong> (computed w.r.t. different variables, obviously). Usually this implies minimizing the error between the <strong>targeted adversarial output</strong> and the <strong>current output</strong> - basically shifting the current output towards the targeted output.</p>
+
+<p>Moreover, when the input is in image-format, additional constraints must be addressed:</p>
+<ul>
+  <li>images (inputs) must be clamped between 0 and 1 (float representation)</li>
+  <li>images must be smooth in order to mitigate basic noise filtering mechanisms</li>
+</ul>
+
+<h2 id="pytorch-generating-adversarial-samples">PyTorch: Generating Adversarial Samples</h2>
+
+<p>The code I ended up with is posted below; further implementation details will also be presented.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td><td class="rouge-code"><pre><span class="n">targeted_adversarial_class</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">INV_TRAFFIC_SIGNS_LABELS</span><span class="p">[</span><span class="s">'stop'</span><span class="p">]])</span>
+<span class="n">adversarial_sample</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)).</span><span class="n">requires_grad_</span><span class="p">()</span> 
+
+<span class="c1"># optimizer for the adversarial sample
+</span><span class="n">adversarial_optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">([</span><span class="n">adversarial_sample</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+
+  <span class="n">adversarial_optimizer</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+  <span class="n">prediction</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">adversarial_sample</span><span class="p">)</span>
+  
+  <span class="c1"># classification loss + 0.05 * image smoothing loss
+</span>  <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">CrossEntropyLoss</span><span class="p">()(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">targeted_adversarial_class</span><span class="p">)</span> <span class="o">+</span> \
+          <span class="mf">0.05</span><span class="o">*</span><span class="p">((</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="n">pad</span><span class="p">(</span><span class="n">adversarial_sample</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="s">'reflect'</span><span class="p">),</span> <span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span><span class="p">([[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]]).</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">).</span><span class="nb">sum</span><span class="p">())</span>
+  
+
+  <span class="c1"># this is the predicted class number
+</span>  <span class="n">predicted_class</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">prediction</span><span class="p">.</span><span class="n">detach</span><span class="p">().</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+  <span class="c1"># updates gradient and backpropagates errors to the input
+</span>  <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+  <span class="n">adversarial_optimizer</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+
+  <span class="c1"># ensuring that the image is valid
+</span>  <span class="n">adversarial_sample</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">adversarial_sample</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+  <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">500</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">adversarial_sample</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s">'gray'</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">'Predicted:'</span><span class="p">,</span> <span class="n">TRAFFIC_SIGNS_LABELS</span><span class="p">[</span><span class="n">predicted_class</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'Loss:'</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The current CNN is trained on 32x32 grayscale images so it makes sense to start with an adversarial sample of same size which consists of random noise distributed over one channel. It is also required to indicate through <code class="highlighter-rouge">requires_grad_()</code> that this variable should be updated by Autograd.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">adversarial_sample</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">)).</span><span class="n">requires_grad_</span><span class="p">()</span> 
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Next, an optimizer is created that instead of tweaking weights will tweak the <code class="highlighter-rouge">adversarial_sample</code> defined above:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">adversarial_optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">Adam</span><span class="p">([</span><span class="n">adversarial_sample</span><span class="p">],</span> <span class="n">lr</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The loss function is defined using <code class="highlighter-rouge">torch.nn.CrossEntropyLoss()</code> - which is the same criterion used for training. In this example, I’ll try to create a sample that is classified as a stop sign (<code class="highlighter-rouge">targeted_adversarial_class</code>).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="n">targeted_adversarial_class</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">INV_TRAFFIC_SIGNS_LABELS</span><span class="p">[</span><span class="s">'stop'</span><span class="p">]])</span>
+
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">adversarial_sample</span><span class="p">)</span>
+
+<span class="c1"># classification loss
+</span><span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">CrossEntropyLoss</span><span class="p">()(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">targeted_adversarial_class</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This loss function does well in generating adversarial images but the results have a <strong>noisy</strong> aspect (e.g., powerful contrasts between small groups of pixels) and might look suspicious. Since this noise can be easily removed using basic filtering, <strong>smooth</strong> images are wanted.</p>
+
+<p>Defining a smooth-image constraint can be done by minimizing the <strong>Mean Squared Error</strong> between <strong>adjacent</strong> pixels. Think of it as applying an edge-detection filter and attempting to minimize the overall result. However, this has an impact on the efficiency of the generated sample as it adds dependencies between pixels. To minimize the loss of freedom, only the adjacent pixels from the bottom-right side are taken into account.
+The following 3x3 <strong>convolution</strong> kernel is used to determine the color difference between a pixel and its 3 other neighbors:</p>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>K</th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>-3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>In PyTorch, I implemented the aforementioned method using <code class="highlighter-rouge">torch.nn.functional.conv2d()</code> and <code class="highlighter-rouge">torch.nn.functional.pad()</code>:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="c1"># image smoothing loss
+</span><span class="n">loss</span> <span class="o">+=</span> <span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="n">conv2d</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">functional</span><span class="p">.</span><span class="n">pad</span><span class="p">(</span><span class="n">adversarial_sample</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="s">'reflect'</span><span class="p">),</span> <span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span><span class="p">([[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]]).</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">).</span><span class="nb">sum</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Finally, the image is clamped to create a valid float tensor using:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">adversarial_sample</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">adversarial_sample</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Multiple iterations are required in order to properly optimize the input.</p>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>FGVM proves reliable in crafting smooth targeted adversarial samples for basic classifiers implemented with CNNs. However, additional problems need to be addressed in order to become a feasible attack. The crafted sample must be picked up by the segmentation algorithm as a possible traffic sign in the detection phase. Next, the adversarial sample’s efficiency should not be impacted by small affine transformations (e.g., being shifted 3 pixels to the left) - this might be fixed through data augmentation. Additionally, factors such as brightness, contrast or various camera properties can still reduce the success rate of an adversarial sample.</p>
+
+<p>Samples which are more resistant to uniformly distributed noise can be obtained by removing the image smoothing constraint.</p>
+:ET

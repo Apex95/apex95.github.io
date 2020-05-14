@@ -1,0 +1,385 @@
+I"�l<p>If you got here, you probably want to know how <strong>Ascii Art</strong> works and how to use C# to <strong>transform images into text</strong>. We’ll do this by making good use of <strong>LockBits()</strong> and <strong>UnlockBits()</strong>, and also, a <strong>pointer</strong> - going unsafe !</p>
+
+<p>I know those make everything more complicated, but they’re more efficient.</p>
+
+<h2 id="how-does-an-ascii-art-generator-work">How does an Ascii Art generator work?</h2>
+
+<ul>
+  <li>first, it opens the Image and resizes it to a custom size (about 100x100)</li>
+  <li>using 2 loops and a <strong>pointer</strong>, it gets the color of each pixel in the image (the image, stored in memory, looks like a two-dimensional array of pixels)</li>
+  <li>for each pixel, it adds a character into a text file, depending on the <strong>alpha</strong> (transparency)</li>
+</ul>
+
+<p>Now if you got a basic idea about how this works, you can build your own program - no need to worry about the source code, you’ll find everything here, including the necessary explainations.</p>
+
+<p>Start by creating a <strong>Forms Project</strong>, make sure you have checked <strong>Allow unsafe code</strong> from <em>Project-&gt;Properties-&gt;Build</em>.</p>
+
+<p>In <strong>form1_load</strong> add the following line to load the image from the executable’s directory:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">Image</span> <span class="n">img</span> <span class="p">=</span> <span class="n">Image</span><span class="p">.</span><span class="nf">FromFile</span><span class="p">(</span><span class="s">"image.png"</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Then, we transform this image into a <strong>Bitmap</strong>, and resize it to <strong>100x100</strong> pixels - don’t use HD images there, because it will take some time to check every pixel:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">Bitmap</span> <span class="n">bmp</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Bitmap</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">100</span><span class="p">);</span>
+<span class="c1">// you can increase the Ascii Art's quality by increasing the bitmap's dimensions</span>
+<span class="c1">// this also increases the time taken by the conversion process...</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Now we need a <strong>StringBuilder</strong> in which we store the characters corresponding to the image’s pixels.</p>
+
+<p><em>Update: it is more efficient to use a <strong>StringBuilder</strong> instead of a <strong>string</strong> (<a href="http://www.codingvision.net/tips-and-tricks/c-string-vs-stringbuilder/" title="String vs StringBuilder">see here why</a>).</em></p>
+
+<h2 id="1from-pixel-to-char">1.From Pixel to Char</h2>
+
+<p>As I said, we’ll use those 2 functions :</p>
+
+<p><strong>LockBits()</strong> - locks the image in the system’s memory so we can directly get pixel’s attributes by using a pointer<br />
+<strong>UnlockBits()</strong> - releases the memory used</p>
+
+<p>As you know, an image is created by a group of pixels and each <strong>pixel</strong> takes <strong>4 bytes</strong> of memory, that means it has 4 properties: Red, Green, Blue and Alpha/transparency. From the memory we can read each pixel’s property.</p>
+
+<p>Each pixel must be transformed into a character with the same color and all the characters must be the same width and height (<strong>monospaced</strong>) so we maintain the aspect ratio.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+</pre></td><td class="rouge-code"><pre><span class="k">private</span> <span class="k">unsafe</span> <span class="n">StringBuilder</span> <span class="nf">convert_image</span><span class="p">(</span><span class="n">Bitmap</span> <span class="n">bmp</span><span class="p">)</span>
+<span class="p">{</span>
+            <span class="n">StringBuilder</span> <span class="n">asciiResult</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>   <span class="c1">//here we store the ascii-art string</span>
+
+            <span class="c1">//setting the font's size &amp; type (Courier new is monospace)</span>
+            <span class="n">asciiResult</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">""</span><span class="p">);</span> 
+
+            <span class="c1">//storing the image's height &amp; width</span>
+            <span class="kt">int</span> <span class="n">bmpHeight</span> <span class="p">=</span> <span class="n">bmp</span><span class="p">.</span><span class="n">Height</span><span class="p">;</span>  
+            <span class="kt">int</span> <span class="n">bmpWidth</span> <span class="p">=</span> <span class="n">bmp</span><span class="p">.</span><span class="n">Width</span><span class="p">;</span>
+
+            <span class="c1">//here we lock the image in the memory by using LockBits</span>
+            <span class="n">BitmapData</span> <span class="n">bmpData</span> <span class="p">=</span> <span class="n">bmp</span><span class="p">.</span><span class="nf">LockBits</span><span class="p">(</span><span class="k">new</span> <span class="nf">Rectangle</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">bmpWidth</span><span class="p">,</span> <span class="n">bmpHeight</span><span class="p">),</span> <span class="n">ImageLockMode</span><span class="p">.</span><span class="n">ReadOnly</span><span class="p">,</span> <span class="n">bmp</span><span class="p">.</span><span class="n">PixelFormat</span><span class="p">);</span>
+
+            <span class="c1">// bmpStride tells us how many pixels are on a line</span>
+            <span class="c1">// because images have multiple lines of pixels (like 2D arrays)</span>
+            <span class="kt">int</span> <span class="n">bmpStride</span> <span class="p">=</span> <span class="n">bmpData</span><span class="p">.</span><span class="n">Stride</span><span class="p">;</span>  
+
+            <span class="c1">// this gets the memory address of the first pixel in the image</span>
+            <span class="c1">// currentPixel is the pointer we'll use</span>
+            <span class="kt">byte</span><span class="p">*</span> <span class="n">currentPixel</span> <span class="p">=</span> <span class="p">(</span><span class="kt">byte</span><span class="p">*)</span><span class="n">bmpData</span><span class="p">.</span><span class="n">Scan0</span><span class="p">;</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">y</span> <span class="p">&lt;</span> <span class="n">bmpHeight</span><span class="p">;</span> <span class="n">y</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">x</span> <span class="p">&lt;</span> <span class="n">bmpWidth</span><span class="p">;</span> <span class="n">x</span><span class="p">++)</span>
+                <span class="p">{</span>
+                    <span class="c1">// as I said a pixel takes 4 bytes of memory so it has 4 attributes</span>
+                    <span class="kt">int</span> <span class="n">r</span> <span class="p">=</span> <span class="n">currentPixel</span><span class="p">[</span><span class="n">x</span><span class="p">*</span><span class="m">4</span><span class="p">];</span> 
+                    <span class="kt">int</span> <span class="n">g</span> <span class="p">=</span> <span class="n">currentPixel</span><span class="p">[</span><span class="n">x</span><span class="p">*</span><span class="m">4</span> <span class="p">+</span> <span class="m">1</span><span class="p">];</span>
+                    <span class="kt">int</span> <span class="n">b</span> <span class="p">=</span> <span class="n">currentPixel</span><span class="p">[</span><span class="n">x</span><span class="p">*</span><span class="m">4</span> <span class="p">+</span> <span class="m">2</span><span class="p">];</span>
+                    <span class="kt">int</span> <span class="n">alpha</span> <span class="p">=</span> <span class="n">currentPixel</span><span class="p">[</span><span class="n">x</span> <span class="p">*</span> <span class="m">4</span> <span class="p">+</span> <span class="m">3</span><span class="p">];</span>
+
+                    <span class="c1">// appending the character to the ascii-art stringbuilder</span>
+                    <span class="c1">// note there's a custom function 'getAsciiChar()' - I'll explain it soon</span>
+                    <span class="n">asciiResult</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"&lt;span style="</span><span class="n">color</span><span class="p">:</span><span class="nf">rgb</span><span class="p">({</span><span class="m">0</span><span class="p">},{</span><span class="m">1</span><span class="p">},{</span><span class="m">2</span><span class="p">});</span><span class="s">"&gt;{3}&lt;/span&gt;"</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="nf">getAsciiChar</span><span class="p">(</span><span class="n">alpha</span><span class="p">)));</span>
+
+                <span class="p">}</span>
+
+                <span class="c1">// reached end of this line, by adding bmpStride (number of pixels on each line)</span>
+                <span class="c1">// to the memory address, it gives us the adress of the first pixel on the next line</span>
+                <span class="n">currentPixel</span> <span class="p">+=</span> <span class="n">bmpStride</span><span class="p">;</span>  
+                <span class="n">asciiResult</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"  
+");
+</span>
+            <span class="p">}</span>
+            <span class="n">asciiResult</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">""</span><span class="p">);</span> <span class="c1">// closing the body tag we opened at the beginning</span>
+
+            <span class="n">bmp</span><span class="p">.</span><span class="nf">UnlockBits</span><span class="p">(</span><span class="n">bmpData</span><span class="p">);</span>  <span class="c1">//removing the image from the memory</span>
+
+            <span class="k">return</span> <span class="n">asciiResult</span><span class="p">;</span>  <span class="c1">// returning the ascii-art stringbuilder</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="2choosing-the-right-character">2.Choosing the right character</h2>
+
+<p>There’s a function in the code above that I’ll explain here: <strong>getAsciiChar()</strong>. What it does? It returns a character depending on the transparency of the current pixel (so it looks like true ascii art).</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="k">private</span> <span class="kt">char</span> <span class="nf">getAsciiChar</span><span class="p">(</span><span class="kt">int</span> <span class="n">alpha</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">240</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sc">'@'</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">200</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sc">'#'</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">160</span><span class="p">)</span>
+        <span class="k">return</span> <span class="err">'</span><span class="p">/</span><span class="n">pre</span><span class="p">&gt;;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">120</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sc">'%'</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">80</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sc">'8'</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">40</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sc">'|'</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="sc">'.'</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="3displaying-the-ascii-art">3.Displaying the Ascii-Art</h2>
+
+<p>Now we just have to display our image, which is easily done using this:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">show_image</span><span class="p">(</span><span class="n">StringBuilder</span> <span class="n">asciiResult</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">StreamWriter</span> <span class="n">sw</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="s">"image.html"</span><span class="p">);</span>
+    <span class="n">sw</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">asciiResult</span><span class="p">.</span><span class="nf">ToString</span><span class="p">());</span>
+    <span class="n">sw</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Finally, we get this:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Drawing</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Drawing.Imaging</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Windows.Forms</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">WindowsFormsApplication1</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">Form1</span> <span class="p">:</span> <span class="n">Form</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">Form1</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="nf">InitializeComponent</span><span class="p">();</span>
+
+            <span class="n">Image</span> <span class="n">img</span> <span class="p">=</span> <span class="n">Image</span><span class="p">.</span><span class="nf">FromFile</span><span class="p">(</span><span class="s">"image.png"</span><span class="p">);</span>
+            <span class="n">Bitmap</span> <span class="n">bmp</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Bitmap</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="m">100</span><span class="p">,</span> <span class="m">100</span><span class="p">);</span>
+            <span class="nf">show_image</span><span class="p">(</span><span class="nf">convert_image</span><span class="p">(</span><span class="n">bmp</span><span class="p">));</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">unsafe</span> <span class="n">StringBuilder</span> <span class="nf">convert_image</span><span class="p">(</span><span class="n">Bitmap</span> <span class="n">bmp</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">StringBuilder</span> <span class="n">asciiResult</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">();</span>
+            <span class="n">asciiResult</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
+
+            <span class="kt">int</span> <span class="n">bmpHeight</span> <span class="p">=</span> <span class="n">bmp</span><span class="p">.</span><span class="n">Height</span><span class="p">;</span>
+            <span class="kt">int</span> <span class="n">bmpWidth</span> <span class="p">=</span> <span class="n">bmp</span><span class="p">.</span><span class="n">Width</span><span class="p">;</span>
+
+            <span class="n">BitmapData</span> <span class="n">bmpData</span> <span class="p">=</span> <span class="n">bmp</span><span class="p">.</span><span class="nf">LockBits</span><span class="p">(</span><span class="k">new</span> <span class="nf">Rectangle</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">bmpWidth</span><span class="p">,</span> <span class="n">bmpHeight</span><span class="p">),</span> <span class="n">ImageLockMode</span><span class="p">.</span><span class="n">ReadOnly</span><span class="p">,</span> <span class="n">bmp</span><span class="p">.</span><span class="n">PixelFormat</span><span class="p">);</span>
+
+            <span class="kt">int</span> <span class="n">bmpStride</span> <span class="p">=</span> <span class="n">bmpData</span><span class="p">.</span><span class="n">Stride</span><span class="p">;</span>
+            <span class="kt">byte</span><span class="p">*</span> <span class="n">currentPixel</span> <span class="p">=</span> <span class="p">(</span><span class="kt">byte</span><span class="p">*)</span><span class="n">bmpData</span><span class="p">.</span><span class="n">Scan0</span><span class="p">;</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">y</span> <span class="p">&lt;</span> <span class="n">bmpHeight</span><span class="p">;</span> <span class="n">y</span><span class="p">++)</span>
+            <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">x</span> <span class="p">&lt;</span> <span class="n">bmpWidth</span><span class="p">;</span> <span class="n">x</span><span class="p">++)</span>
+                <span class="p">{</span>
+                    <span class="kt">int</span> <span class="n">r</span> <span class="p">=</span> <span class="n">currentPixel</span><span class="p">[</span><span class="n">x</span> <span class="p">*</span> <span class="m">4</span><span class="p">];</span>
+                    <span class="kt">int</span> <span class="n">g</span> <span class="p">=</span> <span class="n">currentPixel</span><span class="p">[</span><span class="n">x</span> <span class="p">*</span> <span class="m">4</span> <span class="p">+</span> <span class="m">1</span><span class="p">];</span>
+                    <span class="kt">int</span> <span class="n">b</span> <span class="p">=</span> <span class="n">currentPixel</span><span class="p">[</span><span class="n">x</span> <span class="p">*</span> <span class="m">4</span> <span class="p">+</span> <span class="m">2</span><span class="p">];</span>
+                    <span class="kt">int</span> <span class="n">alpha</span> <span class="p">=</span> <span class="n">currentPixel</span><span class="p">[</span><span class="n">x</span> <span class="p">*</span> <span class="m">4</span> <span class="p">+</span> <span class="m">3</span><span class="p">];</span>
+                    <span class="n">asciiResult</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="nf">Format</span><span class="p">(</span><span class="s">"&lt;span style="</span><span class="n">color</span><span class="p">:</span><span class="nf">rgb</span><span class="p">({</span><span class="m">0</span><span class="p">},{</span><span class="m">1</span><span class="p">},{</span><span class="m">2</span><span class="p">});</span><span class="s">"&gt;{3}&lt;/span&gt;"</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="nf">getAsciiChar</span><span class="p">(</span><span class="n">alpha</span><span class="p">)));</span>
+
+                <span class="p">}</span>
+                <span class="n">currentPixel</span> <span class="p">+=</span> <span class="n">bmpStride</span><span class="p">;</span>
+                <span class="n">asciiResult</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"  
+");
+</span>
+            <span class="p">}</span>
+            <span class="n">asciiResult</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">""</span><span class="p">);</span>
+
+            <span class="n">bmp</span><span class="p">.</span><span class="nf">UnlockBits</span><span class="p">(</span><span class="n">bmpData</span><span class="p">);</span>
+            <span class="k">return</span> <span class="n">asciiResult</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="kt">char</span> <span class="nf">getAsciiChar</span><span class="p">(</span><span class="kt">int</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">240</span><span class="p">)</span>
+                <span class="k">return</span> <span class="sc">'@'</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">200</span><span class="p">)</span>
+                <span class="k">return</span> <span class="sc">'#'</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">160</span><span class="p">)</span>
+                <span class="k">return</span> <span class="err">'</span><span class="p">/</span><span class="n">pre</span><span class="p">&gt;;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">120</span><span class="p">)</span>
+                <span class="k">return</span> <span class="sc">'%'</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">80</span><span class="p">)</span>
+                <span class="k">return</span> <span class="sc">'8'</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">alpha</span> <span class="p">&gt;=</span> <span class="m">40</span><span class="p">)</span>
+                <span class="k">return</span> <span class="sc">'|'</span><span class="p">;</span>
+
+            <span class="k">return</span> <span class="sc">'.'</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">show_image</span><span class="p">(</span><span class="n">StringBuilder</span> <span class="n">asciiResult</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">StreamWriter</span> <span class="n">sw</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="s">"image.html"</span><span class="p">);</span>
+            <span class="n">sw</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">asciiResult</span><span class="p">.</span><span class="nf">ToString</span><span class="p">());</span>
+            <span class="n">sw</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>When you run the application, wait until the Form shows up - that’s when the image conversion is done, then simply open “image.html”.</p>
+
+<p>Here’s a small screenshot of an Ascii Art made with this program - this is how the result will look like:</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-ascii-art-tutorial/1.png" alt="Ascii Art Sample generated with this program" />
+  <figcaption><p>Ascii Art Sample generated with this program</p>
+</figcaption>
+</figure>
+
+<p>Well, that’s all, if you have problems, you can always leave a comment :).</p>
+:ET

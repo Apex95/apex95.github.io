@@ -251,8 +251,6 @@ a.category-link {
 
 .post-title {
     font-size: 36px;
-    letter-spacing: -1px;
-    line-height: 1;
 
     @include media-query($on-laptop) {
         font-size: 36px;
@@ -351,10 +349,9 @@ a.category-link {
  */
  
  .excerpt {
-    font-size: 17px;
+    font-size: 14px;
     color: $grey2-color;
-    padding-left: 20px;
-    font-family: $base-font-family;
+    font-family: $text-font-family;
  }
  
  .separator {
@@ -439,9 +436,10 @@ a.category-link {
     width: 140px;
     height: 140px;
     
-    border: 1px solid $grey-color-dark;
-    margin: 10px;
+    margin: 10px 30px 10px 10px;
     float: left;
+
+    
     
     > img {
         width: 140px;

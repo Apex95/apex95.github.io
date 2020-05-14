@@ -1,0 +1,139 @@
+I"y <p><strong>MsSql</strong> or <strong>MySql</strong> ? What to use ?<br />
+I prefer <strong>MySql</strong> because I work with it more often. Unfortunately <strong>.NET</strong> doesn’t support by default this kind of database…</p>
+
+<p>There’s a solution!</p>
+
+<p>It’s a small library called <strong>Connector/NET</strong>, available <a href="http://dev.mysql.com/downloads/connector/net/1.0.html#downloads">on MySql’s official website</a>. You just have to install it.</p>
+
+<p>After installation, create a new project (console or form) and make sure you have a MySql server running (if you don’t have one, just download and install Xampp).</p>
+
+<p>Then go into <strong>Solution Explorer</strong>, right click on <strong>References</strong>-&gt;<strong>Add reference</strong>-&gt;<strong>.NET</strong>: from here, select <strong>MySql.Data</strong> then click Ok.</p>
+
+<p>Before starting to code, add into your project:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">MySql.Data.MySqlClient</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>In this tutorial I work with a table called <strong>members</strong>:</p>
+
+<table style="border-collapse:collapse;color: #444;" border="1" cellpadding="3" cellspacing="10">
+
+<tbody>
+
+<tr>
+
+<td>**Name**</td>
+
+<td>**Email**</td>
+
+</tr>
+
+<tr>
+
+<td>User-1</td>
+
+<td>user-1@mail.com</td>
+
+</tr>
+
+<tr>
+
+<td>User-2</td>
+
+<td>user-2@mail.com</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<p> </p>
+
+<p>The connection to the database is made using a string which contains all the information required: host, database name, username and password.<br />
+This string has the following structure:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="kt">string</span> <span class="n">str_con</span> <span class="p">=</span> <span class="s">"Server=server_address;Database=database_name;Uid=username;Pwd=password"</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Using this we get:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre></td><td class="rouge-code"><pre><span class="kt">string</span> <span class="n">str_con</span> <span class="p">=</span> <span class="s">"Server=localhost;Database=tutorial;Uid=root;Pwd="</span><span class="p">;</span>  <span class="c1">//my server has no password </span>
+
+<span class="n">MySqlConnection</span> <span class="n">connection</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MySqlConnection</span><span class="p">(</span><span class="n">str_con</span><span class="p">);</span>  <span class="c1">//we create a MySql connection</span>
+
+<span class="k">try</span>  
+<span class="p">{</span>
+      <span class="n">connection</span><span class="p">.</span><span class="nf">Open</span><span class="p">();</span>  <span class="c1">//we try to open the connection</span>
+<span class="p">}</span>
+<span class="k">catch</span><span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="n">Console</span><span class="p">.</span><span class="nf">Writeline</span><span class="p">(</span><span class="n">ex</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>  <span class="c1">// if we got here =&gt; db is offline</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Until now…we managed to establish a connection to the <strong>MySql</strong> server…<br />
+To execute commands, like <strong>INSERT, SELECT, DELETE.</strong> use the following code:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">MySqlCommand</span> <span class="n">command</span> <span class="p">=</span> <span class="n">connection</span><span class="p">.</span><span class="nf">CreateCommand</span><span class="p">();</span> <span class="c1">//we create a command</span>
+<span class="n">command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s">"SELECT * FROM memers"</span><span class="p">;</span> <span class="c1">// in CommandText, we write the Query</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><em>One thing to note: the code must be adjusted depending on the command’s type.</em></p>
+
+<p>What does that mean? We use a different code snippet if we expect a result from our query: if we use <strong>SELECT</strong>, we expect the MySql server to return some data, but if we use <strong>DELETE</strong> we won’t expect any result from the database - I think you got the point.</p>
+
+<h2 id="select-example">SELECT Example</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="n">MySqlDataReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="n">command</span><span class="p">.</span><span class="nf">ExecuteReader</span><span class="p">();</span>  <span class="c1">//execute the SELECT command, which returns the data into the reader</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="n">reader</span><span class="p">.</span><span class="nf">Read</span><span class="p">())</span>  <span class="c1">//while there is data to read</span>
+<span class="p">{</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">reader</span><span class="p">[</span><span class="s">"name"</span><span class="p">]</span> <span class="p">+</span> <span class="s">" "</span> <span class="p">+</span> <span class="n">reader</span><span class="p">[</span><span class="s">"email"</span><span class="p">]);</span>  <span class="c1">//finally, displaying what we got from our server</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>We need the <strong>reader</strong> only for the commands that return something.</p>
+
+<h2 id="insert-example">INSERT Example</h2>
+
+<p>For a simple…<strong>INSERT</strong>, the following lines would be enough:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s">"INSERT INTO members VALUES ('User-3', 'user-3@mail.com')"</span><span class="p">;</span>  <span class="c1">//we add a new member in our table</span>
+
+<span class="n">command</span><span class="p">.</span><span class="nf">ExecuteNonQuery</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This code goes for every MySql query that does not return a value, so, you can just modify the query and use everything you need.</p>
+
+<p>Once the queries are executed, the connection must be closed using the following line:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">connection</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

@@ -1,0 +1,104 @@
+I"<p>This tutorial will show you how to register a custom <strong>Url Protocol</strong> for your application. Basically, you can control your application by simply clicking an Url address like this one:</p>
+
+<p><strong>myApp:doSomething</strong></p>
+
+<h5 id="in-this-tutorial-ill-name-the-custom-protocol-myapp---but-you-can-use-any-name-you-want">In this tutorial, I’ll name the custom protocol <strong>myApp</strong> - but you can use any name you want.</h5>
+
+<h2 id="1editing-the-registry">1.Editing the Registry</h2>
+
+<p>In order to create your custom url protocol, you must first add it to the computer’s Registry so it will know which application is associated with that protocol.</p>
+
+<p>Here’s the structure of the subkey you should create:</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-register-a-url-protocol/1.png" alt="Setting an Application for the 'myApp' url protocol" />
+  <figcaption><p>Setting an Application for the ‘myApp’ url protocol</p>
+</figcaption>
+</figure>
+
+<p>The method below creates all the <strong>subkeys</strong> needed:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="k">static</span> <span class="k">void</span> <span class="nf">RegisterMyProtocol</span><span class="p">(</span><span class="kt">string</span> <span class="n">myAppPath</span><span class="p">)</span>  <span class="c1">//myAppPath = full path to your application</span>
+<span class="p">{</span>
+      <span class="n">RegistryKey</span> <span class="n">key</span> <span class="p">=</span> <span class="n">Registry</span><span class="p">.</span><span class="n">ClassesRoot</span><span class="p">.</span><span class="nf">OpenSubKey</span><span class="p">(</span><span class="s">"myApp"</span><span class="p">);</span>  <span class="c1">//open myApp protocol's subkey</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="n">key</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>  <span class="c1">//if the protocol is not registered yet...we register it</span>
+      <span class="p">{</span>
+          <span class="n">key</span> <span class="p">=</span> <span class="n">Registry</span><span class="p">.</span><span class="n">ClassesRoot</span><span class="p">.</span><span class="nf">CreateSubKey</span><span class="p">(</span><span class="s">"myApp"</span><span class="p">);</span> 
+          <span class="n">key</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">,</span> <span class="s">"URL: myApp Protocol"</span><span class="p">);</span>
+          <span class="n">key</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="s">"URL Protocol"</span><span class="p">,</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">);</span>
+
+          <span class="n">key</span> <span class="p">=</span> <span class="n">key</span><span class="p">.</span><span class="nf">CreateSubKey</span><span class="p">(</span><span class="s">@"shell\open\command"</span><span class="p">);</span>
+          <span class="n">key</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">,</span> <span class="n">myAppPath</span> <span class="p">+</span> <span class="s">" "</span> <span class="p">+</span> <span class="s">"%1"</span><span class="p">);</span>  
+         <span class="c1">//%1 represents the argument - this tells windows to open this program with an argument / parameter</span>
+      <span class="p">}</span>
+
+      <span class="n">key</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="2get-the-arguments-in-the-application">2.Get the arguments in the Application</h2>
+
+<p>Now when you access a url like this: <strong>myApp:SomeValue</strong> Windows will automatically open your program and send to it the argument’s value (which is “SomeValue”).</p>
+
+<p>Finally get the arguments supplied, by using <strong>Environment.GetCommandLineArgs()</strong>.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+</pre></td><td class="rouge-code"><pre><span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+<span class="p">{</span>
+      <span class="kt">string</span><span class="p">[]</span> <span class="n">args</span> <span class="p">=</span> <span class="n">Environment</span><span class="p">.</span><span class="nf">GetCommandLineArgs</span><span class="p">();</span>
+
+      <span class="c1">//args[0] is always the path to the application</span>
+      <span class="nf">RegisterMyProtocol</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="m">0</span><span class="p">]);</span> 
+      <span class="c1">//^the method posted before, that edits registry      </span>
+
+      <span class="k">try</span>
+      <span class="p">{</span>
+          <span class="c1">//if there's an argument passed, write it</span>
+          <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"Argument: "</span> <span class="p">+</span> <span class="n">args</span><span class="p">[</span><span class="m">1</span><span class="p">].</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"myapp:"</span><span class="p">,</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">));</span>  
+      <span class="p">}</span>
+      <span class="k">catch</span>
+      <span class="p">{</span>
+          <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="s">"No argument(s)"</span><span class="p">);</span>  <span class="c1">//if there's an exception, there's no argument</span>
+      <span class="p">}</span>
+
+      <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span> <span class="c1">//pauses the program - so you can see the result</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET
