@@ -6,7 +6,7 @@ categories: numerical-methods
 image: /imgs/thumbnails/mse-slope-plot.webp
 ---
 
-So... I'll try to explain here the concept of **gradient descent** as simple as possible in order to provide some insight of what's happening from a mathematical perspective and why the formula works. I'll try to keep it short and split this into 2 _chapters_: **theory** and **example** - take it as a ELI5 *5 minutes* linear regression tutorial.
+So... I'll try to explain here the concept of **gradient descent** as simple as possible in order to provide some insight of what's happening from a mathematical perspective and why the formula works. I'll try to keep it short and split this into 2 _chapters_: **theory** and **example** - take it as a ELI5 linear regression tutorial.
 
 Feel free to skip the mathy stuff and jump directly to the **example** if you feel that it might be easier to understand.
 
@@ -20,7 +20,7 @@ $$ f(x) = w \cdot x + 2$$
 
 where we have to determine the value of $$ w $$ such that the function successfully matches / approximates a set of known points. 
 
-Since our interest is to find the best coefficient, we'll consider $$ w $$ as a **variable** in our formulas and while computing the derivatives while $$ x $$ is treated as a **constant**. In other words, we don't compute the **derivative** with respect to $$ x $$ since we don't want to find values for it - we already have a set of inputs for the function, we're not allowed to change them.
+Since our interest is to find the best coefficient, we'll consider $$ w $$ as a **variable** in our formulas and while computing the derivatives; $$ x $$ will be treated as a **constant**. In other words, we don't compute the **derivative** with respect to $$ x $$ since we don't want to find values for it - we already have a set of inputs for the function, we're not allowed to change them.
 
 To properly grasp the gradient descent, as an optimization method, you need to know the following mathematical fact:
 
