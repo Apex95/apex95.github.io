@@ -32,7 +32,7 @@ Now, let's focus on the different constraints and challenges:
 
 ### 1. Complex / closed-source architecture
 
-{% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/tess-pipeline.png" description="Tesseract's pipeline as [presented at DAS 2016](https://github.com/tesseract-ocr/docs/blob/master/das_tutorial2016/2ArchitectureAndDataStructures.pdf){:rel="nofollow"}" %}
+{% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/tess-pipeline.png" description="Tesseract's pipeline as [presented at DAS 2016](https://github.com/tesseract-ocr/docs/blob/master/das_tutorial2016/2ArchitectureAndDataStructures.pdf){:rel='nofollow'}" %}
 
 
 Modern OCR systems are more complex than basic convolutional neural networks as they need to perform multiple actions (e.g.: deskewing, layout detection, text rows segmentation), therefore finding ways to correctly compute gradients is a daunting task. Moreover, many of them do not provide access to source code thus making it difficult to use techniques such as **FGSM** or **GAN**s.

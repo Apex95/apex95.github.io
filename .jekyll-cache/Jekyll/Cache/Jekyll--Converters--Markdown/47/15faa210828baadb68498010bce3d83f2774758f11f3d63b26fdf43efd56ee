@@ -1,0 +1,35 @@
+I"�<p>This is a simple way to protect your application from any so-called “cracker”, without involving obfuscation. Remember that this works only against <strong>Reflector</strong> (tested on: <strong>v7.5.2.1</strong>), any other decompilers are “immune”.</p>
+
+<h2 id="technical-stuff">Technical stuff…</h2>
+
+<p>The main idea is this: you change the value of <strong>NumberOfRvaAndSizes</strong> from the optional header of your application (<strong>IMAGE_OPTIONAL_HEADER</strong>).</p>
+
+<p>Note that <strong>NumberOfRvaAndSizes</strong> is usually <strong>16</strong> (<strong>0x10</strong>) in any PE, however we can change that value to any number between: <strong>0x6</strong> and <strong>0x9</strong>. Values outside this range will crash the application.</p>
+
+<p>This value holds the number of data directories (<strong>IMAGE_DATA_DIRECTORY</strong>) - Reflector’s problem is that it always expects the value to be <strong>16</strong> even though the application doesn’t require that.</p>
+
+<h2 id="modifying-the-optional-header">Modifying the optional header</h2>
+
+<p>On 32-bit systems, the value of <strong>NumberOfRvaAndSizes</strong> is always stored on the <strong>244th byte</strong> (<strong>0x00000F4</strong>), so you can change that value with a simple Hex Editor.</p>
+
+<p>It will look like this:</p>
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-prevent-reflector-from-decompiling/1.png" alt="&lt;p&gt;The value of NumberOfRvaAndSizes.&lt;/p&gt;
+" />
+  <figcaption><p>The value of NumberOfRvaAndSizes.</p>
+</figcaption>
+</figure>
+
+<p>After you change that value with one between <strong>6</strong> and <strong>9</strong>, save the application and you’re done.<br />
+If you try to open this in <strong>Reflector</strong> it should return an error message:</p>
+
+<p>“<font color="red" size="3">Invalid number of data directories in NT header.</font>”</p>
+
+<h2 id="cons">Cons</h2>
+
+<ul>
+  <li>might not work on 64 bit systems.</li>
+  <li>not a “global” fix, other decompilers can still get the source code.</li>
+  <li>still a weak method, any skilled cracker would notice that.</li>
+</ul>
+:ET
