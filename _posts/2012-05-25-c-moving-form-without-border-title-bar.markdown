@@ -41,7 +41,7 @@ public static extern bool ReleaseCapture();
 ```
 
 What is this doing? It imports 2 methods from **user32.dll**:  
-- the first one (**SendMessage()**) checks if the mouse button is clicked, and then sends a message to our program, notifying the window to change it's position acording to our cursor  
+- the first one (**SendMessage()**) checks if the mouse button is clicked, and then sends a message to our program, notifying the window to change it's position according to our cursor  
 - the second method (**ReleaseCapture()**) releases the mouse capture from our window.
 
 Using them both, we can make a method that when called, moves the window to our cursor position - acts exactly like a title bar. However we'll have to bind this method to the **MouseDown** event of the **Form**.

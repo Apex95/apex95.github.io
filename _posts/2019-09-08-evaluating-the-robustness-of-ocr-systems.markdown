@@ -8,7 +8,7 @@ image: /imgs/thumbnails/adversarial_samples_ocr.webp
 
 In this article, I'm going to discuss about my Bachelor's degree final project, which is about evaluating the robustness of **OCR systems** (such as **Tesseract** or **Google's Cloud Vision**) when adversarial samples are presented as inputs. It's somewhere in-between **fuzzing** and **adversarial samples crafting**, on a black box, the main objective being the creation of **OCR-proof** images, with minimal amounts of noise.
 
-It's an old project that I recently presented at an [International Security Summer School](https://spritz.math.unipd.it/events/2019/PIU2019/PagesOutput/SSS/index.html) hosted by the University of Padua. I decided to also publish it here mainly because of the positive feedback received when presented at the summer school.
+It's an old project that I recently presented at an [International Security Summer School](https://spritz.math.unipd.it/events/2019/PIU2019/PagesOutput/SSS/index.html){:rel="nofollow"} hosted by the University of Padua. I decided to also publish it here mainly because of the positive feedback received when presented at the summer school.
 
 I'll try to focus on methodology and results, which I consider being of interest, without diving into implementation details.
 
@@ -32,7 +32,7 @@ Now, let's focus on the different constraints and challenges:
 
 ### 1. Complex / closed-source architecture
 
-{% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/tess-pipeline.png" description="Tesseract's pipeline as [presented at DAS 2016](https://github.com/tesseract-ocr/docs/blob/master/das_tutorial2016/2ArchitectureAndDataStructures.pdf)" %}
+{% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/tess-pipeline.png" description="Tesseract's pipeline as [presented at DAS 2016](https://github.com/tesseract-ocr/docs/blob/master/das_tutorial2016/2ArchitectureAndDataStructures.pdf){:rel="nofollow"}" %}
 
 
 Modern OCR systems are more complex than basic convolutional neural networks as they need to perform multiple actions (e.g.: deskewing, layout detection, text rows segmentation), therefore finding ways to correctly compute gradients is a daunting task. Moreover, many of them do not provide access to source code thus making it difficult to use techniques such as **FGSM** or **GAN**s.
@@ -84,7 +84,7 @@ For this project, I used **Tesseract 4.0** for prototyping and testing, as it ha
 
 {% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/architecture.png" description="A rather simplified view of the flow; a feedback-based adversarial samples generator (in image: obfuscator) alters inputs in order to maximize the error of the OCR system" %}
 
-In order to be able to cover even black box cases, I used a **genetic algorithm** guided by the feedback of the targeted OCR system. We observe that the confidence of the classifier, alone, is not a good metric for this problem, a score function based on the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) and the **amount of noise** is employed.
+In order to be able to cover even black box cases, I used a **genetic algorithm** guided by the feedback of the targeted OCR system. We observe that the confidence of the classifier, alone, is not a good metric for this problem, a score function based on the [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance){:rel="nofollow"} and the **amount of noise** is employed.
 
 One of the main problems here was the size of the search space which was partially solved by identifying regions of interest in the image and focusing only on these. Also, lots of parameter tuning...
 
@@ -126,7 +126,7 @@ One of the samples managed to create a **loop** in the recognition process of **
 
 {% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/cloud_ocr_bug.png" description="Possible loop in the recognition process: the same text gets recognized multiple times. The bottom-left and the top-right corners are 'merged' into an oblique text row so the recognition process is sent back to already processed text." %}
 
-Let's take a closer look at the sample: below, you can see how the adversarial sample was interpreted by Google's Cloud Vision OCR system. The image was submitted directly to the Cloud Vision platform via the ["Try the API"](https://cloud.google.com/vision/) option so, at the moment of testing, the results could be easily reproduced.
+Let's take a closer look at the sample: below, you can see how the adversarial sample was interpreted by Google's Cloud Vision OCR system. The image was submitted directly to the Cloud Vision platform via the ["Try the API"](https://cloud.google.com/vision/){:rel="nofollow"} option so, at the moment of testing, the results could be easily reproduced.
 {% include image.html url="/imgs/posts/evaluating-the-robustness-of-ocr-systems/cloud_ocr_bug2.png" description="Rectangles returned by Cloud Vision indicate that additional text rows are 'created' during the recognition thus creating a loop" %}
 
 

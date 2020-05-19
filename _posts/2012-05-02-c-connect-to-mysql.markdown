@@ -11,7 +11,7 @@ I prefer **MySql** because I work with it more often. Unfortunately **.NET** doe
 
 There's a solution!
 
-It's a small library called **Connector/NET**, available [on MySql's official website](http://dev.mysql.com/downloads/connector/net/1.0.html#downloads). You just have to install it.
+It's a small library called **Connector/NET**, available [on MySql's official website](http://dev.mysql.com/downloads/connector/net/1.0.html#downloads){:rel="nofollow"}. You just have to install it.
 
 After installation, create a new project (console or form) and make sure you have a MySql server running (if you don't have one, just download and install Xampp).
 

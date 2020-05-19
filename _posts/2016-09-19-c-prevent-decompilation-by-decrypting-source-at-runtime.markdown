@@ -8,7 +8,7 @@ image: /imgs/thumbnails/reflector-runtime-decryption.webp
 
 *Hello world!* 
 
-Today we continue the *"Trolling the Decompiler"* series (first part here: [Prevent Reflector from Decompiling](http://www.codingvision.net/security/c-prevent-reflector-from-decompiling))
+Today we continue the *"Trolling the Decompiler"* series (first part here: [Prevent Reflector from Decompiling](https://www.codingvision.net/security/c-prevent-reflector-from-decompiling))
 but now with a more serious approach - this one should work on **any decompiler**.
 
 <u>The point is:</u> it is rather difficult to make **.NET** programs run with a key or license; since these can be reverted back
@@ -387,11 +387,6 @@ namespace ConsoleApplication1
 ```
 
 
-## Proof of concept
-
-Short video, before people start saying *it's not working!!!*.
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/q2Ip8A-8wu8" frameborder="0" allowfullscreen></iframe>
 
 <a href="http://www.codeproject.com" rel="tag" style="display:none;">CodeProject</a>
 

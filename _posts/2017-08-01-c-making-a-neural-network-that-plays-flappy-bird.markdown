@@ -121,7 +121,7 @@ I guess it's probably caused by a particular set of distances that won't make th
 Might be a good idea to make some kind of average between the previous scores and the current score. Never tried it though...
 
 Aand...this project also uses some fancy **mutex synchronization** between processes - so multiple instances of the same game can share the best solution between them using a **memory mapped file** (*lazy parallelization* as I like to call it).
-Wrote an article about using memory mapped files, you can find it here: [/tips-and-tricks/c-send-data-between-processes-w-memory-mapped-file](http://www.codingvision.net/tips-and-tricks/c-send-data-between-processes-w-memory-mapped-file).
+Wrote an article about using memory mapped files, you can find it here: [/tips-and-tricks/c-send-data-between-processes-w-memory-mapped-file](https://www.codingvision.net/tips-and-tricks/c-send-data-between-processes-w-memory-mapped-file).
 
 
 ## TODOs

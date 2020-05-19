@@ -21,9 +21,9 @@ I'll be presenting a short summary of the algorithm used by `Random()` and how c
 
 ## The Random class
 
-While many pseudo-random implementations (e.g., libc's `rand()`) rely on a [Linear Congruential Generator (LCG)](https://en.wikipedia.org/wiki/Linear_congruential_generator) which generates each number in the sequence by taking into account the previous one, I discovered that **.NET**'s **random number generator** uses a different approach.
+While many pseudo-random implementations (e.g., libc's `rand()`) rely on a [Linear Congruential Generator (LCG)](https://en.wikipedia.org/wiki/Linear_congruential_generator){:rel="nofollow"} which generates each number in the sequence by taking into account the previous one, I discovered that **.NET**'s **random number generator** uses a different approach.
 
-By looking at the implementation of the [`Random()`](https://referencesource.microsoft.com/#mscorlib/system/random.cs) class, one can easily observe that pseudo-random number generation is based on a [Subtractive Generator](https://rosettacode.org/wiki/Subtractive_generator), which permits the user to specify a custom seed or use `Environment.TickCount` (system's uptime in milliseconds) as default.
+By looking at the implementation of the [`Random()`](https://referencesource.microsoft.com/#mscorlib/system/random.cs){:rel="nofollow"} class, one can easily observe that pseudo-random number generation is based on a [Subtractive Generator](https://rosettacode.org/wiki/Subtractive_generator){:rel="nofollow"}, which permits the user to specify a custom seed or use `Environment.TickCount` (system's uptime in milliseconds) as default.
 
 The core of the pseudo-random generator is the `InternalSample()` (line #100) method which constructs the sequence of numbers. `Random.nextDouble()` will actually call the `Sample()` method which returns the value of `InternalSample()` divided by `Int32.MaxValue`, as this is claimed to improve the distribution of random numbers.
 Without going into much details regarding the included gimmicks, we can describe the generator as follows:
@@ -58,7 +58,7 @@ In other words, if we have access to a randomly generated number $$ retVal $$, w
 ##### If we manage to leak a continuous set of **55** generated numbers, we have enough information to describe and construct a new generator (by providing a circular array of states) which will output the same numbers as the original but can be used as a predictor.
 
 
-In my implentation, I'm using the following trick to simplify the things: I don't convert the leaked $$ retVal $$ back to $$R_i$$ (by multiplying with the `Int32.MaxValue`) because I'll have to divide it again to compare the results. So I'm working directly with differences of leaked values (instead of differences of $$ R_i $$'s) -- I hope it makes sense.
+In my implementation, I'm using the following trick to simplify the things: I don't convert the leaked $$ retVal $$ back to $$R_i$$ (by multiplying with the `Int32.MaxValue`) because I'll have to divide it again to compare the results. So I'm working directly with differences of leaked values (instead of differences of $$ R_i $$'s) -- I hope it makes sense.
 
 Here's the code I used, it should help clear things up.
 

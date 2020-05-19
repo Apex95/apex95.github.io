@@ -30,8 +30,8 @@ have the third party's consent to provide any of the data.
 
 Personal data (**Cookies** and **Usage Data**) is collected for the following purposes and using the following services:
 
-- Analytics ([Google Analytics](https://analytics.google.com)) - _the services contained in this section enable the webmaster to monitor and analyze web traffic and can be used to keep track of user behavior. You may opt out using [Google Analytics Opt-Out Add-on](https://tools.google.com/dlpage/gaoptout)_
-- Displaying advertisements ([Google Adsense](https://www.google.com/adsense/)) - _the service serves relevant advertisements to the users. You may opt out at [Google's Ads Settings](https://www.google.com/settings/ads)_
+- Analytics ([Google Analytics](https://analytics.google.com){:rel="nofollow"}) - _the services contained in this section enable the webmaster to monitor and analyze web traffic and can be used to keep track of user behavior. You may opt out using [Google Analytics Opt-Out Add-on](https://tools.google.com/dlpage/gaoptout){:rel="nofollow"}_
+- Displaying advertisements ([Google Adsense](https://www.google.com/adsense/){:rel="nofollow"}) - _the service serves relevant advertisements to the users. You may opt out at [Google's Ads Settings](https://www.google.com/settings/ads){:rel="nofollow"}_
 
 The aforementioned third party vendors use **Cookies** in order to adjust their services based on a user's prior visits to this website or other websites.
 

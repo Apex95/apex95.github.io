@@ -5,6 +5,7 @@ permalink: /category/interface
 iscategory: 1
 excerpt: "Tutorials that are related to design / interface."
 noindex: true
+sitemap: false
 ---
 
 {% include category.html category=page.title %}

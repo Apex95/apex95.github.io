@@ -1,4 +1,4 @@
-I"Q.<p>So… I’ll try to explain here the concept of <strong>gradient descent</strong> as simple as possible in order to provide some insight of what’s happening from a mathematical perspective and why the formula works. I’ll try to keep it short and split this into 2 <em>chapters</em>: <strong>theory</strong> and <strong>example</strong> - take it as a ELI5 <em>5 minutes</em> linear regression tutorial.</p>
+I">.<p>So… I’ll try to explain here the concept of <strong>gradient descent</strong> as simple as possible in order to provide some insight of what’s happening from a mathematical perspective and why the formula works. I’ll try to keep it short and split this into 2 <em>chapters</em>: <strong>theory</strong> and <strong>example</strong> - take it as a ELI5 linear regression tutorial.</p>
 
 <p>Feel free to skip the mathy stuff and jump directly to the <strong>example</strong> if you feel that it might be easier to understand.</p>
 
@@ -11,7 +11,7 @@ The function can look like this:</p>
 
 <p>where we have to determine the value of \(w\) such that the function successfully matches / approximates a set of known points.</p>
 
-<p>Since our interest is to find the best coefficient, we’ll consider \(w\) as a <strong>variable</strong> in our formulas and while computing the derivatives while \(x\) is treated as a <strong>constant</strong>. In other words, we don’t compute the <strong>derivative</strong> with respect to \(x\) since we don’t want to find values for it - we already have a set of inputs for the function, we’re not allowed to change them.</p>
+<p>Since our interest is to find the best coefficient, we’ll consider \(w\) as a <strong>variable</strong> in our formulas and while computing the derivatives; \(x\) will be treated as a <strong>constant</strong>. In other words, we don’t compute the <strong>derivative</strong> with respect to \(x\) since we don’t want to find values for it - we already have a set of inputs for the function, we’re not allowed to change them.</p>
 
 <p>To properly grasp the gradient descent, as an optimization method, you need to know the following mathematical fact:</p>
 

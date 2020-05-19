@@ -1,4 +1,6 @@
-I"h<p>Inspired by the progress of driverless cars and by the fact that this subject is not thoroughly discussed I decided to give it a shot at creating smooth <strong>targeted</strong> adversarial samples that are interpreted as legit traffic signs with a high confidence by a PyTorch Convolutional Neural Network (<strong>CNN</strong>) classifier trained on the <a href="http://benchmark.ini.rub.de/?section=gtsrb&amp;subsection=dataset">GTSRB</a> dataset. I’ll be using the Fast Gradient Value Method (<strong>FGVM</strong>) in an iterative manner - which is also called the Basic Iterative Method (BIM). I noticed that most articles only present PyTorch code for non-targeted Fast Gardient Sign Method (FGSM) - which performs well in evading classifiers but is, in my opinion, somehow limited.</p>
+I"7h<p>Inspired by the progress of driverless cars and by the fact that this subject is not thoroughly discussed I decided to give it a shot at creating smooth <strong>targeted</strong> adversarial samples that are interpreted as legit traffic signs with a high confidence by a PyTorch Convolutional Neural Network (<strong>CNN</strong>) classifier trained on the <a href="http://benchmark.ini.rub.de/?section=gtsrb&amp;subsection=dataset" rel="nofollow">GTSRB</a> dataset.</p>
+
+<p>I’ll be using the Fast Gradient Value Method (<strong>FGVM</strong>) in an iterative manner - which is also called the Basic Iterative Method (BIM). I noticed that most articles only present PyTorch code for non-targeted Fast Gardient Sign Method (FGSM) - which performs well in evading classifiers but is, in my opinion, somehow limited.</p>
 
 <figure class="image">
   <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/fgvm-gtsrb-adversarial-sample.png" alt="Smooth targeted adversarial sample generated using the current implementation, being misclassified as a 'Stop' sign." />
@@ -6,7 +8,7 @@
 </figcaption>
 </figure>
 
-<h5 id="ill-try-to-discuss-in-this-article-only-the-important-aspects-of-this-problem-however-i-also-prepared-a-google-colab-notebook">I’ll try to discuss in this article only the important aspects of this problem. However, I also prepared a <a href="https://colab.research.google.com/drive/1CndPD5ZsW022qO1xgEAWbmcXJwkJKBAX">Google Colab Notebook</a>.</h5>
+<h5 id="ill-try-to-discuss-in-this-article-only-the-important-aspects-of-this-problem-however-i-also-prepared-a-google-colab-notebook">I’ll try to discuss in this article only the important aspects of this problem. However, I also prepared a <a href="https://colab.research.google.com/drive/1CndPD5ZsW022qO1xgEAWbmcXJwkJKBAX" rel="nofollow">Google Colab Notebook</a>.</h5>
 
 <h2 id="targeted-network">Targeted Network</h2>
 
@@ -91,7 +93,7 @@
 
 <p>When <strong>training</strong> a neural network the focus is on optimizing parameters (i.e. weights) in order to minimize the <strong>loss</strong> (e.g.: Mean Squared Error, Cross Entropy, etc.) between the <strong>current output</strong> and <strong>desired output</strong> while the inputs are fixed. This is done through <a href="https://codingvision.net/numerical-methods/gradient-descent-simply-explained-with-example">gradient descent</a>. As an example, if a neural network models the function below, the \(w\) (weight) and \(b\) (bias) variables are adjusted during the training.</p>
 
-<p>[f(x) = w \cdot x + b]</p>
+\[f(x) = w \cdot x + b\]
 
 <p>When talking about targeted <strong>FGVM</strong>, \(w\) and \(b\) are fixed and the input \(x\) is adjusted through <strong>gradient descent</strong> (computed w.r.t. different variables, obviously). Usually this implies minimizing the error between the <strong>targeted adversarial output</strong> and the <strong>current output</strong> - basically shifting the current output towards the targeted output.</p>
 

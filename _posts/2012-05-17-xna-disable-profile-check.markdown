@@ -21,7 +21,7 @@ The solution is this library **fbDeprofiler.dll** - or another video card. (both
 
 ## Adding fbDeprofiler to your project
 
-**1.** You can download it from here: [fbDeprofiler](http://www.2shared.com/file/Ytbepnqt/fbDeprofiler.html "Download fbdeprofiler")
+**1.** You can download it from here: [fbDeprofiler](http://www.2shared.com/file/Ytbepnqt/fbDeprofiler.html "Download fbdeprofiler"){:rel="nofollow"}
 
 **2.** After downloading, unrar the file and copy **fbDeprofiler.dll** in the directory where the game's source code is found.
 

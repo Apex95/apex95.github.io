@@ -30,4 +30,4 @@ Now when you'll open the window it will show the background image with nice, rou
 
 {% include image.html url="/imgs/posts/c-simple-form-with-rounded-corners/3.png" description="A Form with Rounded Corners" %}
 
-You've probably noticed that the form isn't moving - that's because it has no title bar and border. No need to worry about that, you can find [here](http://www.codingvision.net/interface/c-moving-form-without-title-bar/) a solution.
+You've probably noticed that the form isn't moving - that's because it has no title bar and border. No need to worry about that, you can find [here](https://www.codingvision.net/interface/c-moving-form-without-title-bar) a solution.
