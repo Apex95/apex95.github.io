@@ -8,13 +8,13 @@ image: /imgs/thumbnails/fgvm-gtsrb-adversarial-sample.png
 
 Inspired by the progress of driverless cars and by the fact that this subject is not thoroughly discussed I decided to give it a shot at creating smooth **targeted** adversarial samples that are interpreted as legit traffic signs with a high confidence by a PyTorch Convolutional Neural Network (**CNN**) classifier trained on the [GTSRB](http://benchmark.ini.rub.de/?section=gtsrb&subsection=dataset){:rel="nofollow"} dataset. 
 
-I'll be using the Fast Gradient Value Method (**FGVM**) in an iterative manner - which is also called the Basic Iterative Method (BIM). I noticed that most articles only present PyTorch code for non-targeted Fast Gardient Sign Method (FGSM) - which performs well in evading classifiers but is, in my opinion, somehow limited.
+I'll be using the Fast Gradient Value Method (**FGVM**) in an iterative manner - which is also called the *Basic Iterative Method* (BIM). I noticed that most articles only present PyTorch code for non-targeted *Fast Gardient Sign Method* (**FGSM**) - which performs well in evading classifiers but is, in my opinion, somehow limited.
 
 {% include image.html url="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/fgvm-gtsrb-adversarial-sample.png" description="Smooth targeted adversarial sample generated using the current implementation, being misclassified as a 'Stop' sign." %}
 
 
 
-##### I'll try to discuss in this article only the important aspects of this problem. However, I also prepared a [Google Colab Notebook](https://colab.research.google.com/drive/1CndPD5ZsW022qO1xgEAWbmcXJwkJKBAX){:rel="nofollow"}.
+##### I'll try to discuss in this article only the important aspects of this problem. However, I also prepared a [Google Colab Notebook](https://colab.research.google.com/drive/1CndPD5ZsW022qO1xgEAWbmcXJwkJKBAX){:rel="nofollow"} which includes complete source code and results.
 
 ## Targeted Network
 
@@ -144,6 +144,9 @@ loss = torch.nn.CrossEntropyLoss()(prediction, targeted_adversarial_class)
 
 This loss function does well in generating adversarial images but the results have a **noisy** aspect (e.g., powerful contrasts between small groups of pixels) and might look suspicious. Since this noise can be easily removed using basic filtering, **smooth** images are wanted. 
 
+{% include image.html url="/imgs/posts/pytorch-iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition/fgvm-noisy-sample.png" description="Using only the `CrossEntropyLoss()` will most likely generate noisy adversarial samples" %}
+
+
 Defining a smooth-image constraint can be done by minimizing the **Mean Squared Error** between **adjacent** pixels. Think of it as applying an edge-detection filter and attempting to minimize the overall result. However, this has an impact on the efficiency of the generated sample as it adds dependencies between pixels. To minimize the loss of freedom, only the adjacent pixels from the bottom-right side are taken into account.
 The following 3x3 **convolution** kernel is used to determine the color difference between a pixel and its 3 other neighbors:
 
@@ -173,4 +176,4 @@ Multiple iterations are required in order to properly optimize the input.
 
 FGVM proves reliable in crafting smooth targeted adversarial samples for basic classifiers implemented with CNNs. However, additional problems need to be addressed in order to become a feasible attack. The crafted sample must be picked up by the segmentation algorithm as a possible traffic sign in the detection phase. Next, the adversarial sample's efficiency should not be impacted by small affine transformations (e.g., being shifted 3 pixels to the left) - this might be fixed through data augmentation. Additionally, factors such as brightness, contrast or various camera properties can still reduce the success rate of an adversarial sample.
 
-Samples which are more resistant to uniformly distributed noise can be obtained by removing the image smoothing constraint.
+Finally, samples which are more resistant to uniformly distributed noise can be obtained by removing the image smoothing constraint.
