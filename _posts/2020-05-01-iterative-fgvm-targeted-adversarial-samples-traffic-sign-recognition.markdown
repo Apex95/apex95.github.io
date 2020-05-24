@@ -18,7 +18,7 @@ I'll be using the *Fast Gradient Value Method* (**FGVM**) in an iterative manner
 
 ## Targeted Network
 
-For this experiment, I've constructed a basic **LeNet5** CNN in PyTorch. It performs 2 convolutions of size 5x5 on 32x32 grayscale images, separated by max-pooling. The dataset is slightly unbalanced, but this was compensated for during the training process.
+For this experiment, I've constructed a basic **LeNet5** inspired CNN in PyTorch. It performs 2 convolutions of size 5x5 on 32x32 grayscale images, separated by max-pooling. The dataset is slightly unbalanced, but this was compensated for during the training process.
 
 
 
