@@ -91,7 +91,7 @@ Ok, this is what you need to know before creating your ASP.NET server.
 
 ## 4\. The complete code + bug fix
 
-What you might not know is that there is a **bug** in .NET's **SimpleWorkerRequest** - because of this bug, you can't access pages that are in directories. If you have your asp file in a directory, you'll get an 404 error - more information about this can be found [here](http://www.codingvision.net/tips-and-tricks/c-fix-simpleworkerrequest-path-issue/ "C# Fix SimpleWorkerRequest Path Issue")
+What you might not know is that there is a **bug** in .NET's **SimpleWorkerRequest** - because of this bug, you can't access pages that are in directories. If you have your asp file in a directory, you'll get an 404 error - more information about this can be found [here](http://www.codingvision.net/tips-and-tricks/c-fix-simpleworkerrequest-path-issue "C# Fix SimpleWorkerRequest Path Issue")
 
 This is the complete code of the server, that also **fixes the problem**:
 

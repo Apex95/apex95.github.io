@@ -35,4 +35,4 @@ class WorkerRequest : SimpleWorkerRequest   //the fix, use this instead of Simpl
 
 Now, instead of using **SimpleWorkerRequest**, you must use **WorkerRequest** (the fixed version) to parse your pages.
 
-You can find the patched server [here](http://www.codingvision.net/networking/c-http-server-with-aspnet/).
+You can find the patched server [here](http://www.codingvision.net/networking/c-http-server-with-aspnet).
