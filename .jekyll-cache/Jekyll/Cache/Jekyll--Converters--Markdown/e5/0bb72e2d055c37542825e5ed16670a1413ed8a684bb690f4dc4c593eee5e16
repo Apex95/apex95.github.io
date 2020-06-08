@@ -1,0 +1,257 @@
+I"�M<p>This tutorial will show you how to create a <strong>HTTP server</strong> that can parse <strong>ASP.NET files</strong>. It will be able to serve pages containing <strong>html</strong>,<strong>css</strong> and <strong>server-side code</strong>. As always I’ll try to keep the code simple - luckily .NET does all the work for us.</p>
+
+<h2 id="1-preparing-the-project">1. Preparing the project</h2>
+
+<p>Start by creating a <strong>Console Project</strong>. Once the project is created, go to <em>Project-&gt;Project properties-&gt;Application</em> and make sure that <strong>Target Framework</strong> isn’t set to a client profile framework:</p>
+
+<p>Example: if it is <strong>.NET Framework 4 Client Profile</strong> change it to <strong>.NET Framework 4</strong>.</p>
+
+<p>Now go to the Solution Explorer, right click on <em>References-&gt;Add Reference-&gt;.NET-&gt;<strong>System.Web</strong></em></p>
+
+<p>Also, include the following namespaces:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.Hosting</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="2-creating-a-simple-server">2. Creating a simple server</h2>
+
+<p>Define a <strong>HttpListener</strong> object (that’s the server actually) and set it’s listening address to <strong>localhost</strong>.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="n">HttpListener</span> <span class="n">server</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpListener</span><span class="p">();</span>
+<span class="n">server</span><span class="p">.</span><span class="n">Prefixes</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"http://localhost/"</span><span class="p">);</span>
+<span class="n">server</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>  <span class="c1">//also start the server</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Using an endless loop, this server will check for any incoming connections, if any connection is made, it will serve the page to the client, using a <strong>StreamWriter</strong>.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre><span class="n">host</span> <span class="n">asphost</span> <span class="p">=</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span><span class="n">ApplicationHost</span><span class="p">.</span><span class="nf">CreateApplicationHost</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">host</span><span class="p">),</span> <span class="s">"/"</span><span class="p">,</span> <span class="n">Directory</span><span class="p">.</span><span class="nf">GetCurrentDirectory</span><span class="p">());</span>
+<span class="c1">//the code above will be explained later</span>
+
+<span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span>
+<span class="p">{</span>
+      <span class="n">HttpListenerContext</span> <span class="n">context</span> <span class="p">=</span> <span class="n">server</span><span class="p">.</span><span class="nf">GetContext</span><span class="p">();</span> <span class="c1">//the context</span>
+      <span class="n">HttpListenerResponse</span> <span class="n">response</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">;</span> <span class="c1">//this will specify where to send the data</span>
+
+      <span class="n">StreamWriter</span> <span class="n">sw</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">OutputStream</span><span class="p">);</span> <span class="c1">//data is sent using a streamwriter</span>
+
+      <span class="kt">string</span> <span class="n">page</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">LocalPath</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"/"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span> 
+      <span class="c1">//this gets the file requested by the client</span>
+
+      <span class="kt">string</span> <span class="n">query</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">Query</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"?"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+      <span class="c1">//and this will store any GET parameters -- not very important</span>
+
+      <span class="n">asphost</span><span class="p">.</span><span class="nf">parse_code</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="k">ref</span> <span class="n">sw</span><span class="p">);</span> <span class="c1">//parses the page and sends it</span>
+
+      <span class="n">sw</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+      <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span> <span class="c1">//closes the connection, once the page was sent</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="3-embedding-the-aspnet-runtime">3. Embedding the ASP.NET Runtime</h2>
+
+<p>The lines above, which I said I’ll explain later are used for parsing the ASP.NET file: we can’t just send the file to the client, because it might contain server-side code, that can’t be interpreted by the browser.</p>
+
+<p>Parsing the file is done using the following snippet:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="k">class</span> <span class="nc">host</span> <span class="p">:</span> <span class="n">MarshalByRefObject</span> 
+<span class="p">{</span>
+     <span class="k">public</span> <span class="k">void</span> <span class="nf">parse_code</span><span class="p">(</span><span class="kt">string</span> <span class="n">page</span><span class="p">,</span> <span class="kt">string</span> <span class="n">query</span><span class="p">,</span> <span class="k">ref</span> <span class="n">StreamWriter</span> <span class="n">sw</span><span class="p">)</span>
+     <span class="p">{</span>
+         <span class="n">SimpleWorkerRequest</span> <span class="n">swr</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">SimpleWorkerRequest</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sw</span><span class="p">);</span>
+         <span class="n">HttpRuntime</span><span class="p">.</span><span class="nf">ProcessRequest</span><span class="p">(</span><span class="n">swr</span><span class="p">);</span>
+     <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This class called <strong>host</strong>, embeds the <strong>ASP.NET Runtime</strong> service. However this requires a custom AppDomain - otherwise it won’t work - so that’s the role of the line below:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">host</span> <span class="n">asphost</span> <span class="p">=</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span><span class="n">ApplicationHost</span><span class="p">.</span><span class="nf">CreateApplicationHost</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">host</span><span class="p">),</span> <span class="s">"/"</span><span class="p">,</span> <span class="n">Directory</span><span class="p">.</span><span class="nf">GetCurrentDirectory</span><span class="p">());</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>3 arguments are required here, first is the type, the second is the virtual path and the third the physical path.</p>
+
+<p>Ok, this is what you need to know before creating your ASP.NET server.</p>
+
+<h2 id="4-the-complete-code--bug-fix">4. The complete code + bug fix</h2>
+
+<p>What you might not know is that there is a <strong>bug</strong> in .NET’s <strong>SimpleWorkerRequest</strong> - because of this bug, you can’t access pages that are in directories. If you have your asp file in a directory, you’ll get an 404 error - more information about this can be found <a href="http://www.codingvision.net/tips-and-tricks/c-fix-simpleworkerrequest-path-issue" title="C# Fix SimpleWorkerRequest Path Issue">here</a></p>
+
+<p>This is the complete code of the server, that also <strong>fixes the problem</strong>:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Net</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.IO</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Web.Hosting</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">test</span>
+<span class="p">{</span>
+    <span class="k">class</span> <span class="nc">Program</span>
+    <span class="p">{</span>
+        <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">HttpListener</span> <span class="n">server</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">HttpListener</span><span class="p">();</span>
+            <span class="n">server</span><span class="p">.</span><span class="n">Prefixes</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"http://127.0.0.1/"</span><span class="p">);</span>
+            <span class="n">server</span><span class="p">.</span><span class="n">Prefixes</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"http://localhost/"</span><span class="p">);</span>
+            <span class="n">server</span><span class="p">.</span><span class="nf">Start</span><span class="p">();</span>
+
+            <span class="n">host</span> <span class="n">asphost</span> <span class="p">=</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span><span class="n">ApplicationHost</span><span class="p">.</span><span class="nf">CreateApplicationHost</span><span class="p">(</span><span class="k">typeof</span><span class="p">(</span><span class="n">host</span><span class="p">),</span> <span class="s">"/"</span><span class="p">,</span> <span class="n">Directory</span><span class="p">.</span><span class="nf">GetCurrentDirectory</span><span class="p">());</span>
+
+            <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">HttpListenerContext</span> <span class="n">context</span> <span class="p">=</span> <span class="n">server</span><span class="p">.</span><span class="nf">GetContext</span><span class="p">();</span>
+                <span class="n">HttpListenerResponse</span> <span class="n">response</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">;</span>
+                <span class="n">StreamWriter</span> <span class="n">sw</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">OutputStream</span><span class="p">);</span>
+
+                <span class="kt">string</span> <span class="n">page</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">LocalPath</span><span class="p">;</span>
+                <span class="kt">string</span> <span class="n">query</span> <span class="p">=</span> <span class="n">context</span><span class="p">.</span><span class="n">Request</span><span class="p">.</span><span class="n">Url</span><span class="p">.</span><span class="n">Query</span><span class="p">.</span><span class="nf">Replace</span><span class="p">(</span><span class="s">"?"</span><span class="p">,</span> <span class="s">""</span><span class="p">);</span>
+                <span class="n">asphost</span><span class="p">.</span><span class="nf">parse_code</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="k">ref</span> <span class="n">sw</span><span class="p">);</span>
+                <span class="n">sw</span><span class="p">.</span><span class="nf">Flush</span><span class="p">();</span>
+                <span class="n">context</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="nf">Close</span><span class="p">();</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">WorkerRequest</span> <span class="p">:</span> <span class="n">SimpleWorkerRequest</span>   <span class="c1">//the fix, use this instead of SimpleWorkerRequest</span>
+    <span class="p">{</span>
+        <span class="kt">string</span> <span class="n">page</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+        <span class="k">public</span> <span class="nf">WorkerRequest</span><span class="p">(</span><span class="kt">string</span> <span class="n">page</span><span class="p">,</span> <span class="kt">string</span> <span class="n">query</span><span class="p">,</span> <span class="n">TextWriter</span> <span class="n">output</span><span class="p">)</span> <span class="p">:</span> <span class="k">base</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">page</span> <span class="p">=</span> <span class="n">page</span><span class="p">;</span>   
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">override</span> <span class="kt">string</span> <span class="nf">GetFilePath</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">base</span><span class="p">.</span><span class="nf">GetFilePath</span><span class="p">()</span> <span class="p">+</span> <span class="n">page</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">class</span> <span class="nc">host</span> <span class="p">:</span> <span class="n">MarshalByRefObject</span>
+    <span class="p">{</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">parse_code</span><span class="p">(</span><span class="kt">string</span> <span class="n">page</span><span class="p">,</span> <span class="kt">string</span> <span class="n">query</span><span class="p">,</span> <span class="k">ref</span> <span class="n">StreamWriter</span> <span class="n">sw</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">WorkerRequest</span> <span class="n">swr</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">WorkerRequest</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">sw</span><span class="p">);</span>  <span class="c1">//replacing SimpleWorkerRequest</span>
+            <span class="n">HttpRuntime</span><span class="p">.</span><span class="nf">ProcessRequest</span><span class="p">(</span><span class="n">swr</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="5-fixing-the-notfoundexception-error">5. Fixing the NotFoundException (error)</h2>
+
+<p>Yes, even if the code is correct, this error might appear:<br />
+<em>“Could not load file or assembly ‘projectnamehere, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null’ or one of its dependencies. The system cannot find the file specified.”</em></p>
+
+<p>This is caused by <strong>ASP.NET Runtime</strong> - but it can be easily solved by creating a directory named <strong>bin</strong> and copying the executable there.</p>
+
+<p>If you have your executable in the Debug folder:<br />
+<em>“project_name/bin/Debug/asp_server.exe”</em> &lt;- original path</p>
+
+<p>You have to create the <strong>Bin</strong> folder here (you’ll also have to copy the application in the new directory):<br />
+<em>“project_name/bin/Debug/<strong>bin</strong>/asp_server.exe”</em> &lt;- new path</p>
+
+<p>Now you can safely run your ASP.NET server, from the default location (not from the bin folder).</p>
+
+<p>Note: if you change anything in the server’s source and recompile it, you have to do the copy-paste thing again.</p>
+
+<p><strong><em>Later Edit:</em></strong> there seems to be a problem with the extensions - the server is only serving .aspx files (apparently files with other extensions can not be “seen”). Don’t know sure what can cause this…</p>
+:ET

@@ -1,0 +1,312 @@
+I"�'<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/predict_random_net.webp " alt="C# Predict the Random Number Generator of .NET" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-predict-random-number-generator-net">C# Predict the Random Number Generator of .NET</a>
+        </h2>
+        
+        <p class="excerpt">
+            This post targets to underline the predictability of the random… or better said pseudo-random number generator (PRNG) exposed by the .NET framework (aka the Random() class), under certain assumptions. Because of the nature of the implementation, 100% accuracy can be...
+        </p>
+        
+        <p class="post-meta">Dec 6, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/patch.webp " alt="Hot Patching C/C++ Functions with Intel Pin" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/hot-patching-functions-with-intel-pin">Hot Patching C/C++ Functions with Intel Pin</a>
+        </h2>
+        
+        <p class="excerpt">
+            5 years ago, I said in one of my articles that I shall return, one day, with a method of hot patching functions inside live processes; So… I guess this is that day. What we’ll try to achieve here is...
+        </p>
+        
+        <p class="post-meta">Aug 21, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/ret_buffer_overflow.webp " alt="Bypassing ASLR and DEP - Getting Shells with pwntools" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/bypassing-aslr-dep-getting-shells-with-pwntools">Bypassing ASLR and DEP - Getting Shells with pwntools</a>
+        </h2>
+        
+        <p class="excerpt">
+            Today, I’d like to take some time and to present a short trick to bypass both ASLR (Address Space Layout Randomization) and DEP (Data Execution Prevention) in order to obtain a shell in a buffer-overflow vulnerable binary. I’ve seen this...
+        </p>
+        
+        <p class="post-meta">Jul 3, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/reflector-runtime-decryption.webp " alt="C# Prevent Decompilation by Decrypting Source at Runtime" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-prevent-decompilation-by-decrypting-source-at-runtime">C# Prevent Decompilation by Decrypting Source at Runtime</a>
+        </h2>
+        
+        <p class="excerpt">
+            Hello world! Today we continue the “Trolling the Decompiler” series (first part here: Prevent Reflector from Decompiling) but now with a more serious approach - this one should work on any decompiler. The point is: it is rather difficult to...
+        </p>
+        
+        <p class="post-meta">Sep 19, 2016</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/dllInject.webp " alt="C# Inject a Dll into a Process (w/ CreateRemoteThread)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-inject-a-dll-into-a-process-w-createremotethread">C# Inject a Dll into a Process (w/ CreateRemoteThread)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Since I’ve been asked if this is possible - well…you can do Dll Injection using C# but the injected Dll must be written in a language that doesn’t depend on a CLR (C/C++ would be a good option here, but...
+        </p>
+        
+        <p class="post-meta">Oct 14, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/memorydump.webp " alt="C# How to Scan a Process' Memory" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-how-to-scan-a-process-memory">C# How to Scan a Process' Memory</a>
+        </h2>
+        
+        <p class="excerpt">
+            Intro This article is about how to get the memory dump of a process, by checking almost all memory addresses that can store data. Since C# is quite a high level programming language, I think this is the only method...
+        </p>
+        
+        <p class="post-meta">Jan 26, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/secureDesktop.webp " alt="C# Create Secure Desktop (Anti-Keylogger)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-create-secure-desktop-anti-keylogger">C# Create Secure Desktop (Anti-Keylogger)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Since the number of Keyloggers keeps growing, I decided to publish this little trick hoping that it might be useful for someone. I discovered it when I was looking on how User Acount Control/UAC from Windows 7 protects the data...
+        </p>
+        
+        <p class="post-meta">Nov 2, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/detectDebugger.webp " alt="C# Detect if Debugger is Attached" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-detect-if-debugger-is-attached">C# Detect if Debugger is Attached</a>
+        </h2>
+        
+        <p class="excerpt">
+            This method is used to detect if a running process has a debugger attached to it. It involves using CheckRemoteDebuggerPresent, imported from kernel32.dll via PInvoke. It’s a neat way to add a little bit of protection to your program, but...
+        </p>
+        
+        <p class="post-meta">Sep 9, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/memory.webp " alt="C# Read/Write another Process' Memory" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-read-write-another-process-memory">C# Read/Write another Process' Memory</a>
+        </h2>
+        
+        <p class="excerpt">
+            Today’s tutorial is about…processes’ memory! In this article I’ll show you how to read/write a process’ memory using C#. This is a good way to learn a part of WinAPI and also understand the basics of memory allocation. I’ll be...
+        </p>
+        
+        <p class="post-meta">Aug 4, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/reflectorIcon.gif " alt="C# Prevent Reflector from Decompiling" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-prevent-reflector-from-decompiling">C# Prevent Reflector from Decompiling</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is a simple way to protect your application from any so-called “cracker”, without involving obfuscation. Remember that this works only against Reflector (tested on: v7.5.2.1), any other decompilers are “immune”. Technical stuff… The main idea is this: you change...
+        </p>
+        
+        <p class="post-meta">Jun 1, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/passwordTextBox.webp " alt="C# Protect the Password inside a TextBox" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-protect-the-password-inside-a-textbox">C# Protect the Password inside a TextBox</a>
+        </h2>
+        
+        <p class="excerpt">
+            First of all, the TextBox Control is not a secure way to hold passwords - so don’t use it as it is by default. Even with a PasswordChar, the real password is still visible if you use a tool like...
+        </p>
+        
+        <p class="post-meta">May 4, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/dpapi.webp " alt="C# Safe Encryption/Decryption using DPAPI" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/security/c-safe-encryption-decryption-using-dpapi">C# Safe Encryption/Decryption using DPAPI</a>
+        </h2>
+        
+        <p class="excerpt">
+            Data Protection API aka DPAPI is a neat service provided by Windows Operating Systems (newer than Windows 2000) that safely encrypts and decrypts user credentials, using the Triple-DES algorithm. You have to supply the data as byte array in order...
+        </p>
+        
+        <p class="post-meta">Apr 11, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET
