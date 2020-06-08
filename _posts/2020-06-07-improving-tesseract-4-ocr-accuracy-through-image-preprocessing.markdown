@@ -17,18 +17,19 @@ During this experiment, the *out of the box* version of Tesseract 4 has been use
 * no lexicon / dictionary augmentations
 * no hints about the language used in the dataset
 * no hints about segmentation methods; default (automatic) segmentation is used
+* default settings for the recognition engine (LSTM + Tesseract)
 
 ## Problem Analysis
 
 Tesseract 4 has proven great performance when tested on favorable datasets by achieving good balance between precision and recall. It is presumed that this evaluation is performed on images that resemble scanned documents or book pages (with or without additional preprocessing) in which the number of camera-caused distortions is minimal. Tests on the Brno dataset led to much worse performance that will be discussed later in the article.
 
-{% include image.html url="/imgs/posts/improving-tesseract-4-ocr-accuracy-through-image-preprocessing/tesseract-stats.webp" description="Tesseract 4's result when evaluated using the Google Books Dataset - taken from [DAS 2016](https://github.com/tesseract-ocr/docs/tree/master/das_tutorial2016){:rel='nofollow'}" %}
+{% include image.html url="/imgs/posts/improving-tesseract-4-ocr-accuracy-through-image-preprocessing/tesseract-stats.webp" description="Tesseract 4's performance when evaluated using the Google Books Dataset - taken from [DAS 2016](https://github.com/tesseract-ocr/docs/tree/master/das_tutorial2016){:rel='nofollow'}" %}
 
 In the above figure, a high **precision** indicates favorable *True-Positives* to *False-Positives* ratio thus revealing proper differentiation between characters (i.e. a relatively small number of misclassifications). Despite this, almost no improvements in **recall** can be observed when switching from the **base** classification method to the *Long Short-Term Memory* (**LSTM**) based *Convolutional Recurrent Neural Network* (**CRNN**) for *sequence to sequence* mapping.   
 
 > "Despite being designed over 20 years ago, the current Tesseract classifier is incredibly difficult to beat with so-called modern methods." - Ray Smith, author of Tesseract
 
-I assume that that further training for different fonts might not provide significant improvements and neither will a different model of classifier. *Is there a chance that the classifier doesn't receive any input?*
+I assume that further training for different fonts might not provide significant improvements and neither will a different model of classifier. *Is there a chance that the classifier doesn't receive the correct input?*
 
 It was pointed out in a previous article that [Tesseract is not robust to noise](https://codingvision.net/ai/evaluating-the-robustness-of-ocr-systems); certain *salt-and-pepper* noise patterns disrupt the character recognition process, leading to large segments of text being completely ignored by the OCR engine - the infamous **empty string**. From empirical observations, these errors seem to occur either for a whole word or sentence or not at all thus suggesting a weakness in the segmentation methodology.
 
@@ -43,7 +44,7 @@ Since analyzing Tesseract's segmentation methods is a daunting task, I opted for
 ## Proposed Solution
 The solution consists in directly preprocessing images before they are fed to Tesseract 4. An adaptive preprocessing operation is required, in order to properly compensate for any image features that cause problems in the segmentation process. In other words, an input image must be adapted so it complies with Tesseract 4's preferences and maximizes the chance of producing the correct output, preferably without performing down-sampling.
 
-I choose a convolution-based approach for flexibility and speed; other articles tend to perform more rigid image adjustments (such as global changes in contrast or brightness, fixed-constant conversion to grayscale, histogram equalization, etc.). I preferred an approach that can properly learn to highlight or mask regions of the image according to various features. For this, the kernels are optimized using reinforcement learning using an actor-critic model. To be more specific, it relies on *Twin Delayed Deep Deterministic Policy Gradient* (**TD3** for short), for discovering features which minimize the *Levenshtein distance* between the **recognized text** and the **ground truth**. I'll not dive into implementation details of TD3 here as it would be somehow out of scope but think of it as a method of optimizing the following formula:
+I choose a convolution-based approach for flexibility and speed; other articles tend to perform more rigid image adjustments (such as global changes in brightness, fixed-constant conversion to grayscale, histogram equalization, etc.). I preferred an approach that can properly learn to highlight or mask regions of the image according to various features. For this, the kernels are optimized using reinforcement learning using an actor-critic model. To be more specific, it relies on *Twin Delayed Deep Deterministic Policy Gradient* (**TD3** for short), for discovering features which minimize the *Levenshtein distance* between the **recognized text** and the **ground truth**. I'll not dive into implementation details of TD3 here as it would be somehow out of scope but think of it as a method of optimizing the following formula:
 
 $$ \max_{K1,K2,K3,K4,K5}\sum_{i=1}^{N}{-Levenshtein(OCR(Image_i * K1 * K2 * K3 * K4 * K5),Text_i)}$$
 
