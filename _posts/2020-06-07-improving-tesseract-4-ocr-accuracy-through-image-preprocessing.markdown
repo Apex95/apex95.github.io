@@ -50,7 +50,7 @@ $$ \max_{K1,K2,K3,K4,K5}\sum_{i=1}^{N}{-Levenshtein(OCR(Image_i * K1 * K2 * K3 *
 
 Where $$K_j$$ is a kernel, and $$<Image_i, Text_i>$$ is a tuple from the training set.
 
-##### A short (simpler) proof of concept of the convolutional preprocessor is presented in [this Google Colab](https://colab.research.google.com/drive/1l0qT2S3tkY4WHTRbkVK_J5jATPg0t41-?usp=sharing){:rel='nofollow'}. It uses a different architecture than the final one and has the purpose of verifying if the idea of using convolutions is feasible and offers good results. A comparison is presented between original and preprocessed images, thus revealing Tesseract 4's segmentation issue. 
+##### A short (simpler) proof of concept of the convolutional preprocessor is presented in [this Google Colab](https://colab.research.google.com/drive/1l0qT2S3tkY4WHTRbkVK_J5jATPg0t41-?usp=sharing){:rel='nofollow'}. It uses a different architecture than the final one and has the purpose of verifying if the idea of using convolutions is feasible and offers good results. A comparison is presented between original and preprocessed images including recognized texts for each sample. 
 
 The final model is illustrated below, with **ReLU** activations in-between each convolution step to capture nonlinearities and prevent negative values as pixels' colors.
 
