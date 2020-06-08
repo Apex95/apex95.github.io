@@ -113,7 +113,7 @@ A numeric comparison is presented below:
 
 Significant improvements can be observed through this preprocessing operation. Moreover, the majority of errors probably do not occur in the *sequence to sequence* classifier (since all the recognized characters are erroneous and would contradict previous performance analysis) and would most likely be a page-segmentation issue, when automatic mode is used. It is shown that an array of convolutions is sufficient to decrease error rates substantially.
 
-The OCR performance on the preprocessed images is overall better but not good enough to be reliable. A 38% character error rate is still a large setback. I'm pretty sure that better recognitions can be obtained with more fine-tuning, a more complex architecture for the convolutional preprocessor and a more diverse training set. The current implementation is very slow to train which makes me question if the entire methodology is feasible from this point of view.
+The OCR performance on the preprocessed images is overall better but not good enough to be reliable. A 38% character error rate is still a large setback. I'm pretty sure that better recognitions can be obtained with more fine-tuning, a more complex architecture for the convolutional preprocessor and a more diverse training set. However, the current implementation is already very slow to train which makes me question if the entire methodology is feasible from this point of view.
 
 
 
