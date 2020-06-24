@@ -22,9 +22,9 @@ The following dependencies will be required
 
 `CLRCreateInstance()` needs to be called in order to gain access to the `ICLRMetaHost` interface. This interface contains various methods that will provide general information about the current .NET Framework runtime.
 
-From there, it is required to focus on one version of the framework (I'm working with **v4.0.30319**) - calling `ICLRMetaHost::GetRuntime()` will return a pointer to another interface (`ICLRRuntimeInfo`), which contains... more methods. (this is the upgraded version of **ICorRuntimeHost**).
+From there, it is required to focus on one version of the framework (I'm working with **v4.0.30319**) - calling `ICLRMetaHost::GetRuntime()` will return a pointer to another interface (`ICLRRuntimeInfo`), which contains... more methods. (this is the upgraded version of `ICorRuntimeHost`).
 
-The next step is calling **ICLRRuntimeInfo::GetInterface** which returns an instance of the `ICLRRuntimeHost`. The `ICLRRuntimeHost` needs to be started (`ICLRRuntimeHost::Start()`) in the current native process and can be used to execute managed code through `ICLRRuntimeHost::ExecuteInDefaultAppDomain()`. The aforementioned method has the following prototype:
+The next step is calling `ICLRRuntimeInfo::GetInterface()` which returns an instance of the `ICLRRuntimeHost`. The `ICLRRuntimeHost` needs to be started (`ICLRRuntimeHost::Start()`) in the current native process and can be used to execute managed code through `ICLRRuntimeHost::ExecuteInDefaultAppDomain()`. The aforementioned method has the following prototype:
 
 ```c
 HRESULT ExecuteInDefaultAppDomain (
