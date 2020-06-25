@@ -6,13 +6,13 @@ categories: security
 image: /imgs/thumbnails/secureDesktop.webp
 ---
 
-Since the number of **Keyloggers** keeps growing, I decided to publish this little trick hoping that it might be useful for someone. I discovered it when I was looking on how User Acount Control/UAC from Windows 7 protects the data - I was 'amazed' by this idea so I tried to make this accessible for any program.
+Since the number of **Keyloggers** keeps growing, I decided to publish this little trick hoping that it might be useful for someone. I discovered it when I was looking on how User Account Control/UAC from Windows 7 protects the data - I was 'amazed' by this idea so I tried to make this accessible for any program.
 
 This tutorial will show you how to create a form that can't be tracked by keyloggers.
 
 ## 1\. Details
 
-As you probably know, some keyloggers (not all) place hooks like **WH_KEYBOARD_LL** in order to intercept window's messages. Now...why don't we move the applications we want to protect from keyloggers to a new, safe enviroment?
+As you probably know, some keyloggers (not all) place hooks like **WH_KEYBOARD_LL** in order to intercept window's messages. Now...why don't we move the applications we want to protect from keyloggers to a new, safe environment?
 
 This is where <u>Secure Desktop</u> becomes useful: it's actually a 2nd desktop, but whatever runs on this desktop can not be 'influenced' by what runs on the original desktop. Basically, the 2 desktops are separated by the kernel, so the applications can't interact: the keylogger that is running on the original desktop will not intercept the messages received by a program which is found on the other desktop.
 

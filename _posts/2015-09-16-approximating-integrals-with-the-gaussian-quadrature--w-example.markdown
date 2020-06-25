@@ -93,7 +93,7 @@ $$ \int_{-1}^{1} 1 \cdot 1 dx = A_1f_1(x_1) + A_2f_1(x_2) \Rightarrow A_1+A_2 = 
 
 $$ \int_{-1}^{1} x \cdot 1 dx = A_1f_2(x_1) + A_2f_2(x_2) \Rightarrow A_1x_1+A_2x_2 = 0 $$
 
-(substitued **w(x) = 1**)
+(substituted **w(x) = 1**)
 
 So **A<sub>1</sub> = A<sub>2</sub> = 1**, hence the <u>final equation</u>:
 

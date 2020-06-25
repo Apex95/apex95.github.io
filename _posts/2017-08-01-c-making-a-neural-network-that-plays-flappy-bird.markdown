@@ -31,7 +31,7 @@ Pretty sure you are probably using a set of metrics like the following ones:
 
 - horizontal distance between the bird and the closest set of pipes (**dist1**)
 - vertical distance between the bird and the lower pipe (**dist2**)
-- verctical distance between the bird and the upper pipe (**dist3**)
+- vertical distance between the bird and the upper pipe (**dist3**)
 
 {% include image.html url="/imgs/posts/c-making-a-neural-network-that-plays-flappy-bird/1.png" description="Metrics used as Inputs for the Neural Network" %}
 
@@ -43,7 +43,7 @@ $$ f(dist_1, dist_2, dist_3) = \left\{\begin{matrix}
 <= 0.5 => do\_nothing
 \end{matrix}\right. $$
 
-Considering we don't know the relationship between the 3 distances, we can try to approximate the behaviour of this function using a **neural network**.
+Considering we don't know the relationship between the 3 distances, we can try to approximate the behavior of this function using a **neural network**.
 
 In my project I used a network with:
 
@@ -108,7 +108,7 @@ of candidates could limit your search domain - so there's a chance of getting st
 
 In my code I used a **CROSSOVER_RATE** of **0.8** and a **MUTATION_RATE** of **0.05**, with **POPULATION_SIZE** = **25**. 
 
-I know this might look boring (it's already written in the code snippet, right?) but I felt that it should be mentioned here just in case someone enounters this exact problem. This and a wrong fitness function are usually
+I know this might look boring (it's already written in the code snippet, right?) but I felt that it should be mentioned here just in case someone encounters this exact problem. This and a wrong fitness function are usually
 the main reasons the algorithm might not work as expected.
 
 

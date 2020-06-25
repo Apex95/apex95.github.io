@@ -98,7 +98,7 @@ nod_produs.AppendChild(product_name);
 
 ## Deleting a node
 
-A node is 'deleted' when it's removed from it's parent node, so if we want to delete the last node from the list - the one that we created before, we use this:
+A node is 'deleted' when it's removed from its parent node, so if we want to delete the last node from the list - the one that we created before, we use this:
 
 ```csharp
 XmlNode node = xmldoc.SelectSingleNode("/products/product[name='Pencil']");  //select node where name is 'Pencil'

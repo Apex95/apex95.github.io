@@ -18,7 +18,7 @@ Now for a better understanding:
 
 **Weight 1** and **Weight 2** are random values - they're used to adjust the input values so the error is minimum. By modifying them, the perceptron is able to learn.
 
-The **Bias** should be treated as another input value, that always has the value of **1** (bias = 1). It must have it's own weight -> **weight 3**.
+The **Bias** should be treated as another input value, that always has the value of **1** (bias = 1). It must have its own weight -> **weight 3**.
 
 To learn, a perceptron uses **supervised learning**: that means, we need to provide multiple inputs and correct outputs so the weights can be adjusted correctly. Repeating this process will constantly lower the error until the generated output is almost equal with the desired output. When the weights are adjusted, the perceptron will be able to 'guess' the output for new inputs.
 

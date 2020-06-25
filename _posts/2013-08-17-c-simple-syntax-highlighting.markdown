@@ -8,7 +8,7 @@ image: /imgs/thumbnails/syntaxhighlight.webp
 
 Some time ago, I had to make a project that required **syntax highlighting** - luckily I wasn't the one who had to make that part. However the version used in the project was more complicated - so I decided to make a tutorial that will teach you how to make a _basic_ syntax highlighter (with **Regex**).
 
-I'll be using the **RichTextBox** control - using the simple **TextBox** might seem to be better but it's kinda difficult to implement the word coloring function without getting into other troubles.
+I'll be using the `RichTextBox` control - using the simple `TextBox` might seem to be better but it's kind of difficult to implement the word coloring function without getting into other troubles.
 
 Anyhow it needs to be improved - I tried to keep things as simple as possible. This program is just to show you the basic idea behind a syntax highlighter.
 
@@ -32,7 +32,7 @@ This part is meant to explain the main idea behind the whole process. The algori
 
 6) **restore focus** to the RichTextBox
 
-Each Regex **Match** contains its positon and its length - we'll need these for highlighting. All the matches are stored in a **MatchCollection** (list). At the end, there'll be multiple lists, as an example: there'll be a list that contains strings, another list that contains comments, etc.
+Each Regex **Match** contains its position and its length - we'll need these for highlighting. All the matches are stored in a **MatchCollection** (list). At the end, there'll be multiple lists, as an example: there'll be a list that contains strings, another list that contains comments, etc.
 
 ## 2.Coding Part
 

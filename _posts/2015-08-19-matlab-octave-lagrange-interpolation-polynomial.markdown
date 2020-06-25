@@ -20,7 +20,7 @@ Now a sum of products may look intimidating, but it's a really simple method - w
 
 Don't worry if you don't understand the formula, take a look at the example below, it should be way clearer after.
 
-## Example & Explaination
+## Example & Explanation
 
 Let's take the... factorial function (**x!**) and try to write a **Lagrange Polynomial** that produces "similar" results.  
 _It won't produce very precise outputs since we gave it a low number of points - don't expect miracles_.
@@ -99,7 +99,8 @@ Still it provides exact values for 2!, 3!, 4! and 5!
 
 Here goes the code:
 
-```matlabfunction [y] = lagrange(x, x0, y0)
+```matlab
+function [y] = lagrange(x, x0, y0)
 
     % x0 - vector containing inputs (x values)
     % y0 - vector containing outputs (results for these x values

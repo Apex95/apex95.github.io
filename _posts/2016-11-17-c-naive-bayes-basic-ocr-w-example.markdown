@@ -77,7 +77,7 @@ Where P(one\|...) is the probability the image matches the one I used to train t
 
 ## Computing the likelihoods
 
-First, there's going to be one big table containg both the data from the images and some additional
+First, there's going to be one big table containing both the data from the images and some additional
 sums that we'll need in order to compute some probabilities - usually it's called **Frequency Table**.
 
 The table looks like this:
@@ -166,7 +166,7 @@ You can get the probability for each image by doing: `likelihoods[k] / totalLike
 Given the fact that the **frequency table** may contain **0**'s (not all pixels are black), 
 we need to apply some **smoothing** to prevent working with null probabilities in our formula.
 
-We add some "fake" inputs in the **frequency table** - kinda like a black background image
+We add some "fake" inputs in the **frequency table** - kind of like a black background image
 for each digit. If it makes it easier think of it as adding **1** to the numerator and **n**
 to the denominator (n = number of pixels) when computing probabilities.
 
@@ -190,7 +190,7 @@ And the outputs:
 
 ## Complete Sourcecode
 
-The sourcecode that I used in this article; I guess there's no need for additional documentation :))
+The sourcecode that I used in this article; I guess there's no need for additional documentation.
 
 Final note: to me it seems to be working, but it's the first time I'm coding stuff like this, so... it might contain mistakes.
 

@@ -18,7 +18,7 @@ $$ ACC = \frac{\sum_{i=1}^{i=N}{ACC_i}}{N} $$
 
 To their surprise, the resulted accuracy for the **multiclass classifier** was **erroneous** and highly different (when compared to `accuracy_score()` from **sklearn**). However, the accuracy of the **binary classifier** was correct.
 
-As there wasn't much time available, I told them to use the following **accuracy formula** to match the results of **sklearn** and I'll send an explaination later:
+As there wasn't much time available, I told them to use the following **accuracy formula** to match the results of **sklearn** and I'll send an explanation later:
 
 $$ {\color{Green}{ACC = \frac{\sum_{i=1}^{i=N}{TP_i}}{\sum_{i = 1}^{i=N}{(TP_i + FP_i)}}}} $$
 
@@ -51,7 +51,7 @@ $$ \color{Red}{ACC_0 = \frac{0 + 200}{0+200+200+200} = 0.333(3)} $$
 This already looks suspicious. You'll get the same results for the other 2 classes, so... on average, $$ \color{Red}{ACC = 0.333(3)} $$.
 This is definitely wrong.
 
-If you directly compute **global accuracy** using the <span style="color:red">same formula</span> (summing all $$TP's$$, $$TN's$$, ...), you get the same result because of the symmetry. This happens mainly because of the $$ TN $$ in the numerator which grows faster than any other term. In other words, as the number of classes grows, this error grows aswell; a similar model, but with **4 classess**, gets a **0.5** accuracy.
+If you directly compute **global accuracy** using the <span style="color:red">same formula</span> (summing all $$TP's$$, $$TN's$$, ...), you get the same result because of the symmetry. This happens mainly because of the $$ TN $$ in the numerator which grows faster than any other term. In other words, as the number of classes grows, this error grows as well; a similar model, but with **4 classes**, gets a **0.5** accuracy.
 
 Using the <span style="color:green">second formula</span>, the **global accuracy** becomes:
 

@@ -17,7 +17,7 @@ Given a vulnerable binary, let's consider the following scenario:
 1. **ASLR** is enabled
 2. **DEP** is enabled
 3. Only `gets()` and `puts()` are called in the binary
-4. Running on a **x64** system (no bruteforce)
+4. Running on a **x64** system (no brute-force)
 5. For the sake of simplicity: no stack protectors (**no canary values**)
 6. The attacker knows which **libc** version is used by the binary 
 
@@ -49,7 +49,7 @@ gcc -Wall -ansi -fno-stack-protector vuln.c -o vuln
 
 ## Step 1: Basic Buffer Overflow
 
-We start by finding the offset in order to **overwrite** the **return address** and perform a simple execution hijacking. There are multiple ways of doing this: you can either start with a payload of a random size and analyze the behaviour of the binary in a debugger (like **GDB**) such as the image below, where we overwrite the return address and the **RIP** (PC) jumps to **0x414241424142** ("**ABABAB**")
+We start by finding the offset in order to **overwrite** the **return address** and perform a simple execution hijacking. There are multiple ways of doing this: you can either start with a payload of a random size and analyze the behavior of the binary in a debugger (like **GDB**) such as the image below, where we overwrite the return address and the **RIP** (PC) jumps to **0x414241424142** ("**ABABAB**")
 
 {% include image.html url="/imgs/posts/bypassing-aslr-dep-getting-shells-with-pwntools/bypass_aslr_dep_buffer_overflow.webp" description="Finding the offset for a buffer overflow attack by trial-and-error" %}
 
@@ -117,7 +117,7 @@ OFFSET           TYPE                VALUE
 
 Next, you'll need a **ROP gadget** that takes a parameter from the stack and places it into the **RDI** register (in our case, takes the **@GOT** address from our payload, from the stack, and sets it as the first parameter for a future `puts@PLT` call). As you remember, we're running on a **x64** architecture and the calling convention
 states that the first parameter of a method must be placed in the **RDI** register. We're looking for a `POP RDI; RET` gadget -- I'm doing this using **ROPgadget** (so it's `ROPgadget --binary vuln`)
-but feel free to use whatever you're confortable with (GDB, radare2, etc.). 
+but feel free to use whatever you're comfortable with (GDB, radare2, etc.). 
 
 We'll get the following line:
 

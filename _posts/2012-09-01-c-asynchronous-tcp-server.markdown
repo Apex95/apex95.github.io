@@ -93,9 +93,9 @@ Now, to understand how it works, take a look at the methods below:
 
 ```
 
-- first, the program calls the function **accept_connection()** - used to accept a client's connection to the server. This function will invoke through **BeginAcceptTcpClient** another function called **handle_connection()** which will run on a **different thread** chosen from the **threadpool** - so you don't have to manually create/release threads.
+- first, the program calls the function `accept_connection()` - used to accept a client's connection to the server. This function will invoke through `BeginAcceptTcpClient` another function called `handle_connection()` which will run on a **different thread** chosen from the **threadpool** - so you don't have to manually create/release threads.
 
-- when **handle_connection()** is called, it also receives an **IAsyncResult** argument - this argument maintains the connection between the 2 threads. This method will then call again **accept_connection()** - so the program will constantly change the threads.
+- when `handle_connection()` is called, it also receives an `IAsyncResult` argument - this argument maintains the connection between the 2 threads. This method will then call again `accept_connection()` - so the program will constantly change the threads.
 
 - if the connection is closed, the thread used is released automatically and can later be used for a new client; however this threadpool is limited.
 

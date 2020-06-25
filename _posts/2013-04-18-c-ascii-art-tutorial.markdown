@@ -16,7 +16,7 @@ I know those make everything more complicated, but they're more efficient.
 *   using 2 loops and a **pointer**, it gets the color of each pixel in the image (the image, stored in memory, looks like a two-dimensional array of pixels)
 *   for each pixel, it adds a character into a text file, depending on the **alpha** (transparency)
 
-Now if you got a basic idea about how this works, you can build your own program - no need to worry about the source code, you'll find everything here, including the necessary explainations.
+Now if you got a basic idea about how this works, you can build your own program - no need to worry about the source code, you'll find everything here, including the necessary explanations.
 
 Start by creating a **Forms Project**, make sure you have checked **Allow unsafe code** from _Project->Properties->Build_.
 
@@ -89,7 +89,7 @@ private unsafe StringBuilder convert_image(Bitmap bmp)
                 }
 
                 // reached end of this line, by adding bmpStride (number of pixels on each line)
-                // to the memory address, it gives us the adress of the first pixel on the next line
+                // to the memory address, it gives us the address of the first pixel on the next line
                 currentPixel += bmpStride;  
                 asciiResult.Append("  
 ");

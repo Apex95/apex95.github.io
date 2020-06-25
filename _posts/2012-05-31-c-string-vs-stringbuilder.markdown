@@ -35,7 +35,7 @@ StringBuilder a = new StringBuilder("some", 1000);
 a.Append("stringbuilder");
 ```
 
-The advantage offered by **StringBuilder** is that it stores the values in an internal buffer which can be **directly extended** without releasing and reallocationg memory. This buffer has its size specified in stringbuilder's declaration (in the example above, it's **1000**), if that limit is exceeded, the stringbuilder will create another internal buffer and will merge it with the first one. However is not a good idea to continously allocate memory for these buffers, so try to be precise when you specify the StringBuilder's size.
+The advantage offered by **StringBuilder** is that it stores the values in an internal buffer which can be **directly extended** without releasing and re-allocating memory. This buffer has its size specified in `StringBuilder`'s declaration (in the example above, it's **1000**), if that limit is exceeded, the `StringBuilder` will create another internal buffer and will merge it with the first one. However is not a good idea to continuously allocate memory for these buffers, so try to be precise when you specify the `StringBuilder`'s size.
 
 ## So what to use?
 

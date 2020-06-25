@@ -12,7 +12,7 @@ Before starting, we need a "target" - I choose **notepad.exe**.
 
 ## 1.Finding the Memory Address
 
-As you might probably know, applications store each variable's value at a **specific memory address**, we need to know that memory adress in order to edit anything. Since there's not other way around (or I'm not aware of it?) the only solution is to start searching, using a debugger.
+As you might probably know, applications store each variable's value at a **specific memory address**, we need to know that memory address in order to edit anything. Since there's not other way around (or I'm not aware of it?) the only solution is to start searching, using a debugger.
 
 To get that memory address, I used **OllyDbg** - don't worry, all the steps are written below.
 
@@ -36,7 +36,7 @@ We got the memory address, now...**don't close/restart** the application. If you
 
 ## 2.Read Process' Memory
 
-In order to read the value from that memory address, we need to import **2 functions** into C#: **OpenProcess()** and **ReadProcessMemory()** from **kernel32.dll**.
+In order to read the value from that memory address, we need to import **2 functions** into C#: `OpenProcess()` and `ReadProcessMemory()` from **kernel32.dll**.
 
 ```csharp
 [DllImport("kernel32.dll")]
@@ -90,7 +90,7 @@ public class MemoryRead
 
 ## 3.Write Process' Memory
 
-Writing to a memory address is a little bit different: you'll need **OpenProcess()** and **WriteProcessMemory()**.
+Writing to a memory address is a little bit different: you'll need `OpenProcess()` and `WriteProcessMemory()`.
 
 ```csharp
 [DllImport("kernel32.dll")]
@@ -100,7 +100,7 @@ public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle
 static extern bool WriteProcessMemory(int hProcess, int lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesWritten);
 ```
 
-However, special permissions are required: while opening the process request the following privileges: **PROCESS_VM_WRITE \| PROCESS_VM_OPERATION**.
+However, special permissions are required: while opening the process request the following privileges: `PROCESS_VM_WRITE | PROCESS_VM_OPERATION`.
 
 ```csharp
 const int PROCESS_VM_WRITE = 0x0020;

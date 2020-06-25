@@ -14,7 +14,7 @@ In my opinion, applying hot patches is quite a daunting task, if implemented fro
 
 * it requires access to a different process' memory (most operating systems are fans of **process isolation**)
 * has software compatibility constraints (**Windows** binaries vs **Linux** binaries)
-* has architecture compatibility contrains (**32bit** vs **64bit**)
+* has architecture compatibility constraints (**32bit** vs **64bit**)
 * it implies working with machine code and brings certain issues to the table
 * it has only a didactic purpose - probably no one would actually use a 'from-scratch' method since there are tools that do this better
 
@@ -34,7 +34,7 @@ Start by [downloading Intel Pin](https://software.intel.com/en-us/articles/pin-a
 ##### I'm doing this tutorial on Ubuntu x86_64, but I'm expecting the code to be highly similar on Windows or other operating systems.
 
 
-Now, I imagine this turns out to be useful for endpoints that provide remote services to clients - i.e.: a server receives some sort of input and is expected to also return something. Let's say that someone discovered that a  service is vulnerable to certain inputs - so it can be comprimised by the first attacker who submits a specially crafted request. We'll consider that taking the service down, compiling, deploying and launching a new instance is not a desirable solution so hot patching is wanted until a new version is ready. 
+Now, I imagine this turns out to be useful for endpoints that provide remote services to clients - i.e.: a server receives some sort of input and is expected to also return something. Let's say that someone discovered that a  service is vulnerable to certain inputs - so it can be compromised by the first attacker who submits a specially crafted request. We'll consider that taking the service down, compiling, deploying and launching a new instance is not a desirable solution so hot patching is wanted until a new version is ready. 
 
 I’ll use the following **dummy** C program to illustrate the aforementioned model - to keep it simple, I'm reading inputs from **stdin** (instead of a tcp stream / network).
 
@@ -101,7 +101,7 @@ Finally, create a file named **hotpatch.cpp** with some dummy code and run the *
 ## Coding the Hot Patcher
 
 
-The whole idea revolves around registering a **callback** which is called everytime the binary loads an image (see `IMG_AddInstrumentFunction()`). Since the method is defined in the running program, we're interested when the process loads its own image. In this callback, we look for the method that we want to **hot patch** (replace) - in my example, it's `read_input()`.
+The whole idea revolves around registering a **callback** which is called every time the binary loads an image (see `IMG_AddInstrumentFunction()`). Since the method is defined in the running program, we're interested when the process loads its own image. In this callback, we look for the method that we want to **hot patch** (replace) - in my example, it's `read_input()`.
 
 You can list the functions that are present in a binary using:
 ```bash

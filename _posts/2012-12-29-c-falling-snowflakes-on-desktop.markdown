@@ -15,7 +15,7 @@ Since it's winter, I decided to write about how to create an application that ma
 It's quite simple:
 
 1.  create a **transparent** form the same size as your desktop (you can still use other programs while this form is running)
-2.  on this form you add about 40-50 **PictureBox**es - each one will contain a snowflake image
+2.  on this form you add about 40-50 `PictureBox`es - each one will contain a snowflake image
 3.  finally you'll have to use a timer to constantly change their position in the form, so the snowflakes will look like they're slowly falling
 
 The program presented in this tutorial has 2 parts:
@@ -81,11 +81,11 @@ class snowflake : PictureBox
 
         void t_Tick(object sender, EventArgs e)
         {
-            //moves the snowflake by constantly adding a values to it's location
+            //moves the snowflake by constantly adding a values to its location
             this.Location += new Size(1, 3);   
 
             //checking if the snowflake isn't going out of the visible area
-            //if it goes out we reset it's location to a random one.
+            //if it goes out we reset its location to a random one.
             if (this.Location.X > Screen.PrimaryScreen.Bounds.Width || this.Location.Y > Screen.PrimaryScreen.Bounds.Height)
                 this.Location = new Point(r.Next(-Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Width), r.Next(-Screen.PrimaryScreen.Bounds.Height, Screen.PrimaryScreen.Bounds.Height));
 
@@ -95,7 +95,7 @@ class snowflake : PictureBox
 
 ## 3\. Creating the main program
 
-We want the main program (the form) to be **transparent** so we'll make it **black** and setting it's size equal to **Screen.PrimaryScreen.Bounds.Size**. After we must set the **TransparencyKey** to **black**.
+We want the main program (the form) to be **transparent** so we'll make it **black** and setting its size equal to **Screen.PrimaryScreen.Bounds.Size**. After we must set the **TransparencyKey** to **black**.
 
 Finally, we'll create an array of **snowflake**(class), that will contain all the snowflakes we want. When an element from that array is instantiated, a new snowflake will spawn and will start falling.
 
