@@ -1,0 +1,216 @@
+I"�J<p>Today’s tutorial is about…processes’ memory! In this article I’ll show you how to <strong>read/write</strong> a process’ memory using C#. This is a good way to learn a part of <strong>WinAPI</strong> and also understand the basics of memory allocation. I’ll be considering a fixed (known) memory address for reading and writing just for the sake of simplicity; feel free to also read how to [scan a process’ memory] and discover addresses of different variables.</p>
+
+<p>Before starting, we need a “target” - I choose <strong>notepad.exe</strong>.</p>
+
+<h2 id="1finding-the-memory-address">1.Finding the Memory Address</h2>
+
+<p>As you might probably know, applications store each variable’s value at a <strong>specific memory address</strong>, we need to know that memory address in order to edit anything. Since there’s not other way around (or I’m not aware of it?) the only solution is to start searching, using a debugger.</p>
+
+<p>To get that memory address, I used <strong>OllyDbg</strong> - don’t worry, all the steps are written below.</p>
+
+<p>First, open <strong>notepad.exe</strong>, type some text (like “hello world”) and attach <strong>OllyDbg</strong> (<em>File-&gt;Attach</em>). Press <strong>F9</strong> and then <strong>ALT+M</strong> to open the <strong>Memory Map</strong>.</p>
+
+<p>It should look like this:</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-read-write-another-process-memory/1.png" alt="View of OllyDbg's Memory Map of a Process" />
+  <figcaption><p>View of OllyDbg’s Memory Map of a Process</p>
+</figcaption>
+</figure>
+
+<p>Press <strong>CTRL+B</strong> and it will open the <strong>Binary Search</strong> Window. Now, because the value is stored in memory as <strong>Unicode</strong>, you have to type the string you’re looking for in the <strong>2nd textbox</strong>:</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-read-write-another-process-memory/2.png" alt="Searching through the binary for the targeted string" />
+  <figcaption><p>Searching through the binary for the targeted string</p>
+</figcaption>
+</figure>
+
+<p>Once you hit <strong>Ok</strong> another window will pop up - the <strong>Memory Dump</strong>. Here, look at the <strong>very first memory address</strong> (on the left) - from that address we’ll start reading. In the image below, the highlighted part contains the message I typed in <strong>Notepad</strong>.</p>
+
+<p><em><strong>Note:</strong> don’t use the memory address from the image - it’s not the same memory address every time</em></p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/c-read-write-another-process-memory/3.png" alt="Viewing the text in OllyDbg's Memory Dump" />
+  <figcaption><p>Viewing the text in OllyDbg’s Memory Dump</p>
+</figcaption>
+</figure>
+
+<p>We got the memory address, now…<strong>don’t close/restart</strong> the application. If you restart it, the memory for the text will be reallocated, so the address will most likely be changed.</p>
+
+<h2 id="2read-process-memory">2.Read Process’ Memory</h2>
+
+<p>In order to read the value from that memory address, we need to import <strong>2 functions</strong> into C#: <code class="highlighter-rouge">OpenProcess()</code> and <code class="highlighter-rouge">ReadProcessMemory()</code> from <strong>kernel32.dll</strong>.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">OpenProcess</span><span class="p">(</span><span class="kt">int</span> <span class="n">dwDesiredAccess</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bInheritHandle</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwProcessId</span><span class="p">);</span>
+
+<span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">ReadProcessMemory</span><span class="p">(</span><span class="kt">int</span> <span class="n">hProcess</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lpBaseAddress</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwSize</span><span class="p">,</span> <span class="k">ref</span> <span class="kt">int</span> <span class="n">lpNumberOfBytesRead</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>When a process is opened, you must also specify the desired access (this time, you request access for reading the memory), so this constant is needed:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_WM_READ</span> <span class="p">=</span> <span class="m">0x0010</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Since the whole code is self explanatory, I’ll just add short comments where they’re needed:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Runtime.InteropServices</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MemoryRead</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_WM_READ</span> <span class="p">=</span> <span class="m">0x0010</span><span class="p">;</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">OpenProcess</span><span class="p">(</span><span class="kt">int</span> <span class="n">dwDesiredAccess</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bInheritHandle</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwProcessId</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">ReadProcessMemory</span><span class="p">(</span><span class="kt">int</span> <span class="n">hProcess</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lpBaseAddress</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwSize</span><span class="p">,</span> <span class="k">ref</span> <span class="kt">int</span> <span class="n">lpNumberOfBytesRead</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+
+        <span class="n">Process</span> <span class="n">process</span> <span class="p">=</span> <span class="n">Process</span><span class="p">.</span><span class="nf">GetProcessesByName</span><span class="p">(</span><span class="s">"notepad"</span><span class="p">)[</span><span class="m">0</span><span class="p">];</span> 
+        <span class="n">IntPtr</span> <span class="n">processHandle</span> <span class="p">=</span> <span class="nf">OpenProcess</span><span class="p">(</span><span class="n">PROCESS_WM_READ</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="n">process</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span> 
+
+        <span class="kt">int</span> <span class="n">bytesRead</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="kt">byte</span><span class="p">[]</span> <span class="n">buffer</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="p">[</span><span class="m">24</span><span class="p">];</span> <span class="c1">//'Hello World!' takes 12*2 bytes because of Unicode </span>
+
+        <span class="c1">// 0x0046A3B8 is the address where I found the string, replace it with what you found</span>
+        <span class="nf">ReadProcessMemory</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">processHandle</span><span class="p">,</span> <span class="m">0x0046A3B8</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">buffer</span><span class="p">.</span><span class="n">Length</span><span class="p">,</span> <span class="k">ref</span> <span class="n">bytesRead</span><span class="p">);</span>
+
+        <span class="n">Console</span><span class="p">.</span><span class="nf">WriteLine</span><span class="p">(</span><span class="n">Encoding</span><span class="p">.</span><span class="n">Unicode</span><span class="p">.</span><span class="nf">GetString</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span> <span class="p">+</span> <span class="s">" ("</span> <span class="p">+</span> <span class="n">bytesRead</span><span class="p">.</span><span class="nf">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">"bytes)"</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="3write-process-memory">3.Write Process’ Memory</h2>
+
+<p>Writing to a memory address is a little bit different: you’ll need <code class="highlighter-rouge">OpenProcess()</code> and <code class="highlighter-rouge">WriteProcessMemory()</code>.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">OpenProcess</span><span class="p">(</span><span class="kt">int</span> <span class="n">dwDesiredAccess</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bInheritHandle</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwProcessId</span><span class="p">);</span>
+
+<span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">,</span> <span class="n">SetLastError</span> <span class="p">=</span> <span class="k">true</span><span class="p">)]</span>
+<span class="k">static</span> <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">WriteProcessMemory</span><span class="p">(</span><span class="kt">int</span> <span class="n">hProcess</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lpBaseAddress</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwSize</span><span class="p">,</span> <span class="k">ref</span> <span class="kt">int</span> <span class="n">lpNumberOfBytesWritten</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>However, special permissions are required: while opening the process request the following privileges: <code class="highlighter-rouge">PROCESS_VM_WRITE | PROCESS_VM_OPERATION</code>.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_VM_WRITE</span> <span class="p">=</span> <span class="m">0x0020</span><span class="p">;</span>
+<span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_VM_OPERATION</span> <span class="p">=</span> <span class="m">0x0008</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Note:</strong> notepad’s textbox is storing the number of bytes it has to read from the memory - that value is updated only when the text is changed by user. If you write to the memory address a longer string, it will be truncated.</p>
+
+<p>The complete code is available below:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Runtime.InteropServices</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Text</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MemoryRead</span>
+<span class="p">{</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">PROCESS_ALL_ACCESS</span> <span class="p">=</span> <span class="m">0x1F0FFF</span><span class="p">;</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">)]</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">extern</span> <span class="n">IntPtr</span> <span class="nf">OpenProcess</span><span class="p">(</span><span class="kt">int</span> <span class="n">dwDesiredAccess</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">bInheritHandle</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwProcessId</span><span class="p">);</span>
+
+    <span class="p">[</span><span class="nf">DllImport</span><span class="p">(</span><span class="s">"kernel32.dll"</span><span class="p">,</span> <span class="n">SetLastError</span> <span class="p">=</span> <span class="k">true</span><span class="p">)]</span>
+    <span class="k">static</span> <span class="k">extern</span> <span class="kt">bool</span> <span class="nf">WriteProcessMemory</span><span class="p">(</span><span class="kt">int</span> <span class="n">hProcess</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lpBaseAddress</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">lpBuffer</span><span class="p">,</span> <span class="kt">int</span> <span class="n">dwSize</span><span class="p">,</span> <span class="k">ref</span> <span class="kt">int</span> <span class="n">lpNumberOfBytesWritten</span><span class="p">);</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+    <span class="p">{</span>
+
+        <span class="n">Process</span> <span class="n">process</span> <span class="p">=</span> <span class="n">Process</span><span class="p">.</span><span class="nf">GetProcessesByName</span><span class="p">(</span><span class="s">"notepad"</span><span class="p">)[</span><span class="m">0</span><span class="p">];</span>
+        <span class="n">IntPtr</span> <span class="n">processHandle</span> <span class="p">=</span> <span class="nf">OpenProcess</span><span class="p">(</span><span class="n">PROCESS_ALL_ACCESS</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="n">process</span><span class="p">.</span><span class="n">Id</span><span class="p">);</span> 
+
+        <span class="kt">int</span> <span class="n">bytesWritten</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+        <span class="kt">byte</span><span class="p">[]</span> <span class="n">buffer</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">Unicode</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="s">"It works!\0"</span><span class="p">);</span> <span class="c1">// '\0' marks the end of string</span>
+
+        <span class="c1">// replace 0x0046A3B8 with your address</span>
+        <span class="nf">WriteProcessMemory</span><span class="p">((</span><span class="kt">int</span><span class="p">)</span><span class="n">processHandle</span><span class="p">,</span> <span class="m">0x0046A3B8</span><span class="p">,</span> <span class="n">buffer</span><span class="p">,</span> <span class="n">buffer</span><span class="p">.</span><span class="n">Length</span><span class="p">,</span> <span class="k">ref</span> <span class="n">bytesWritten</span><span class="p">);</span>
+        <span class="n">Console</span><span class="p">.</span><span class="nf">ReadLine</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

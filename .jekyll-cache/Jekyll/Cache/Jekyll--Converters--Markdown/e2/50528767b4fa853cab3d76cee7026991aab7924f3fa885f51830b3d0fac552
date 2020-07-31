@@ -1,0 +1,306 @@
+I"�P<p>5 years ago, I said in one of my articles that I shall return, one day, with a method of <strong>hot patching</strong> functions inside live processes; So… I guess this is that day.</p>
+
+<p>What we’ll try to achieve here is to <strong>replace</strong>, from outside, a function inside a <strong>running executable</strong>, without stopping/freezing the process (or crashing it…).</p>
+
+<p>In my opinion, applying hot patches is quite a daunting task, if implemented from scratch, since:</p>
+
+<ul>
+  <li>it requires access to a different process’ memory (most operating systems are fans of <strong>process isolation</strong>)</li>
+  <li>has software compatibility constraints (<strong>Windows</strong> binaries vs <strong>Linux</strong> binaries)</li>
+  <li>has architecture compatibility constraints (<strong>32bit</strong> vs <strong>64bit</strong>)</li>
+  <li>it implies working with machine code and brings certain issues to the table</li>
+  <li>it has only a didactic purpose - probably no one would actually use a ‘from-scratch’ method since there are tools that do this better</li>
+</ul>
+
+<p>Considering these, I guess it is better to use something that was actually written for this task and not coding something manually.
+Therefore, we’ll be looking at a way to do this with <a href="https://software.intel.com/en-us/articles/pin-a-dynamic-binary-instrumentation-tool" rel="nofollow">Intel Pin</a>. I stumbled upon this tool while working at a completely different project but it seems to be quite versatile. Basically, it is described as a <strong>Dynamic Binary Instrumentation Tool</strong>, however we’ll be using it to facilitate the procedure of writing code to another process’ memory.</p>
+
+<h2 id="initial-preparations">Initial Preparations</h2>
+
+<p>Start by <a href="https://software.intel.com/en-us/articles/pin-a-binary-instrumentation-tool-downloads" rel="nofollow">downloading Intel Pin</a> and extract it somewhere in your workspace.</p>
+
+<h5 id="im-doing-this-tutorial-on-ubuntu-x86_64-but-im-expecting-the-code-to-be-highly-similar-on-windows-or-other-operating-systems">I’m doing this tutorial on Ubuntu x86_64, but I’m expecting the code to be highly similar on Windows or other operating systems.</h5>
+
+<p>Now, I imagine this turns out to be useful for endpoints that provide remote services to clients - i.e.: a server receives some sort of input and is expected to also return something. Let’s say that someone discovered that a  service is vulnerable to certain inputs - so it can be compromised by the first attacker who submits a specially crafted request. We’ll consider that taking the service down, compiling, deploying and launching a new instance is not a desirable solution so hot patching is wanted until a new version is ready. </p>
+
+<p>I’ll use the following <strong>dummy</strong> C program to illustrate the aforementioned model - to keep it simple, I’m reading inputs from <strong>stdin</strong> (instead of a tcp stream / network).</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre><span class="cp">#include &lt;stdio.h&gt;
+</span>
+<span class="c1">// TODO: hot patch this method</span>
+<span class="kt">void</span> <span class="nf">read_input</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Tell me your name:</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    
+    <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">11</span><span class="p">];</span>
+    <span class="n">scanf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span> <span class="c1">// this looks bad</span>
+    
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Hello, %s!</span><span class="se">\n\n</span><span class="s">"</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// not gonna end too soon</span>
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">read_input</span><span class="p">();</span>
+    
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Some of you probably noticed that the <code class="highlighter-rouge">read_input()</code> function is not very well written since it’s reading inputs using <code class="highlighter-rouge">scanf("%s", name);</code> and thus enabling an attacker to hijack the program’s execution using <strong>buffer overflow</strong>.</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/hot-patching-functions-with-intel-pin/buffer_overflow.png" alt="Scanf() reading exceeds the limits of the allocated buffer" />
+  <figcaption><p>Scanf() reading exceeds the limits of the allocated buffer</p>
+</figcaption>
+</figure>
+
+<p>We intend to patch this vulnerability by “replacing” the vulnerable reading function (<code class="highlighter-rouge">read_input()</code>) with another that we know it’s actually safe. I’m using quotes there to express the fact that
+it will act more like a re-routing procedure - the code of the original (vulnerable) function will still be in the process’ memory, but all the calls will be forwarded to the new (patched) method.</p>
+
+<p>I hope it makes sense for now.</p>
+
+<h2 id="projects-structure">Project’s Structure</h2>
+
+<p><strong>Intel Pin</strong> works by performing actions, indicated in <strong>tools</strong>, to targeted <strong>binaries</strong> or <strong>processes</strong>. As an example, you may have a tool that says <em>‘increase a counter each time you find a RET instruction’</em> that you can attach to an executable and get the value of the counter at a certain time.</p>
+
+<p>It offers a directory with examples of <strong>tools</strong> which can be found at: <strong>pin/source/tools/</strong>. In order to avoid updating makefile dependencies, we’ll work here so continue by creating a new directory (mine’s named <strong>Hotpatch</strong>) - this is where the coding happens.</p>
+
+<p>Also, copy a <strong>makefile</strong> to your new directory, if you don’t feel like writing one:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nb">cp</span> ../SimpleExamples/makefile <span class="nb">.</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>And use the following as your <strong>makefile.rules</strong> file:</p>
+
+<div class="language-make highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="nv">TEST_TOOL_ROOTS</span> <span class="o">:=</span> hotpatch <span class="c"># for hotpatch.cpp</span>
+<span class="nv">SANITY_SUBSET</span> <span class="o">:=</span> <span class="nv">$(TEST_TOOL_ROOTS)</span> <span class="nv">$(TEST_ROOTS)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Finally, create a file named <strong>hotpatch.cpp</strong> with some dummy code and run the <strong>make</strong> command. If everything works fine, you should end up with something like this…</p>
+
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/hot-patching-functions-with-intel-pin/directory_structure.png" alt="Directory structure for the Hotpatch tool" />
+  <figcaption><p>Directory structure for the Hotpatch tool</p>
+</figcaption>
+</figure>
+
+<h2 id="coding-the-hot-patcher">Coding the Hot Patcher</h2>
+
+<p>The whole idea revolves around registering a <strong>callback</strong> which is called every time the binary loads an image (see <code class="highlighter-rouge">IMG_AddInstrumentFunction()</code>). Since the method is defined in the running program, we’re interested when the process loads its own image. In this callback, we look for the method that we want to <strong>hot patch</strong> (replace) - in my example, it’s <code class="highlighter-rouge">read_input()</code>.</p>
+
+<p>You can list the functions that are present in a binary using:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>nm targeted_binary_name
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The process of replacing a function (<code class="highlighter-rouge">RTN_ReplaceSignatureProbed()</code>) is based on <strong>probes</strong> - as you can tell by the name, which, according to <strong>Intel</strong>’s claims, ensure less overhead and are less intrusive. Under the hood, <strong>Intel Pin</strong> will overwrite the original function’s instructions with a <code class="highlighter-rouge">JMP</code> that points to the replacement function. It is up to you to call the original function, if needed.</p>
+
+<p>Without further ado, the code I ended up with:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+</pre></td><td class="rouge-code"><pre><span class="cp">#include "pin.H"
+#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+</span>
+
+<span class="kt">char</span> <span class="n">target_routine_name</span><span class="p">[]</span> <span class="o">=</span> <span class="s">"read_input"</span><span class="p">;</span>
+
+
+<span class="c1">// replacement routine's code (i.e. patched read_input)</span>
+<span class="kt">void</span> <span class="nf">read_input_patched</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">original_routine_ptr</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">return_address</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Tell me your name:</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    
+    <span class="c1">// 5 stars stdin reading method</span>
+    <span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">},</span> <span class="n">c</span><span class="p">;</span>
+    <span class="n">fgets</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">stdin</span><span class="p">);</span>
+    <span class="n">name</span><span class="p">[</span><span class="n">strcspn</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s">"</span><span class="se">\r\n</span><span class="s">"</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// discard rest of the data from stdin</span>
+    <span class="k">while</span><span class="p">((</span><span class="n">c</span> <span class="o">=</span> <span class="n">getchar</span><span class="p">())</span> <span class="o">!=</span> <span class="sc">'\n'</span> <span class="o">&amp;&amp;</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">EOF</span><span class="p">);</span>
+
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Hello, %s!</span><span class="se">\n\n</span><span class="s">"</span><span class="p">,</span> <span class="n">name</span><span class="p">);</span>
+<span class="p">}</span>
+
+
+<span class="kt">void</span> <span class="nf">loaded_image_callback</span><span class="p">(</span><span class="n">IMG</span> <span class="n">current_image</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// look for the routine in the loaded image</span>
+    <span class="n">RTN</span> <span class="n">current_routine</span> <span class="o">=</span> <span class="n">RTN_FindByName</span><span class="p">(</span><span class="n">current_image</span><span class="p">,</span> <span class="n">target_routine_name</span><span class="p">);</span>
+    
+
+    <span class="c1">// stop if the routine was not found in this image</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">RTN_Valid</span><span class="p">(</span><span class="n">current_routine</span><span class="p">))</span>
+        <span class="k">return</span><span class="p">;</span>
+
+    <span class="c1">// skip routines which are unsafe for replacement</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">RTN_IsSafeForProbedReplacement</span><span class="p">(</span><span class="n">current_routine</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"Skipping unsafe routine "</span> <span class="o">&lt;&lt;</span> <span class="n">target_routine_name</span> <span class="o">&lt;&lt;</span> <span class="s">" in image "</span> <span class="o">&lt;&lt;</span> <span class="n">IMG_Name</span><span class="p">(</span><span class="n">current_image</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// replacement routine's prototype: returns void, default calling standard, name, takes no arugments </span>
+    <span class="n">PROTO</span> <span class="n">replacement_prototype</span> <span class="o">=</span> <span class="n">PROTO_Allocate</span><span class="p">(</span><span class="n">PIN_PARG</span><span class="p">(</span><span class="kt">void</span><span class="p">),</span> <span class="n">CALLINGSTD_DEFAULT</span><span class="p">,</span> <span class="n">target_routine_name</span><span class="p">,</span> <span class="n">PIN_PARG_END</span><span class="p">());</span>
+
+    <span class="c1">// replaces the original routine with a jump to the new one </span>
+    <span class="n">RTN_ReplaceSignatureProbed</span><span class="p">(</span><span class="n">current_routine</span><span class="p">,</span> 
+                               <span class="n">AFUNPTR</span><span class="p">(</span><span class="n">read_input_patched</span><span class="p">),</span> 
+                               <span class="n">IARG_PROTOTYPE</span><span class="p">,</span> 
+                               <span class="n">replacement_prototype</span><span class="p">,</span>
+                               <span class="n">IARG_ORIG_FUNCPTR</span><span class="p">,</span>
+                               <span class="n">IARG_FUNCARG_ENTRYPOINT_VALUE</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                               <span class="n">IARG_RETURN_IP</span><span class="p">,</span>
+                               <span class="n">IARG_END</span><span class="p">);</span>
+
+    <span class="n">PROTO_Free</span><span class="p">(</span><span class="n">replacement_prototype</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Successfully replaced "</span> <span class="o">&lt;&lt;</span> <span class="n">target_routine_name</span> <span class="o">&lt;&lt;</span> <span class="s">" from image "</span> <span class="o">&lt;&lt;</span> <span class="n">IMG_Name</span><span class="p">(</span><span class="n">current_image</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">PIN_InitSymbols</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">PIN_Init</span><span class="p">(</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">))</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"Failed to initialize PIN."</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> 
+        <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// registers a callback for the "load image" action</span>
+    <span class="n">IMG_AddInstrumentFunction</span><span class="p">(</span><span class="n">loaded_image_callback</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    
+    <span class="c1">// runs the program in probe mode</span>
+    <span class="n">PIN_StartProgramProbed</span><span class="p">();</span>
+    
+    <span class="k">return</span> <span class="n">EXIT_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>After running <strong>make</strong>, use a command like the following one to attach <strong>Intel Pin</strong> to a running instance of the targeted process.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nb">sudo</span> ../../../pin <span class="nt">-pid</span> <span class="si">$(</span>pidof targeted_binary_name<span class="si">)</span> <span class="nt">-t</span> obj-intel64/hotpatch.so
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="results-and-conclusions">Results and Conclusions</h2>
+
+<p>Aaand it seems to be working:</p>
+<figure class="image">
+  <img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" data-echo="/imgs/posts/hot-patching-functions-with-intel-pin/hot_patched_process.png" alt="Testing the Hot Patched version against Buffer Overflow" />
+  <figcaption><p>Testing the Hot Patched version against Buffer Overflow</p>
+</figcaption>
+</figure>
+
+<p>To conclude, I’m pretty sure <strong>Intel Pin</strong> is capable of more complex stuff than what I’m presenting here - which I believe is examples-level (actually it’s inspired by an example). To me, it seems rather strange that it is not a more popular tool - and no, I’m not paid by Intel to endorse it.</p>
+
+<p>However, I hope this article manages to provide support and solutions/ideas to those who are looking at <strong>hot patching</strong> methods and who, like me, never heard of <strong>Intel Pin</strong> before.</p>
+
+<p><a href="https://www.codeproject.com" rel="tag" style="display:none">CodeProject</a></p>
+:ET

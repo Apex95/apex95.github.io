@@ -1,0 +1,272 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/hamming.webp " alt="Hamming Error Correction - with Example" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/hamming-error-correction-w-example">Hamming Error Correction - with Example</a>
+        </h2>
+        
+        <p class="excerpt">
+            This article will focus on Hamming codes - mainly, this represents an attempt to explain a little bit better how this method can help in detecting and correcting… 1 bit errors. This method is not really useful at “higher level”...
+        </p>
+        
+        <p class="post-meta">Jun 30, 2016</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/getIpAddress.webp " alt="C# How To: Get External IP Address" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/c-how-to-get-external-ip-address">C# How To: Get External IP Address</a>
+        </h2>
+        
+        <p class="excerpt">
+            Okay, this is a really short article, but I felt the need to write this because too many people seem to take the wrong way. Problem First: getting the public IP address of a machine shouldn’t be done locally (Dns.GetHostAddresses(Dns.GetHostName())...
+        </p>
+        
+        <p class="post-meta">Sep 27, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/ftpAddress.webp " alt="C# Connecting to FTP Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/c-connecting-to-ftp-server">C# Connecting to FTP Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this tutorial I will show you how to use C# to connect to a FTP server and perform basic operations: uploading a file downloading a file deleting a file 1.Connecting &amp; Logging In Before doing operations on files, you...
+        </p>
+        
+        <p class="post-meta">Oct 20, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/getpost.webp " alt="C# Sending data using GET or POST" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/c-sending-data-using-get-or-post">C# Sending data using GET or POST</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this short article, I’ll show you how to send data to a website from a C# application using GET or POST method. The tutorial also includes how to receive data from a website, by getting the page’s source -...
+        </p>
+        
+        <p class="post-meta">Oct 12, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/httpserver.webp " alt="C# Simple Http Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/c-simple-http-server">C# Simple Http Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this short tutorial I’ll explain how to make a simple Http Server using only C#. The server will be able to serve any page that contains client-side code (html and javascript). Basic stuff When a client requests a page...
+        </p>
+        
+        <p class="post-meta">Sep 9, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/asynctcplistener.webp " alt="C# Asynchronous Tcp Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/c-asynchronous-tcp-server">C# Asynchronous Tcp Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is the model of an Asynchronous TCP server, that can have multiple clients connected, each one on it’s own thread - all of this is done using a relatively short and easy-to-remember code. If you don’t have basic knowledge...
+        </p>
+        
+        <p class="post-meta">Sep 1, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/aspnet.webp " alt="C# Http Server With ASP.NET" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/c-http-server-with-aspnet">C# Http Server With ASP.NET</a>
+        </h2>
+        
+        <p class="excerpt">
+            This tutorial will show you how to create a HTTP server that can parse ASP.NET files. It will be able to serve pages containing html,css and server-side code. As always I’ll try to keep the code simple - luckily .NET...
+        </p>
+        
+        <p class="post-meta">Aug 18, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/smtpConnect.webp " alt="C# Send email using Gmail" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/c-send-email-using-gmail">C# Send email using Gmail</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this tutorial … we’ll send emails :) using C# of course. 1. Required: SMTP server I use: smtp.google.com , you must have a Gmail account Little attention / some basic knowledge of C# 2. Creating the client We start...
+        </p>
+        
+        <p class="post-meta">Jun 19, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/tcpserver.webp " alt="C# Simple Tcp Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/networking/c-simple-tcp-server">C# Simple Tcp Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            If you got here, you probably want to know how to make a simple server in C#, using the shortest possible code and the easiest method to understand. For the sake of simplicity we’ll make a synchronous server using a...
+        </p>
+        
+        <p class="post-meta">Apr 13, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

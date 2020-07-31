@@ -1,0 +1,98 @@
+I"�<p>In this short article, I’ll show you how to send data to a website from a C# application using <strong>GET</strong> or <strong>POST</strong> method. The tutorial also includes how to receive data from a website, by getting the page’s source - so it’s a neat way to check if the everything is working as intended.</p>
+
+<h2 id="1-get-method">1. GET Method</h2>
+
+<p>Using the <strong>GET</strong> method is the easiest way to send any text data since all you have to do is to open the Url address with already-defined parameters, with <code class="highlighter-rouge">WebClient</code>. Notice that WebClient is IDisposable you can use it this way:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="kt">string</span> <span class="n">username</span> <span class="p">=</span> <span class="s">"john"</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">urlAddress</span> <span class="p">=</span> <span class="s">"http://www.yoursite.tld/somepage.php?username="</span> <span class="p">+</span> <span class="n">username</span><span class="p">;</span>  
+
+<span class="k">using</span> <span class="p">(</span><span class="n">WebClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">WebClient</span><span class="p">())</span>
+<span class="p">{</span>
+       <span class="c1">// this string contains the webpage's source</span>
+       <span class="kt">string</span> <span class="n">pagesource</span> <span class="p">=</span> <span class="n">client</span><span class="p">.</span><span class="nf">DownloadString</span><span class="p">(</span><span class="n">urlAddress</span><span class="p">);</span>  
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The code above opens a Url address, with 1 GET parameter: <code class="highlighter-rouge">/somepage.php?username=john</code>.</p>
+
+<p>Now if you need to check what the program sent, use a PHP snippet like this one and look in the source of the page:</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;?php</span>
+    <span class="nv">$username</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s2">"username"</span><span class="p">];</span>  <span class="c1">//make sure you filter these values, before showing them</span>
+    <span class="k">echo</span> <span class="nv">$username</span><span class="p">;</span>  <span class="c1">//$username == "john"</span>
+<span class="cp">?&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h2 id="2-post-method">2. POST Method</h2>
+
+<p>Sending data using <strong>POST</strong>, even if it looks similar to GET, you’ll need a different approach. Not very different, we’re still using <code class="highlighter-rouge">WebClient</code>, but we must also include a new class: <code class="highlighter-rouge">NameValueCollection</code>. This dictionary-like container will store each parameter’s name and value. Once all the data has been loaded, call <code class="highlighter-rouge">WebClient.UploadValues()</code> to send the information to the webpage.</p>
+
+<p>First, make sure you include this namespace:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="k">using</span> <span class="nn">System.Collections.Specialized</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Then, you can jump to the code:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre></td><td class="rouge-code"><pre><span class="kt">string</span> <span class="n">username</span> <span class="p">=</span> <span class="s">"john"</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">referer</span> <span class="p">=</span> <span class="s">"myprogram"</span><span class="p">;</span>
+<span class="kt">string</span> <span class="n">urlAddress</span> <span class="p">=</span> <span class="s">"http://www.yoursite.tld/somepage.php"</span><span class="p">;</span>
+
+<span class="k">using</span> <span class="p">(</span><span class="n">WebClient</span> <span class="n">client</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">WebClient</span><span class="p">())</span>
+<span class="p">{</span>
+       <span class="n">NameValueCollection</span> <span class="n">postData</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">NameValueCollection</span><span class="p">()</span> 
+       <span class="p">{</span> 
+              <span class="p">{</span> <span class="s">"username"</span><span class="p">,</span> <span class="n">username</span> <span class="p">},</span>  <span class="c1">//order: {"parameter name", "parameter value"}</span>
+              <span class="p">{</span> <span class="s">"referer"</span><span class="p">,</span> <span class="n">referer</span> <span class="p">}</span>
+       <span class="p">};</span>
+
+       <span class="c1">// client.UploadValues returns page's source as byte array (byte[])</span>
+       <span class="c1">// so it must be transformed into a string</span>
+       <span class="kt">string</span> <span class="n">pagesource</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetString</span><span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="nf">UploadValues</span><span class="p">(</span><span class="n">urlAddress</span><span class="p">,</span> <span class="n">postData</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Once again, a short PHP snippet that can be used with the example above (the result is shown in the source code, downloaded by WebClient.UploadValues):</p>
+
+<div class="language-php highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="cp">&lt;?php</span>
+    <span class="nv">$username</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s2">"username"</span><span class="p">];</span>  
+    <span class="nv">$referer</span> <span class="o">=</span> <span class="nv">$_POST</span><span class="p">[</span><span class="s2">"referer"</span><span class="p">];</span>
+    <span class="k">echo</span> <span class="nv">$username</span><span class="o">.</span><span class="s2">" from "</span><span class="o">.</span><span class="nv">$referer</span><span class="p">;</span>  <span class="c1">// $username == "john" and $referer == "myprogram"</span>
+<span class="cp">?&gt;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+:ET

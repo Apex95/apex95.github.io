@@ -1,0 +1,39 @@
+I"�<p><strong>StringBuilder</strong> or <strong>String</strong>? Is there any difference?</p>
+
+<p>It is - and not only the name, when we talk about our program’s performance. I’ll start by explaining how each one works so you’ll understand why this and not that.</p>
+
+<h2 id="string">String</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="kt">string</span> <span class="n">a</span> <span class="p">=</span> <span class="s">"something"</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>When we declare a string, there’s allocated enough memory to store it’s value, but that’s all.<br />
+The problem appears when we try to execute operations on that string.</p>
+
+<p>Take a look at this code:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="kt">string</span> <span class="n">a</span> <span class="p">=</span> <span class="s">"some"</span><span class="p">;</span>
+<span class="n">a</span> <span class="p">+=</span> <span class="s">"string"</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The first time our string is declared, it’s allocated memory to store its actual value. But when we modify/extend it, by concatenating the strings guess what happens? The memory used by our initial string is released and the program reallocates memory for the new string. So, if we <strong>add to the string 10 characters</strong>, one by one, the <strong>memory gets reallocated 9 times</strong> which makes our program lose performance.</p>
+
+<h2 id="stringbuilder">StringBuilder</h2>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="n">StringBuilder</span> <span class="n">a</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StringBuilder</span><span class="p">(</span><span class="s">"some"</span><span class="p">,</span> <span class="m">1000</span><span class="p">);</span>
+<span class="n">a</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="s">"stringbuilder"</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The advantage offered by <strong>StringBuilder</strong> is that it stores the values in an internal buffer which can be <strong>directly extended</strong> without releasing and re-allocating memory. This buffer has its size specified in <code class="highlighter-rouge">StringBuilder</code>’s declaration (in the example above, it’s <strong>1000</strong>), if that limit is exceeded, the <code class="highlighter-rouge">StringBuilder</code> will create another internal buffer and will merge it with the first one. However is not a good idea to continuously allocate memory for these buffers, so try to be precise when you specify the <code class="highlighter-rouge">StringBuilder</code>’s size.</p>
+
+<h2 id="so-what-to-use">So what to use?</h2>
+
+<p><strong>StringBuilder</strong> - should be used when you want to execute many operations continuously to avoid creating a new string each time.</p>
+
+<p><strong>String</strong> - it should be used when you don’t want to do heavy operations (like modifying its value very often/inside a loop).</p>
+:ET

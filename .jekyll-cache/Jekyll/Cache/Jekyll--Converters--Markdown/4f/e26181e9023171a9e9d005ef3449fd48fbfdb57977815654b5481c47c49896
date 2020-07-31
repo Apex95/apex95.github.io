@@ -1,0 +1,2 @@
+I"�<p>The RNN learns to recognize the digit ‘5’ only by seeing stripes of width equal to 1 of the digit in cause - think of it as time series; by combining information from previous and current inputs, the RNN can determine the correct class.</p>
+:ET
