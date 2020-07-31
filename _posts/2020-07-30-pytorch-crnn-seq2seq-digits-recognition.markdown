@@ -193,7 +193,6 @@ The CRNN manifests some overfitting behavior but the results are acceptable cons
 
 
 After 6 epochs, the CRNN successfully recognizes **7567** out of **8000** sequences in the training set and **1776** out of **2000** from the testing set.
-Don't forget to check out the Google Colab.
 
 
 ## References
