@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "PyTorch CRNN: Seq2Seq Digits Recognition w/ CTC"
-date:   2020-06-08 00:45:05 +0300
+date:   2020-07-31 00:45:05 +0300
 categories: ai
 image: /imgs/thumbnails/rnn-ctc-ocr.png
 ---
