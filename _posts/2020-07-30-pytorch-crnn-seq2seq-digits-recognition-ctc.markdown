@@ -176,8 +176,7 @@ class CRNN(nn.Module):
 
 crnn = CRNN()
 criterion = nn.CTCLoss(blank=10, reduction='mean', zero_infinity=True)
-optimizer = torch.optim.SGD(crnn.parameters(), lr=0.01, momentum=0.95, nesterov=True, weight_decay=1e-5)
-scheduler = torch.optim.lr_scheduler.StepLR(optimizer, 5, gamma=0.9)
+optimizer = torch.optim.Adam(crnn.parameters(), lr=0.001) 
 ```
 
 ## Results
