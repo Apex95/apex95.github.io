@@ -67,7 +67,7 @@ $$ P(S_{55207}) = \sum_{A \in Alignments(55207)}{A} $$
 
 When training, the neural network attempts to maximize this probability for the sequence provided as ground truth.
 
-A **decoding** method is used to recover the text from a set of digits probabilities; a naive approach would be to pick, for **each slot** in the **alignment**, the digits with the **highest probability** and the collapse the result. This approach is easier to implement and might be enough for this example although **beam search** (i.e.: greedy approach that picks first N digits with highest probabilities, instead of only one) is employed for such tasks in larger projects.
+A **decoding** method is used to recover the text from a set of digits probabilities; a naive approach would be to pick, for **each slot** in the **alignment**, the digits with the **highest probability** and then collapse the result. This approach is easier to implement and might be enough for this example although **beam search** (i.e.: greedy approach that picks first N digits with highest probabilities, instead of only one) is employed for such tasks in larger projects.
 
 
 
