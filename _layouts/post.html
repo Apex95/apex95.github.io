@@ -17,7 +17,7 @@ layout: default
   </div>
 
 <div class="post-tags">
-Filled under: {% for tag in page.tags %} <a class="category-link" href="/tag/{{tag}}">{{tag}}</a>{% endfor; %}
+{% for tag in page.tags %} <a class="category-link" href="/tag/{{tag}}">{{tag}}</a>{% endfor; %}
 </div>
 
 

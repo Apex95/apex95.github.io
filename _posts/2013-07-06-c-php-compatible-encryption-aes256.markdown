@@ -3,7 +3,9 @@ layout: post
 title:  "C#/PHP Compatible Encryption (AES256)"
 date:   2013-07-06 20:02:05 +0300
 tags: c-sharp php encryption aes
-redirect_from: /security/c-php-compatible-encryption-aes256
+redirect_from: 
+    - /security/c-php-compatible-encryption-aes256
+    - /tips-and-tricks/c-php-compatible-encryption-aes256
 image: /imgs/thumbnails/sharedEncryption.webp
 ---
 

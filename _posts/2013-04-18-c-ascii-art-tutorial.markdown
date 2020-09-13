@@ -3,7 +3,7 @@ layout: post
 title:  "C# Ascii Art Tutorial"
 date:   2013-04-18 20:02:05 +0300
 tags: c-sharp ascii-art
-redirect-from: /files/c-ascii-art-tutorial
+redirect_from: /files/c-ascii-art-tutorial
 image: /imgs/thumbnails/asciiArt.webp
 ---
 

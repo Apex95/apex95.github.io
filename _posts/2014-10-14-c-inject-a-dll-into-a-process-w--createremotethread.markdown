@@ -2,7 +2,7 @@
 layout: post
 title:  "C# Inject a Dll into a Process (w/ CreateRemoteThread)"
 date:   2014-10-14 20:02:05 +0300
-tags: exploit process dll-injection c-sharp
+tags: exploit process dll c-sharp
 redirect_from: 
     - /miscellaneous/c-inject-a-dll-into-a-process-w-createremotethread
     - /miscellaneous/c-inject-a-dll-into-a-process-w--createremotethread

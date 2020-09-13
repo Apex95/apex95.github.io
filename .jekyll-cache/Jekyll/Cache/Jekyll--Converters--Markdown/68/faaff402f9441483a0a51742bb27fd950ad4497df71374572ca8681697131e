@@ -1,0 +1,166 @@
+I"~<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/dllInject.webp " alt="C# Inject a Dll into a Process (w/ CreateRemoteThread)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-inject-a-dll-into-a-process-w-createremotethread">C# Inject a Dll into a Process (w/ CreateRemoteThread)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Since I’ve been asked if this is possible - well…you can do DLL Injection using C# but the injected DLL must be written in a language that doesn’t depend on a CLR (C/C++ would be a good option here, but...
+        </p>
+        
+        <p class="post-meta">Oct 14, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/libraryRuntime.webp " alt="C# Load dll at Runtime" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-load-dll-at-runtime">C# Load dll at Runtime</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is a method used to import a dll during the program’s execution (at the runtime) without adding the actual library as a reference. Obviously, you will need: A DLL made in C# - only a function and a class...
+        </p>
+        
+        <p class="post-meta">Jun 23, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET
