@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Synchronize 2 RichTextBoxes' Scroll"
 date:   2013-03-17 20:02:05 +0300
-categories: interface
+tags: c-sharp textbox
+redirect_from: /interface/c-synchronize-2-richtextboxes-scroll
 image: /imgs/thumbnails/rtbcontrol.webp
 ---
 

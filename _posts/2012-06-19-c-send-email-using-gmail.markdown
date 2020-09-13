@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Send email using Gmail"
 date:   2012-06-19 20:02:05 +0300
-categories: networking
+tags: c-sharp smtp
+redirect_from: /networking/c-send-email-using-gmail
 image: /imgs/thumbnails/smtpConnect.webp
 ---
 

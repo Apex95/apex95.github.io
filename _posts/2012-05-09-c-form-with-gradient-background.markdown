@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Form with Gradient Background"
 date:   2012-05-09 20:02:05 +0300
-categories: interface
+tags: c-sharp form
+redirect_from: /interface/c-form-with-gradient-background
 image: /imgs/thumbnails/formGradient.webp
 ---
 

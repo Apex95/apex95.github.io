@@ -2,7 +2,8 @@
 layout: post
 title:  "PyTorch CRNN: Seq2Seq Digits Recognition w/ CTC"
 date:   2020-07-31 00:45:05 +0300
-categories: ai
+tags: pytorch machine-learning ocr ctc python conv-neural-network
+redirect_from: /ai/pytorch-crnn-seq2seq-digits-recognition-ctc
 image: /imgs/thumbnails/rnn-ctc-ocr.png
 ---
 

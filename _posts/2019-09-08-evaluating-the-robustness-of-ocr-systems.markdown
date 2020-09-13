@@ -2,7 +2,8 @@
 layout: post
 title:  "Evaluating the Robustness of OCR Systems"
 date:   2019-09-08 00:45:05 +0300
-categories: ai
+tags: research genetic-algorithm ocr tesseract adversarial-machine-learning
+redirect_from: /ai/evaluating-the-robustness-of-ocr-systems
 image: /imgs/thumbnails/adversarial_samples_ocr.webp
 ---
 

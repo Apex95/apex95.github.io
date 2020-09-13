@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Http Server With ASP.NET"
 date:   2012-08-18 20:02:05 +0300
-categories: networking
+tags: c-sharp http asp-net
+redirect_from: /networking/c-http-server-with-aspnet
 image: /imgs/thumbnails/aspnet.webp
 redirect_from: "/networking/c-http-server-with-asp-net/"
 ---

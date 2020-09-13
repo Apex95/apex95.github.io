@@ -2,7 +2,8 @@
 layout: post
 title:  "Approximating Integrals with the Gaussian Quadrature (w/ example)"
 date:   2015-09-16 20:02:05 +0300
-categories: numerical-methods
+tags: algorithm
+redirect_from: /numerical-methods/approximating-integrals-with-the-gaussian-quadrature-w-example
 image: /imgs/thumbnails/gauss.gif
 ---
 

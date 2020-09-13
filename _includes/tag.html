@@ -1,0 +1,19 @@
+<ul class="post-list">
+    {% for post in site.posts %}
+    {% if post.tags contains include.tag %}
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo="{% if post.image %} {{post.image}} {% else %} /imgs/thumbnails/no_thumbnail.png {% endif %}" alt="{{ post.title }}"></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        </h2>
+        
+        <p class="excerpt">
+            {{ post.content | strip_html | truncatewords: 40 }}
+        </p>
+        
+        <p class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</p>
+      </li>
+      <hr class="separator">
+    {% endif %}
+    {% endfor %}
+  </ul>

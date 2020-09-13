@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Make a Critical Process (BSoD if Killed)"
 date:   2013-10-07 20:02:05 +0300
-categories: tips-and-tricks
+tags: c-sharp exploit bsod
+redirect_from: /tips-and-tricks/c-make-a-critical-process-bsod-if-killed
 image: /imgs/thumbnails/bsod.webp
 ---
 

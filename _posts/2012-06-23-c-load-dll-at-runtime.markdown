@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Load dll at Runtime"
 date:   2012-06-23 20:02:05 +0300
-categories: miscellaneous
+tags: c-sharp dll runtime
+redirect_from: /miscellaneous/c-load-dll-at-runtime
 image: /imgs/thumbnails/libraryRuntime.webp
 ---
 

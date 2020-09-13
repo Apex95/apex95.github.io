@@ -2,7 +2,8 @@
 layout: post
 title:  "Hot Patching C/C++ Functions with Intel Pin"
 date:   2019-08-21 00:45:05 +0300
-categories: security
+tags: intel-pin hot-patch cpp buffer-overflow
+redirect_from: /security/hot-patching-functions-with-intel-pin
 image: /imgs/thumbnails/patch.webp
 ---
 

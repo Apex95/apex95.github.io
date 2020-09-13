@@ -1,0 +1,194 @@
+I")<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/predict_random_net.webp " alt="C# Predict the Random Number Generator of .NET" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-predict-random-number-generator-net">C# Predict the Random Number Generator of .NET</a>
+        </h2>
+        
+        <p class="excerpt">
+            This post targets to underline the predictability of the random… or better said pseudo-random number generator (PRNG) exposed by the .NET framework (aka the Random() class), under certain assumptions. Because of the nature of the implementation, 100% accuracy can be...
+        </p>
+        
+        <p class="post-meta">Dec 6, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/ret_buffer_overflow.webp " alt="Bypassing ASLR and DEP - Getting Shells with pwntools" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/bypassing-aslr-dep-getting-shells-with-pwntools">Bypassing ASLR and DEP - Getting Shells with pwntools</a>
+        </h2>
+        
+        <p class="excerpt">
+            Today, I’d like to take some time and to present a short trick to bypass both ASLR (Address Space Layout Randomization) and DEP (Data Execution Prevention) in order to obtain a shell in a buffer-overflow vulnerable binary. I’ve seen this...
+        </p>
+        
+        <p class="post-meta">Jul 3, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/dllInject.webp " alt="C# Inject a Dll into a Process (w/ CreateRemoteThread)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-inject-a-dll-into-a-process-w-createremotethread">C# Inject a Dll into a Process (w/ CreateRemoteThread)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Since I’ve been asked if this is possible - well…you can do DLL Injection using C# but the injected DLL must be written in a language that doesn’t depend on a CLR (C/C++ would be a good option here, but...
+        </p>
+        
+        <p class="post-meta">Oct 14, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/bsod.webp " alt="C# Make a Critical Process (BSoD if Killed)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-make-a-critical-process-bsod-if-killed">C# Make a Critical Process (BSoD if Killed)</a>
+        </h2>
+        
+        <p class="excerpt">
+            A critical process is a type of process that Windows requires to be running - csrss.exe is an example of such process. Whenever a process like this finishes its execution (or it’s terminated) Windows will respond with an authentic Blue...
+        </p>
+        
+        <p class="post-meta">Oct 7, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

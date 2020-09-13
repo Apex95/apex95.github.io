@@ -2,7 +2,8 @@
 layout: post
 title:  "PyTorch Iterative FGVM: Targeted Adversarial Samples for Traffic-Sign Recognition"
 date:   2020-05-01 00:45:05 +0300
-categories: ai
+tags: pytorch python adversarial-machine-learning conv-neural-network
+redirect_from: /ai/iterative-fgvm-targeted-adversarial-samples-traffic-sign-recognition
 image: /imgs/thumbnails/fgvm-gtsrb-adversarial-sample.png
 ---
 

@@ -111,7 +111,7 @@
  */
 .site-footer {
     border-top: 2px solid $blue2-color;
-    padding: $spacing-unit 0;
+    padding: $spacing-unit/2 0;
     box-shadow: 0 -4px 3px $shadow-color;
     background-color: $black-color;
     margin-top: 2%;
@@ -123,9 +123,9 @@
 }
 
 .footer-heading {
-    font-size: 18px;
-    margin-bottom: $spacing-unit;
-    text-align:center;
+    font-size: 24px;
+    margin-bottom: $spacing-unit/2;
+    text-align: center;
 }
 
 .contact-list,
@@ -222,16 +222,23 @@ a.category-link {
     list-style: none;
 
     > li {
-        margin-bottom: $spacing-unit;
+        margin-bottom: 20px;
         min-height: 160px;
     }
 }
 
 .post-meta {
     font-size: $small-font-size;
-    color: darken($orange-color, 5%);
-    text-align: right;
+    color: #777777;
+    text-align: center;
     font-family: $base-font-family;
+}
+
+.post-tags {
+  font-size: $small-font-size;
+  border-top: 1px solid $grey-color-dark;
+  padding-top: 20px;
+
 }
 
 .post-link {
@@ -354,6 +361,7 @@ a.category-link {
     font-size: 14px;
     color: $grey2-color;
     font-family: $text-font-family;
+    min-height: 80px;
  }
  
  .separator {

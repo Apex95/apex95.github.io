@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Send Text to Notepad"
 date:   2012-12-09 20:02:05 +0300
-categories: miscellaneous
+tags: c-sharp windows-messages
+redirect_from: /miscellaneous/c-send-text-to-notepad
 image: /imgs/thumbnails/sendtext.webp
 ---
 

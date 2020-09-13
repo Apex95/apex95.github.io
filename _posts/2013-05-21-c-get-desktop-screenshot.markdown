@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Get Desktop Screenshot"
 date:   2013-05-21 20:02:05 +0300
-categories: miscellaneous
+tags: c-sharp screenshot
+redirect_from: /miscellaneous/c-get-desktop-screenshot
 image: /imgs/thumbnails/desktopSS.webp
 ---
 

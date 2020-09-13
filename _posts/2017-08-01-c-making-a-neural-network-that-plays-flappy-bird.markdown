@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Making a Neural Network that plays Flappy Bird"
 date:   2017-08-01 00:45:05 +0300
-categories: ai
+tags: genetic-algorithm neural-network unsupervised-learning
+redirect_from: /ai/c-making-a-neural-network-that-plays-flappy-bird
 image: /imgs/thumbnails/flappy_bird_ann.webp
 ---
 

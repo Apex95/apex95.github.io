@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Countdown Timer"
 date:   2012-06-15 20:02:05 +0300
-categories: miscellaneous
+tags: c-sharp
+redirect_from: /miscellaneous/c-countdown-timer
 image: /imgs/thumbnails/timer1.webp
 ---
 

@@ -2,7 +2,8 @@
 layout: post
 title:  "Avoid a Mistake: Correctly Calculate Multiclass Accuracy"
 date:   2019-12-11 00:45:05 +0300
-categories: tips-and-tricks
+tags: sklearn python metric
+redirect_from: /tips-and-tricks/avoid-a-mistake-correctly-calculate-multiclass-accuracy
 image: /imgs/thumbnails/correctly_calculate_multiclass_accuracy.webp
 ---
 

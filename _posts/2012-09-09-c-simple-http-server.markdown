@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Simple Http Server"
 date:   2012-09-09 20:02:05 +0300
-categories: networking
+tags: c-sharp http
+redirect_from: /networking/c-simple-http-server
 image: /imgs/thumbnails/httpserver.webp
 ---
 

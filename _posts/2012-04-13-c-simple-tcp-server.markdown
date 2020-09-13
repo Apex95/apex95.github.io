@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Simple Tcp Server"
 date:   2012-04-13 20:02:05 +0300
-categories: networking
+tags: c-sharp tcp
+redirect_from: /networking/c-simple-tcp-server
 image: /imgs/thumbnails/tcpserver.webp
 ---
 

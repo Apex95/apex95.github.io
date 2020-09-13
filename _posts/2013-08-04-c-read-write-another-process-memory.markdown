@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Read/Write another Process' Memory"
 date:   2013-08-04 20:02:05 +0300
-categories: security
+tags: c-sharp process memory
+redirect_from: /security/c-read-write-another-process-memory
 image: /imgs/thumbnails/memory.webp
 ---
 

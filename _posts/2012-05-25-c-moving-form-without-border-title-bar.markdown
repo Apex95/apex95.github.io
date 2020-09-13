@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Moving form without border/title bar"
 date:   2012-05-25 20:02:05 +0300
-categories: interface
+tags: c-sharp form
+redirect_from: /interface/c-moving-form-without-border-title-bar
 image: /imgs/thumbnails/formTitleBar.webp
 ---
 

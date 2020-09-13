@@ -2,7 +2,8 @@
 layout: post
 title:  "C# WebClient with Cookies"
 date:   2012-10-26 20:02:05 +0300
-categories: tips-and-tricks
+tags: c-sharp http
+redirect_from: /tips-and-tricks/c-webclient-with-cookies
 image: /imgs/thumbnails/webclientcookie.webp
 ---
 

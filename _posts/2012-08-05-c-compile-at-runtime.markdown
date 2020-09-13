@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Compile at Runtime"
 date:   2012-08-05 20:02:05 +0300
-categories: miscellaneous
+tags: c-sharp compilation runtime
+redirect_from: /miscellaneous/c-compile-at-runtime
 image: /imgs/thumbnails/compileRuntime.webp
 ---
 

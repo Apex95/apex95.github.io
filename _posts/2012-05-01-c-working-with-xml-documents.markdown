@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Working with Xml Documents"
 date:   2012-05-01 20:02:05 +0300
-categories: files
+tags: c-sharp xml
+redirect_from: /files/c-working-with-xml-documents
 image: /imgs/thumbnails/xmlFiles.webp
 ---
 

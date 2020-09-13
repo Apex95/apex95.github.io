@@ -2,11 +2,12 @@
 layout: post
 title:  "C# How To: Get External IP Address"
 date:   2014-09-27 20:02:05 +0300
-categories: networking
+tag: ip c-sharp
+redirect_from: /networking/c-how-to-get-external-ip-address
 image: /imgs/thumbnails/getIpAddress.webp
 ---
 
-Okay, this is a really short article, but I felt the need to write this because too many people seem to take the wrong way.
+Okay, this is a really short article, but I felt the need to write this because too many people seem to do it the wrong way.
 
 ## Problem
 
@@ -29,7 +30,7 @@ string getExternalIP()
 {
     using (WebClient client = new WebClient())
     {
-         return client.DownloadString("http://canihazip.com/s");
+         return client.DownloadString("https://api.ipify.org/");
     }
 }
 ```
@@ -45,14 +46,6 @@ string getExternalIP()
 {
     using (WebClient client = new WebClient())
     {
-        try
-        {
-            return client.DownloadString("http://canihazip.com/s");
-        }
-        catch (WebException e)
-        {
-            // this one is offline
-        }
 
         try
         {
@@ -65,7 +58,7 @@ string getExternalIP()
 
         try
         {
-            return client.DownloadString("http://ip.telize.com/");
+            return client.DownloadString("https://api.ipify.org/");
         }
         catch (WebException e)
         {

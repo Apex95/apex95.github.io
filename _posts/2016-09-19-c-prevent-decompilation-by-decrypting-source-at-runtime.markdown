@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Prevent Decompilation by Decrypting Source at Runtime"
 date:   2016-09-19 20:02:05 +0300
-categories: security
+tags: encryption decompilation c-sharp static-analysis c-sharp
+redirect_from: /security/c-prevent-decompilation-by-decrypting-source-at-runtime
 image: /imgs/thumbnails/reflector-runtime-decryption.webp
 ---
 

@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Protect the Password inside a TextBox"
 date:   2013-05-04 20:02:05 +0300
-categories: security
+tags: c-sharp textbox windows-messages
+redirect_from: /security/c-protect-the-password-inside-a-textbox
 image: /imgs/thumbnails/passwordTextBox.webp
 ---
 

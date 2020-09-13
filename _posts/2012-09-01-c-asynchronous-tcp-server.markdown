@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Asynchronous Tcp Server"
 date:   2012-09-01 20:02:05 +0300
-categories: networking
+tags: c-sharp tcp
+redirect_from: /networking/c-asynchronous-tcp-server
 image: /imgs/thumbnails/asynctcplistener.webp
 ---
 

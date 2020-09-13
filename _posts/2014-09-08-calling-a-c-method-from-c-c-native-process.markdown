@@ -2,7 +2,8 @@
 layout: post
 title:  "Call a C# Method from C/C++ (native process)"
 date:   2014-09-08 20:02:05 +0300
-categories: tips-and-tricks
+tags: c c-sharp clr
+redirect_from: /tips-and-tricks/calling-a-c-method-from-c-c-native-process
 image: /imgs/thumbnails/runtime-host.webp
 ---
 

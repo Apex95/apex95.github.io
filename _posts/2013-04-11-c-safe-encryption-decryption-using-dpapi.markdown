@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Safe Encryption/Decryption using DPAPI"
 date:   2013-04-11 20:02:05 +0300
-categories: security
+tags: c-sharp encryption
+redirect_from: /security/c-safe-encryption-decryption-using-dpapi
 image: /imgs/thumbnails/dpapi.webp
 ---
 

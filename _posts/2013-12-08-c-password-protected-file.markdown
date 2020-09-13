@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Password Protected File"
 date:   2013-12-08 20:02:05 +0300
-categories: files
+tags: c-sharp encryption file
+redirect_from: /files/c-password-protected-file
 image: /imgs/thumbnails/filePassword.webp
 ---
 

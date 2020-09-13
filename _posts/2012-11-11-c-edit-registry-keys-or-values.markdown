@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Edit Registry Keys or Values"
 date:   2012-11-11 20:02:05 +0300
-categories: miscellaneous
+tags: c-sharp registry
+redirect_from: /miscellaneous/c-edit-registry-keys-or-values
 image: /imgs/thumbnails/registry.webp
 ---
 

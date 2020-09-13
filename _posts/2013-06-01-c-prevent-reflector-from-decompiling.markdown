@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Prevent Reflector from Decompiling"
 date:   2013-06-01 20:02:05 +0300
-categories: security
+tags: c-sharp decompilation reflector
+redirect_from: /security/c-prevent-reflector-from-decompiling
 image: /imgs/thumbnails/reflectorIcon.gif
 ---
 

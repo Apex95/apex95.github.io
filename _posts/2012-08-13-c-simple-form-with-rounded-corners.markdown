@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Simple Form with Rounded Corners"
 date:   2012-08-13 20:02:05 +0300
-categories: interface
+tag: c-sharp form
+redirect_from: /interface/c-simple-form-with-rounded-corners
 image: /imgs/thumbnails/formround.webp
 ---
 

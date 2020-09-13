@@ -1,0 +1,194 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/fadeinout.webp " alt="C# Form Fade In/Fade Out" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-form-fade-in-fade-out">C# Form Fade In/Fade Out</a>
+        </h2>
+        
+        <p class="excerpt">
+            This short tutorial is made to show you how to create a fade in / fade out effect for a form. Since basic Windows Forms doesn’t provide such an option, it must be done manually. Note: we’ll use timers instead...
+        </p>
+        
+        <p class="post-meta">Feb 18, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/childforms.webp " alt="C# Create Child Forms" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-create-child-forms">C# Create Child Forms</a>
+        </h2>
+        
+        <p class="excerpt">
+            Child Forms are those forms that are found inside another form (parent form). There are multiple ways to create child forms - most of them require to use a MDI Container. Child Forms without MDI Container I, personally, had lots...
+        </p>
+        
+        <p class="post-meta">Feb 2, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/formTitleBar.webp " alt="C# Moving form without border/title bar" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-moving-form-without-border-title-bar">C# Moving form without border/title bar</a>
+        </h2>
+        
+        <p class="excerpt">
+            1. Removing the title bar and border In this tutorial I will show you how you can make a draggable window (Form) with no title bar or border. By default, when you remove the border of a Form, you can’t...
+        </p>
+        
+        <p class="post-meta">May 25, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/formGradient.webp " alt="C# Form with Gradient Background" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-form-with-gradient-background">C# Form with Gradient Background</a>
+        </h2>
+        
+        <p class="excerpt">
+            Gradient is a method which consists in slowly switching from one color to another - it’s used very often in application’s design. In this tutorial I’ll show you how to create this effect using only code: First, create a Forms...
+        </p>
+        
+        <p class="post-meta">May 9, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

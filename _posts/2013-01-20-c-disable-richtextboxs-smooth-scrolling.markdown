@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Disable RichTextBox's Smooth Scrolling"
 date:   2013-01-20 20:02:05 +0300
-categories: interface
+tags: c-sharp textbox
+redirect_from: /interface/c-disable-richtextboxs-smooth-scrolling
 image: /imgs/thumbnails/smoothscrolling.webp
 ---
 

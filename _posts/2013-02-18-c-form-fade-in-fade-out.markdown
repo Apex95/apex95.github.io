@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Form Fade In/Fade Out"
 date:   2013-02-18 20:02:05 +0300
-categories: interface
+tags: c-sharp form
+redirect_from: /interface/c-form-fade-in-fade-out
 image: /imgs/thumbnails/fadeinout.webp
 ---
 

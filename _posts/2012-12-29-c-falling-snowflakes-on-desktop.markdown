@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Falling Snowflakes on Desktop"
 date:   2012-12-29 20:02:05 +0300
-categories: miscellaneous
+tags: c-sharp
+redirect_from: /miscellaneous/c-falling-snowflakes-on-desktop
 image: /imgs/thumbnails/snowflake.webp
 ---
 

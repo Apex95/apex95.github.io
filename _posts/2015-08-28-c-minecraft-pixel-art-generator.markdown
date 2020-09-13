@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Minecraft Pixel Art Generator"
 date:   2015-08-28 20:02:05 +0300
-categories: miscellaneous
+tags: pixel-art minecraft c-sharp nearest-neighbor
+redirect_from: /miscellaneous/c-minecraft-pixel-art-generator
 image: /imgs/thumbnails/minecraft.webp
 ---
 

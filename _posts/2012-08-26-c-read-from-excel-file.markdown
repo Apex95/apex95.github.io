@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Read from Excel file"
 date:   2012-08-26 20:02:05 +0300
-categories: files
+tag: c-sharp excel
+redirect_from: /files/c-read-from-excel-file
 image: /imgs/thumbnails/viewexcel.webp
 ---
 

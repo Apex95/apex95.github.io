@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Get Frames from a GIF"
 date:   2014-08-01 20:02:05 +0300
-categories: files
+tags: gif c-sharp
+redirect_from: /files/c-get-frames-from-a-gif
 image: /imgs/thumbnails/9gag.webp
 ---
 

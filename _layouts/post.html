@@ -6,12 +6,19 @@ layout: default
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
     
-    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time> / {% for category in page.categories %} <a href="/category/{{category}}">{{category}}</a>{% endfor; %}</p>
+    <div class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time> 
+      <div id="reading-time">{% assign words = content | strip_html | number_of_words %}
+        {{ words | divided_by: 180 | plus: 1 }} min. read</div>
+      </div>
   </header>
 
   <div class="post-content" itemprop="articleBody">
     {{ content }}
   </div>
+
+<div class="post-tags">
+Filled under: {% for tag in page.tags %} <a class="category-link" href="/tag/{{tag}}">{{tag}}</a>{% endfor; %}
+</div>
 
 
 

@@ -2,11 +2,11 @@
 layout: post
 title:  "C# How to Scan a Process' Memory"
 date:   2014-01-26 20:02:05 +0300
-categories: security
+tags: process c-sharp memory
+redirect_from: /security/c-how-to-scan-a-process-memory
 image: /imgs/thumbnails/memorydump.webp
 ---
 
-## Intro
 
 This article is about how to <u>get the memory dump of a process</u>, by checking _almost_ all memory addresses that can store data. Since C# is quite a high level programming language, I think this is the only method available to do this.
 

@@ -2,8 +2,10 @@
 layout: post
 title:  "XNA Disable Profile check"
 date:   2012-05-17 20:02:05 +0300
-categories: tips-and-tricks
-redirect_from: /xna/xna-disable-profile-check
+tags: c-sharp
+redirect_from: 
+    - /xna/xna-disable-profile-check
+    - /tips-and-tricks/xna-disable-profile-check
 image: /imgs/thumbnails/fbdeprofiler.webp
 ---
 

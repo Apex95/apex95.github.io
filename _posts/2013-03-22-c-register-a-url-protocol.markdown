@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Register a Url Protocol"
 date:   2013-03-22 20:02:05 +0300
-categories: miscellaneous
+tags: c-sharp url protocol
+redirect_from: /miscellaneous/c-register-a-url-protocol
 image: /imgs/thumbnails/protocolArgument.webp
 ---
 

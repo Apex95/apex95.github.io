@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Naive Bayes Basic OCR (w/ Example)"
 date:   2016-11-17 20:02:05 +0300
-categories: ai
+tags: ocr c-sharp algorithm
+redirect_from: /ai/c-naive-bayes-basic-ocr-w-example
 image: /imgs/thumbnails/naive_bayes_ocr.webp
 ---
 

@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Create Child Forms"
 date:   2013-02-02 20:02:05 +0300
-categories: interface
+tags: c-sharp form
+redirect_from: /interface/c-create-child-forms
 image: /imgs/thumbnails/childforms.webp
 ---
 

@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Simple Syntax Highlighting"
 date:   2013-08-17 20:02:05 +0300
-categories: interface
+tags: c-sharp syntax-highlighting
+redirect_from: /interface/c-simple-syntax-highlighting
 image: /imgs/thumbnails/syntaxhighlight.webp
 ---
 

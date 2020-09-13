@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Connecting to FTP Server"
 date:   2012-10-20 20:02:05 +0300
-categories: networking
+tags: c-sharp ftp
+redirect_from: /networking/c-connecting-to-ftp-server
 image: /imgs/thumbnails/ftpAddress.webp
 ---
 

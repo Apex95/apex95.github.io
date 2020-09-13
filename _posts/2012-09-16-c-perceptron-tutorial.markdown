@@ -2,8 +2,10 @@
 layout: post
 title:  "C# Perceptron Tutorial"
 date:   2012-09-16 20:02:05 +0300
-categories: ai
-redirect_from: /miscellaneous/c-perceptron-tutorial
+tags: c-sharp supervised-learning algorithm
+redirect_from: 
+    - /miscellaneous/c-perceptron-tutorial
+    - /ai/c-perceptron-tutorial
 image: /imgs/thumbnails/perceptron.webp
 ---
 

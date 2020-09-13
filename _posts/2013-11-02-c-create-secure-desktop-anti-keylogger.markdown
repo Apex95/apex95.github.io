@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Create Secure Desktop (Anti-Keylogger)"
 date:   2013-11-02 20:02:05 +0300
-categories: security
+tags: c-sharp keylogging
+redirect_from: /security/c-create-secure-desktop-anti-keylogger
 image: /imgs/thumbnails/secureDesktop.webp
 ---
 

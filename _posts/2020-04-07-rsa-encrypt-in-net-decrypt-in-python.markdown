@@ -2,7 +2,8 @@
 layout: post
 title:  "RSA: Encrypt in .NET & Decrypt in Python"
 date:   2020-04-07 00:45:05 +0300
-categories: tips-and-tricks
+tags: c-sharp python rsa encryption
+redirect_from: /tips-and-tricks/rsa-encrypt-in-net-decrypt-in-python
 image: /imgs/thumbnails/rsa-python-net.png
 ---
 

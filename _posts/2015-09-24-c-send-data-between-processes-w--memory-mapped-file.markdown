@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Send Data Between Processes (w/ Memory Mapped File)"
 date:   2015-09-24 20:02:05 +0300
-categories: tips-and-tricks
+tags: process inter-process-communication c-sharp
+redirect_from: /tips-and-tricks/c-send-data-between-processes-w-memory-mapped-file
 image: /imgs/thumbnails/mmf.webp
 ---
 

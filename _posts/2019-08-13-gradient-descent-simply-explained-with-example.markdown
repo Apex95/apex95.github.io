@@ -2,7 +2,8 @@
 layout: post
 title:  "Gradient Descent Simply Explained (with Example)"
 date:   2019-08-13 00:45:05 +0300
-categories: numerical-methods
+tags: algorithm optimization gradient-descent
+redirect_from: /numerical-methods/gradient-descent-simply-explained-with-example
 image: /imgs/thumbnails/mse-slope-plot.webp
 ---
 

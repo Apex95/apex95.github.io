@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Detect if Debugger is Attached"
 date:   2013-09-09 20:02:05 +0300
-categories: security
+tags: c-sharp debugging
+redirect_from: /security/c-detect-if-debugger-is-attached
 image: /imgs/thumbnails/detectDebugger.webp
 ---
 

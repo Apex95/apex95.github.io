@@ -2,7 +2,8 @@
 layout: post
 title:  "Bypassing ASLR and DEP - Getting Shells with pwntools"
 date:   2019-07-03 00:45:05 +0300
-categories: security
+tags: aslr dep buffer-overflow exploit pwntools python
+redirect_from: /security/bypassing-aslr-dep-getting-shells-with-pwntools
 image: /imgs/thumbnails/ret_buffer_overflow.webp
 ---
 

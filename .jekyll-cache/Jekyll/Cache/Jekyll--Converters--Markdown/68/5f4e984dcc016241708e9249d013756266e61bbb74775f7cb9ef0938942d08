@@ -1,2 +1,0 @@
-I"0<p>The RNN receives sequences of arrays of pixels covered by the sliding window of width equal to 1; once trained, the RNN will be able to memorize that certain sequences of arrays (here in colors) form specific digits and properly separate multiple digits even though they are merged in the image .</p>
-:ET

@@ -2,7 +2,8 @@
 layout: post
 title:  "Improving Tesseract 4's OCR Accuracy through Image Preprocessing"
 date:   2020-06-08 00:45:05 +0300
-categories: ai
+tags: ocr pytorch python research tesseract conv-neural-network reinforcement-learning unsupervised-learning
+redirect_from: /ai/improving-tesseract-4-ocr-accuracy-through-image-preprocessing
 image: /imgs/thumbnails/tesseract-convolutional-preprocessor.webp
 ---
 

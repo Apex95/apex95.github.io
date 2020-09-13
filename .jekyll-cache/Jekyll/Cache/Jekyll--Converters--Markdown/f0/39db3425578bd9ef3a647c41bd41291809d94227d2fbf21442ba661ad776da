@@ -1,0 +1,194 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/webclientcookie.webp " alt="C# WebClient with Cookies" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-webclient-with-cookies">C# WebClient with Cookies</a>
+        </h2>
+        
+        <p class="excerpt">
+            Well, you’re probably reading this because you noticed that .NET’s WebClient doesn’t support cookies. Basically, the cookies which are received through the WebRequest are NOT stored and also NOT sent - this is how it works by default. How to...
+        </p>
+        
+        <p class="post-meta">Oct 26, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/getpost.webp " alt="C# Sending data using GET or POST" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-sending-data-using-get-or-post">C# Sending data using GET or POST</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this short article, I’ll show you how to send data to a website from a C# application using GET or POST method. The tutorial also includes how to receive data from a website, by getting the page’s source -...
+        </p>
+        
+        <p class="post-meta">Oct 12, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/httpserver.webp " alt="C# Simple Http Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-simple-http-server">C# Simple Http Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this short tutorial I’ll explain how to make a simple Http Server using only C#. The server will be able to serve any page that contains client-side code (html and javascript). Basic stuff When a client requests a page...
+        </p>
+        
+        <p class="post-meta">Sep 9, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/aspnet.webp " alt="C# Http Server With ASP.NET" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-http-server-with-aspnet">C# Http Server With ASP.NET</a>
+        </h2>
+        
+        <p class="excerpt">
+            This tutorial will show you how to create a HTTP server that can parse ASP.NET files. It will be able to serve pages containing html,css and server-side code. As always I’ll try to keep the code simple - luckily .NET...
+        </p>
+        
+        <p class="post-meta">Aug 18, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

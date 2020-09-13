@@ -2,7 +2,8 @@
 layout: post
 title:  "Hamming Error Correction - with Example"
 date:   2016-06-30 20:02:05 +0300
-categories: networking
+tags: error-correction algorithm
+redirect_from: /networking/hamming-error-correction-w-example
 image: /imgs/thumbnails/hamming.webp
 ---
 

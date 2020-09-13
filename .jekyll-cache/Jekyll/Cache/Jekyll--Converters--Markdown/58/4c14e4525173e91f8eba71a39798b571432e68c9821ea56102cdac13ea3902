@@ -1,0 +1,824 @@
+I"a�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/rsa-python-net.png " alt="RSA: Encrypt in .NET &amp; Decrypt in Python" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/rsa-encrypt-in-net-decrypt-in-python">RSA: Encrypt in .NET &amp; Decrypt in Python</a>
+        </h2>
+        
+        <p class="excerpt">
+            So… one of my current projects required the following actions: asymmetrically encrypt a string in .NET using a public key and decrypt it in a python script using a private key. The problem that I’ve encountered was that, apparently, I...
+        </p>
+        
+        <p class="post-meta">Apr 7, 2020</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/predict_random_net.webp " alt="C# Predict the Random Number Generator of .NET" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-predict-random-number-generator-net">C# Predict the Random Number Generator of .NET</a>
+        </h2>
+        
+        <p class="excerpt">
+            This post targets to underline the predictability of the random… or better said pseudo-random number generator (PRNG) exposed by the .NET framework (aka the Random() class), under certain assumptions. Because of the nature of the implementation, 100% accuracy can be...
+        </p>
+        
+        <p class="post-meta">Dec 6, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/naive_bayes_ocr.webp " alt="C# Naive Bayes Basic OCR (w/ Example)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-naive-bayes-basic-ocr-w-example">C# Naive Bayes Basic OCR (w/ Example)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Hello again; I’m back - once again sacrificing my time for homework so I can publish something that I find more interesting. So if anyone is still reading this: the whole article is about OCR (which stands for Optical Character...
+        </p>
+        
+        <p class="post-meta">Nov 17, 2016</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/reflector-runtime-decryption.webp " alt="C# Prevent Decompilation by Decrypting Source at Runtime" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-prevent-decompilation-by-decrypting-source-at-runtime">C# Prevent Decompilation by Decrypting Source at Runtime</a>
+        </h2>
+        
+        <p class="excerpt">
+            Hello world! Today we continue the “Trolling the Decompiler” series (first part here: Prevent Reflector from Decompiling) but now with a more serious approach - this one should work on any decompiler. The point is: it is rather difficult to...
+        </p>
+        
+        <p class="post-meta">Sep 19, 2016</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/mmf.webp " alt="C# Send Data Between Processes (w/ Memory Mapped File)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-send-data-between-processes-w-memory-mapped-file">C# Send Data Between Processes (w/ Memory Mapped File)</a>
+        </h2>
+        
+        <p class="excerpt">
+            If you’re reading this right now you’re probably developing some application that has 2 or more processes and you want those processes to share some data with each other. There are multiple ways to pass data between processes (IPC), each...
+        </p>
+        
+        <p class="post-meta">Sep 24, 2015</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/minecraft.webp " alt="C# Minecraft Pixel Art Generator" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-minecraft-pixel-art-generator">C# Minecraft Pixel Art Generator</a>
+        </h2>
+        
+        <p class="excerpt">
+            Good morning class, (see what I did there:P ?) Today we will discuss a very important subject: creating pixel art in Minecraft from a given image.     Ok guys, so I saw people creating pixel art in Minecraft (trying...
+        </p>
+        
+        <p class="post-meta">Aug 28, 2015</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/dllInject.webp " alt="C# Inject a Dll into a Process (w/ CreateRemoteThread)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-inject-a-dll-into-a-process-w-createremotethread">C# Inject a Dll into a Process (w/ CreateRemoteThread)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Since I’ve been asked if this is possible - well…you can do DLL Injection using C# but the injected DLL must be written in a language that doesn’t depend on a CLR (C/C++ would be a good option here, but...
+        </p>
+        
+        <p class="post-meta">Oct 14, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/runtime-host.webp " alt="Call a C# Method from C/C++ (native process)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/calling-a-c-method-from-c-c-native-process">Call a C# Method from C/C++ (native process)</a>
+        </h2>
+        
+        <p class="excerpt">
+            This article presents a method of loading a managed (C#) dll in a native (C++) process by using the Common Language Runtime (CLR). Basically, it refers to calling a C# method from C/C++ and enables calling managed code from native...
+        </p>
+        
+        <p class="post-meta">Sep 8, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/9gag.webp " alt="C# Get Frames from a GIF" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-get-frames-from-a-gif">C# Get Frames from a GIF</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is a simple method to extract a certain frame (or all of them) from a GIF, using C#. As always, .NET provides all the functions we need, so it shouldn’t take more than 12 lines of code. Basic Information...
+        </p>
+        
+        <p class="post-meta">Aug 1, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/memorydump.webp " alt="C# How to Scan a Process' Memory" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-how-to-scan-a-process-memory">C# How to Scan a Process' Memory</a>
+        </h2>
+        
+        <p class="excerpt">
+            This article is about how to get the memory dump of a process, by checking almost all memory addresses that can store data. Since C# is quite a high level programming language, I think this is the only method available...
+        </p>
+        
+        <p class="post-meta">Jan 26, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/filePassword.webp " alt="C# Password Protected File" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-password-protected-file">C# Password Protected File</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this article…I’ll talk about how to protect a file with a password (any file type) - without using ZIP or any other archivers. The file will be encrypted and then ‘attached’ to an executable, which will be later used...
+        </p>
+        
+        <p class="post-meta">Dec 8, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/secureDesktop.webp " alt="C# Create Secure Desktop (Anti-Keylogger)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-create-secure-desktop-anti-keylogger">C# Create Secure Desktop (Anti-Keylogger)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Since the number of Keyloggers keeps growing, I decided to publish this little trick hoping that it might be useful for someone. I discovered it when I was looking on how User Account Control/UAC from Windows 7 protects the data...
+        </p>
+        
+        <p class="post-meta">Nov 2, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/bsod.webp " alt="C# Make a Critical Process (BSoD if Killed)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-make-a-critical-process-bsod-if-killed">C# Make a Critical Process (BSoD if Killed)</a>
+        </h2>
+        
+        <p class="excerpt">
+            A critical process is a type of process that Windows requires to be running - csrss.exe is an example of such process. Whenever a process like this finishes its execution (or it’s terminated) Windows will respond with an authentic Blue...
+        </p>
+        
+        <p class="post-meta">Oct 7, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/detectDebugger.webp " alt="C# Detect if Debugger is Attached" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-detect-if-debugger-is-attached">C# Detect if Debugger is Attached</a>
+        </h2>
+        
+        <p class="excerpt">
+            This method is used to detect if a running process has a debugger attached to it. It involves using CheckRemoteDebuggerPresent, imported from kernel32.dll via PInvoke. It’s a neat way to add a little bit of protection to your program, but...
+        </p>
+        
+        <p class="post-meta">Sep 9, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/syntaxhighlight.webp " alt="C# Simple Syntax Highlighting" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-simple-syntax-highlighting">C# Simple Syntax Highlighting</a>
+        </h2>
+        
+        <p class="excerpt">
+            Some time ago, I had to make a project that required syntax highlighting - luckily I wasn’t the one who had to make that part. However the version used in the project was more complicated - so I decided to...
+        </p>
+        
+        <p class="post-meta">Aug 17, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/memory.webp " alt="C# Read/Write another Process' Memory" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-read-write-another-process-memory">C# Read/Write another Process' Memory</a>
+        </h2>
+        
+        <p class="excerpt">
+            Today’s tutorial is about…processes’ memory! In this article I’ll show you how to read/write a process’ memory using C#. This is a good way to learn a part of WinAPI and also understand the basics of memory allocation. I’ll be...
+        </p>
+        
+        <p class="post-meta">Aug 4, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/sharedEncryption.webp " alt="C#/PHP Compatible Encryption (AES256)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-php-compatible-encryption-aes256">C#/PHP Compatible Encryption (AES256)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Finding a way to encrypt messages in C# and decrypting them in PHP or vice versa seems to be a “challenge” for many users. I wrote this tutorial to provide some help with this: below, you can find how to...
+        </p>
+        
+        <p class="post-meta">Jul 6, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/backpropagation.webp " alt="C# Backpropagation Tutorial (XOR)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-backpropagation-tutorial-xor">C# Backpropagation Tutorial (XOR)</a>
+        </h2>
+        
+        <p class="excerpt">
+            I’ve been trying for some time to learn and actually understand how Backpropagation (aka backward propagation of errors) works and how it trains the neural networks. Since I encountered many problems while creating the program, I decided to write this...
+        </p>
+        
+        <p class="post-meta">Jun 14, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/reflectorIcon.gif " alt="C# Prevent Reflector from Decompiling" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-prevent-reflector-from-decompiling">C# Prevent Reflector from Decompiling</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is a simple way to protect your application from any so-called “cracker”, without involving obfuscation. Remember that this works only against Reflector (tested on: v7.5.2.1), any other decompilers are “immune”. Technical stuff… The main idea is this: you change...
+        </p>
+        
+        <p class="post-meta">Jun 1, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/desktopSS.webp " alt="C# Get Desktop Screenshot" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-get-desktop-screenshot">C# Get Desktop Screenshot</a>
+        </h2>
+        
+        <p class="excerpt">
+            I found this feature while looking inside Graphics class and since it was so simple to use, I decided to post it here. It basically allows you to take print screens programmatically and save them as local images or forward...
+        </p>
+        
+        <p class="post-meta">May 21, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/passwordTextBox.webp " alt="C# Protect the Password inside a TextBox" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-protect-the-password-inside-a-textbox">C# Protect the Password inside a TextBox</a>
+        </h2>
+        
+        <p class="excerpt">
+            First of all, the TextBox Control is not a secure way to hold passwords - so don’t use it as it is by default. Even with a PasswordChar, the real password is still visible if you use a tool like...
+        </p>
+        
+        <p class="post-meta">May 4, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/asciiArt.webp " alt="C# Ascii Art Tutorial" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-ascii-art-tutorial">C# Ascii Art Tutorial</a>
+        </h2>
+        
+        <p class="excerpt">
+            If you got here, you probably want to know how Ascii Art works and how to use C# to transform images into text. We’ll do this by making good use of LockBits() and UnlockBits(), and also, a pointer - going...
+        </p>
+        
+        <p class="post-meta">Apr 18, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/dpapi.webp " alt="C# Safe Encryption/Decryption using DPAPI" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-safe-encryption-decryption-using-dpapi">C# Safe Encryption/Decryption using DPAPI</a>
+        </h2>
+        
+        <p class="excerpt">
+            Data Protection API aka DPAPI is a neat service provided by Windows Operating Systems (newer than Windows 2000) that safely encrypts and decrypts user credentials, using the Triple-DES algorithm. You have to supply the data as byte array in order...
+        </p>
+        
+        <p class="post-meta">Apr 11, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/protocolArgument.webp " alt="C# Register a Url Protocol" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-register-a-url-protocol">C# Register a Url Protocol</a>
+        </h2>
+        
+        <p class="excerpt">
+            This tutorial will show you how to register a custom Url Protocol for your application. Basically, you can control your application by simply clicking an Url address like this one: myApp:doSomething In this tutorial, I’ll name the custom protocol myApp...
+        </p>
+        
+        <p class="post-meta">Mar 22, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/rtbcontrol.webp " alt="C# Synchronize 2 RichTextBoxes' Scroll" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-synchronize-2-richtextboxes-scroll">C# Synchronize 2 RichTextBoxes' Scroll</a>
+        </h2>
+        
+        <p class="excerpt">
+            I recently had a problem when I tried to synchronize the scrolling between 2 RichTextBoxes - that was because these controls behave different than normal TextBoxes. However I managed to solve this…after some time, and I decided to post the...
+        </p>
+        
+        <p class="post-meta">Mar 17, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/fadeinout.webp " alt="C# Form Fade In/Fade Out" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-form-fade-in-fade-out">C# Form Fade In/Fade Out</a>
+        </h2>
+        
+        <p class="excerpt">
+            This short tutorial is made to show you how to create a fade in / fade out effect for a form. Since basic Windows Forms doesn’t provide such an option, it must be done manually. Note: we’ll use timers instead...
+        </p>
+        
+        <p class="post-meta">Feb 18, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/childforms.webp " alt="C# Create Child Forms" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-create-child-forms">C# Create Child Forms</a>
+        </h2>
+        
+        <p class="excerpt">
+            Child Forms are those forms that are found inside another form (parent form). There are multiple ways to create child forms - most of them require to use a MDI Container. Child Forms without MDI Container I, personally, had lots...
+        </p>
+        
+        <p class="post-meta">Feb 2, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/smoothscrolling.webp " alt="C# Disable RichTextBox's Smooth Scrolling" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-disable-richtextboxs-smooth-scrolling">C# Disable RichTextBox's Smooth Scrolling</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this article I’ll show you how to disable RichTextBox’s Smooth Scrolling - aka make RichTextBox scroll line by line. I know this is a problem for many developers, it was a problem for me too, so that’s why I...
+        </p>
+        
+        <p class="post-meta">Jan 20, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/snowflake.webp " alt="C# Falling Snowflakes on Desktop" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-falling-snowflakes-on-desktop">C# Falling Snowflakes on Desktop</a>
+        </h2>
+        
+        <p class="excerpt">
+            Since it’s winter, I decided to write about how to create an application that makes snowflakes fall on your desktop. It’s just like snowing on your desktop, but the application is pretty basic so there’s space for improvements - I...
+        </p>
+        
+        <p class="post-meta">Dec 29, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/sendtext.webp " alt="C# Send Text to Notepad" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-send-text-to-notepad">C# Send Text to Notepad</a>
+        </h2>
+        
+        <p class="excerpt">
+            This tutorial focuses on sending text from a C# program to any other window by using 2 functions provided by user32.dll. The big advantage of this method is that the window you’re sending the text to doesn’t require focus. Don’t...
+        </p>
+        
+        <p class="post-meta">Dec 9, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/registry.webp " alt="C# Edit Registry Keys or Values" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-edit-registry-keys-or-values">C# Edit Registry Keys or Values</a>
+        </h2>
+        
+        <p class="excerpt">
+            First Before starting to edit registry values/keys, include in your project’s source this namespace Microsoft.Win32. It will give you access to the required Registry functions. So, make sure you add this: 1 using Microsoft.Win32; In order to edit anything, you...
+        </p>
+        
+        <p class="post-meta">Nov 11, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/webclientcookie.webp " alt="C# WebClient with Cookies" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-webclient-with-cookies">C# WebClient with Cookies</a>
+        </h2>
+        
+        <p class="excerpt">
+            Well, you’re probably reading this because you noticed that .NET’s WebClient doesn’t support cookies. Basically, the cookies which are received through the WebRequest are NOT stored and also NOT sent - this is how it works by default. How to...
+        </p>
+        
+        <p class="post-meta">Oct 26, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/ftpAddress.webp " alt="C# Connecting to FTP Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-connecting-to-ftp-server">C# Connecting to FTP Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this tutorial I will show you how to use C# to connect to a FTP server and perform basic operations: uploading a file downloading a file deleting a file 1.Connecting &amp; Logging In Before doing operations on files, you...
+        </p>
+        
+        <p class="post-meta">Oct 20, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/getpost.webp " alt="C# Sending data using GET or POST" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-sending-data-using-get-or-post">C# Sending data using GET or POST</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this short article, I’ll show you how to send data to a website from a C# application using GET or POST method. The tutorial also includes how to receive data from a website, by getting the page’s source -...
+        </p>
+        
+        <p class="post-meta">Oct 12, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/perceptron.webp " alt="C# Perceptron Tutorial" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-perceptron-tutorial">C# Perceptron Tutorial</a>
+        </h2>
+        
+        <p class="excerpt">
+            The Perceptron is basically the simplest learning algorithm, that uses only one neuron. An usual representation of a perceptron (neuron) that has 2 inputs looks like this: A 2 Inputs + Bias Perceptron Now for a better understanding: Input 1...
+        </p>
+        
+        <p class="post-meta">Sep 16, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/httpserver.webp " alt="C# Simple Http Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-simple-http-server">C# Simple Http Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this short tutorial I’ll explain how to make a simple Http Server using only C#. The server will be able to serve any page that contains client-side code (html and javascript). Basic stuff When a client requests a page...
+        </p>
+        
+        <p class="post-meta">Sep 9, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/asynctcplistener.webp " alt="C# Asynchronous Tcp Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-asynchronous-tcp-server">C# Asynchronous Tcp Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is the model of an Asynchronous TCP server, that can have multiple clients connected, each one on it’s own thread - all of this is done using a relatively short and easy-to-remember code. If you don’t have basic knowledge...
+        </p>
+        
+        <p class="post-meta">Sep 1, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/aspnet.webp " alt="C# Http Server With ASP.NET" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-http-server-with-aspnet">C# Http Server With ASP.NET</a>
+        </h2>
+        
+        <p class="excerpt">
+            This tutorial will show you how to create a HTTP server that can parse ASP.NET files. It will be able to serve pages containing html,css and server-side code. As always I’ll try to keep the code simple - luckily .NET...
+        </p>
+        
+        <p class="post-meta">Aug 18, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/compileRuntime.webp " alt="C# Compile at Runtime" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-compile-at-runtime">C# Compile at Runtime</a>
+        </h2>
+        
+        <p class="excerpt">
+            To our luck, .NET Framework contains some classes that allow us to access the compiler and with it, we can compile our code at runtime. Basically when our executable will run, it will compile a small piece of code stored...
+        </p>
+        
+        <p class="post-meta">Aug 5, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/eventhandlerArgs.webp " alt="C# EventHandler with Arguments" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-eventhandler-with-arguments">C# EventHandler with Arguments</a>
+        </h2>
+        
+        <p class="excerpt">
+            All the methods that are called by events require two arguments: object sender EventArgs e The event calls a method using those 2 parameters, so we can’t directly add a custom argument. If we have this code and we want...
+        </p>
+        
+        <p class="post-meta">Jun 25, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/libraryRuntime.webp " alt="C# Load dll at Runtime" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-load-dll-at-runtime">C# Load dll at Runtime</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is a method used to import a dll during the program’s execution (at the runtime) without adding the actual library as a reference. Obviously, you will need: A DLL made in C# - only a function and a class...
+        </p>
+        
+        <p class="post-meta">Jun 23, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/smtpConnect.webp " alt="C# Send email using Gmail" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-send-email-using-gmail">C# Send email using Gmail</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this tutorial … we’ll send emails :) using C# of course. 1. Required: SMTP server I use: smtp.google.com , you must have a Gmail account Little attention / some basic knowledge of C# 2. Creating the client We start...
+        </p>
+        
+        <p class="post-meta">Jun 19, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/timer1.webp " alt="C# Countdown Timer" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-countdown-timer">C# Countdown Timer</a>
+        </h2>
+        
+        <p class="excerpt">
+            A timer in C # is an object that executes an action after a specified time interval - for example, it can call a method every 5 seconds. The best way to understand how it works is to use it...
+        </p>
+        
+        <p class="post-meta">Jun 15, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/formTitleBar.webp " alt="C# Moving form without border/title bar" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-moving-form-without-border-title-bar">C# Moving form without border/title bar</a>
+        </h2>
+        
+        <p class="excerpt">
+            1. Removing the title bar and border In this tutorial I will show you how you can make a draggable window (Form) with no title bar or border. By default, when you remove the border of a Form, you can’t...
+        </p>
+        
+        <p class="post-meta">May 25, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/fbdeprofiler.webp " alt="XNA Disable Profile check" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/xna-disable-profile-check">XNA Disable Profile check</a>
+        </h2>
+        
+        <p class="excerpt">
+            HiDef is one of the 2 profiles available for developing games in XNA. But…this profile requires a direct3d/D3D compatible video card. It apparently checks for DirectX10 compatibility. XNA will check this before compiling/running the project and will throw an error...
+        </p>
+        
+        <p class="post-meta">May 17, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/formGradient.webp " alt="C# Form with Gradient Background" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-form-with-gradient-background">C# Form with Gradient Background</a>
+        </h2>
+        
+        <p class="excerpt">
+            Gradient is a method which consists in slowly switching from one color to another - it’s used very often in application’s design. In this tutorial I’ll show you how to create this effect using only code: First, create a Forms...
+        </p>
+        
+        <p class="post-meta">May 9, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/connectMysql.webp " alt="C# Connect to MySql" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-connect-to-mysql">C# Connect to MySql</a>
+        </h2>
+        
+        <p class="excerpt">
+            MsSql or MySql ? What to use ? I prefer MySql because I work with it more often. Unfortunately .NET doesn’t support by default this kind of database… There’s a solution! It’s a small library called Connector/NET, available on MySql’s...
+        </p>
+        
+        <p class="post-meta">May 2, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/xmlFiles.webp " alt="C# Working with Xml Documents" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-working-with-xml-documents">C# Working with Xml Documents</a>
+        </h2>
+        
+        <p class="excerpt">
+            XML is the main file type used to save our program’s data. In this tutorial, I’ll show you how to work with XML files in C#. I’ll be working with the following file: 1 2 3 4 5 6 7...
+        </p>
+        
+        <p class="post-meta">May 1, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/tcpserver.webp " alt="C# Simple Tcp Server" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-simple-tcp-server">C# Simple Tcp Server</a>
+        </h2>
+        
+        <p class="excerpt">
+            If you got here, you probably want to know how to make a simple server in C#, using the shortest possible code and the easiest method to understand. For the sake of simplicity we’ll make a synchronous server using a...
+        </p>
+        
+        <p class="post-meta">Apr 13, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

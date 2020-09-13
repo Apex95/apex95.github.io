@@ -2,7 +2,8 @@
 layout: post
 title:  "C# Sending data using GET or POST"
 date:   2012-10-12 20:02:05 +0300
-categories: networking
+tags: c-sharp http
+redirect_from: /networking/c-sending-data-using-get-or-post
 image: /imgs/thumbnails/getpost.webp
 ---
 

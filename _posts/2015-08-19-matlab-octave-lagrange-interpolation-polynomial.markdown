@@ -2,7 +2,8 @@
 layout: post
 title:  "Matlab/Octave Lagrange Interpolation Polynomial"
 date:   2015-08-19 20:02:05 +0300
-categories: numerical-methods
+tags: algorithm matlab octave
+redirect_from: /numerical-methods/matlab-octave-lagrange-interpolation-polynomial
 image: /imgs/thumbnails/plot.webp
 ---
 
