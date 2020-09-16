@@ -2,7 +2,7 @@
 layout: post
 title:  "Build Tesseract 5 in Conda Environment"
 date:   2020-09-16 00:45:05 +0300
-tags: tesseract conda
+tags: tesseract conda ocr
 image: /imgs/thumbnails/tesseract-5-conda.png
 ---
 
