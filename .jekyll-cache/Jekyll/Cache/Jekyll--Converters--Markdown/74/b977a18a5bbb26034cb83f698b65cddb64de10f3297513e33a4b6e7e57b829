@@ -1,0 +1,210 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/rsa-python-net.png " alt="RSA: Encrypt in .NET &amp; Decrypt in Python" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/rsa-encrypt-in-net-decrypt-in-python">RSA: Encrypt in .NET &amp; Decrypt in Python</a>
+        </h2>
+        
+        <p class="excerpt">
+            So… one of my current projects required the following actions: asymmetrically encrypt a string in .NET using a public key and decrypt it in a python script using a private key. The problem that I’ve encountered was that, apparently, I...
+        </p>
+        
+        <p class="post-meta">Apr 7, 2020</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/reflector-runtime-decryption.webp " alt="C# Prevent Decompilation by Decrypting Source at Runtime" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-prevent-decompilation-by-decrypting-source-at-runtime">C# Prevent Decompilation by Decrypting Source at Runtime</a>
+        </h2>
+        
+        <p class="excerpt">
+            Hello world! Today we continue the “Trolling the Decompiler” series (first part here: Prevent Reflector from Decompiling) but now with a more serious approach - this one should work on any decompiler. The point is: it is rather difficult to...
+        </p>
+        
+        <p class="post-meta">Sep 19, 2016</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/filePassword.webp " alt="C# Password Protected File" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-password-protected-file">C# Password Protected File</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this article…I’ll talk about how to protect a file with a password (any file type) - without using ZIP or any other archivers. The file will be encrypted and then ‘attached’ to an executable, which will be later used...
+        </p>
+        
+        <p class="post-meta">Dec 8, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/sharedEncryption.webp " alt="C#/PHP Compatible Encryption (AES256)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-php-compatible-encryption-aes256">C#/PHP Compatible Encryption (AES256)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Finding a way to encrypt messages in C# and decrypting them in PHP or vice versa seems to be a “challenge” for many users. I wrote this tutorial to provide some help with this: below, you can find how to...
+        </p>
+        
+        <p class="post-meta">Jul 6, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/dpapi.webp " alt="C# Safe Encryption/Decryption using DPAPI" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-safe-encryption-decryption-using-dpapi">C# Safe Encryption/Decryption using DPAPI</a>
+        </h2>
+        
+        <p class="excerpt">
+            Data Protection API aka DPAPI is a neat service provided by Windows Operating Systems (newer than Windows 2000) that safely encrypts and decrypts user credentials, using the Triple-DES algorithm. You have to supply the data as byte array in order...
+        </p>
+        
+        <p class="post-meta">Apr 11, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

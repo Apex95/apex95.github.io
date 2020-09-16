@@ -1,0 +1,238 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/mse-slope-plot.webp " alt="Gradient Descent Simply Explained (with Example)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/gradient-descent-simply-explained-with-example">Gradient Descent Simply Explained (with Example)</a>
+        </h2>
+        
+        <p class="excerpt">
+            So… I’ll try to explain here the concept of gradient descent as simple as possible in order to provide some insight of what’s happening from a mathematical perspective and why the formula works. I’ll try to keep it short and...
+        </p>
+        
+        <p class="post-meta">Aug 13, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/naive_bayes_ocr.webp " alt="C# Naive Bayes Basic OCR (w/ Example)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-naive-bayes-basic-ocr-w-example">C# Naive Bayes Basic OCR (w/ Example)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Hello again; I’m back - once again sacrificing my time for homework so I can publish something that I find more interesting. So if anyone is still reading this: the whole article is about OCR (which stands for Optical Character...
+        </p>
+        
+        <p class="post-meta">Nov 17, 2016</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/hamming.webp " alt="Hamming Error Correction - with Example" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/hamming-error-correction-w-example">Hamming Error Correction - with Example</a>
+        </h2>
+        
+        <p class="excerpt">
+            This article will focus on Hamming codes - mainly, this represents an attempt to explain a little bit better how this method can help in detecting and correcting… 1 bit errors. This method is not really useful at “higher level”...
+        </p>
+        
+        <p class="post-meta">Jun 30, 2016</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/gauss.gif " alt="Approximating Integrals with the Gaussian Quadrature (w/ example)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/approximating-integrals-with-the-gaussian-quadrature-w-example">Approximating Integrals with the Gaussian Quadrature (w/ example)</a>
+        </h2>
+        
+        <p class="excerpt">
+            This is more like a memory dump so I will have a backup in case I’ll ever need it again. And if someone else finds this information useful, the better it is. Intro The Gaussian Quadrature is a method used...
+        </p>
+        
+        <p class="post-meta">Sep 16, 2015</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/plot.webp " alt="Matlab/Octave Lagrange Interpolation Polynomial" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/matlab-octave-lagrange-interpolation-polynomial">Matlab/Octave Lagrange Interpolation Polynomial</a>
+        </h2>
+        
+        <p class="excerpt">
+            Ok, I’ve been missing for a few days…months…almost a year. Ran out of ideas and time for new articles (thanks to the university) so I’ll publish some stuff related to numerical methods, starting with a basic interpolation method using the...
+        </p>
+        
+        <p class="post-meta">Aug 19, 2015</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/backpropagation.webp " alt="C# Backpropagation Tutorial (XOR)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-backpropagation-tutorial-xor">C# Backpropagation Tutorial (XOR)</a>
+        </h2>
+        
+        <p class="excerpt">
+            I’ve been trying for some time to learn and actually understand how Backpropagation (aka backward propagation of errors) works and how it trains the neural networks. Since I encountered many problems while creating the program, I decided to write this...
+        </p>
+        
+        <p class="post-meta">Jun 14, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/perceptron.webp " alt="C# Perceptron Tutorial" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-perceptron-tutorial">C# Perceptron Tutorial</a>
+        </h2>
+        
+        <p class="excerpt">
+            The Perceptron is basically the simplest learning algorithm, that uses only one neuron. An usual representation of a perceptron (neuron) that has 2 inputs looks like this: A 2 Inputs + Bias Perceptron Now for a better understanding: Input 1...
+        </p>
+        
+        <p class="post-meta">Sep 16, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

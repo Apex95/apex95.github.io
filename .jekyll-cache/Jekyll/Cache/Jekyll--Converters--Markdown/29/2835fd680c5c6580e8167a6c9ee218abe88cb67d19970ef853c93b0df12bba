@@ -1,0 +1,122 @@
+I"�"<p>Here’s a short guide to building <strong>Tesseract 5</strong> from source (master branch on GitHub). I’m writing this mainly because conda offers as packages only versions of Tesseract up to 4.1.1 – at least at this moment. The other reason is that the cluster I’m building it on is running a CentOS 7 and permitting only inside-environment changes so I can’t install packages with yum.</p>
+
+<h5 id="in-this-guide-im-using-gccg-version-620-it-is-recommended-to-use-recent-versions-when-compiling-tesseract-5-for-example-the-build-fails-with-gccg-485">In this guide I’m using <strong>GCC/G++</strong> version <strong>6.2.0</strong>; it is recommended to use recent versions when compiling Tesseract 5. For example, the build fails with GCC/G++ 4.8.5.</h5>
+
+<h2 id="building-steps">Building Steps</h2>
+
+<ol>
+  <li>Create your <strong>conda environment</strong> and activate it:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>conda create <span class="nt">--name</span> tess-build 
+conda activate tess-build
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>Install the following dependencies. You’ll need at least leptonica 1.74 for this to work - I’m using 1.78.0.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge automake
+conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge libtool
+conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge pkgconfig
+conda <span class="nb">install</span> <span class="nt">-c</span> conda-forge leptonica
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>Clone the latest Tesseract version from the master branch and navigate into the directory:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>git clone https://github.com/tesseract-ocr/tesseract.git
+<span class="nb">cd </span>tesseract
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>Run the following scripts to prepare the building process
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre>./autogen.sh
+./configure
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>Conda might not include the path to its libraries inside the <code class="highlighter-rouge">LD_LIBRARY_PATH</code> environment variable. I had to include it manually otherwise the build fails during linking:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span><span class="nv">$LD_LIBRARY_PATH</span>:~/.conda/envs/tess-build/lib
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>Run the makefile:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>make
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+  <li>Set the <code class="highlighter-rouge">TESSDATA_PREFIX</code> environment variable in order to inform Tesseract where to look for language packs
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="nb">export </span><span class="nv">TESSDATA_PREFIX</span><span class="o">=</span><span class="nv">$HOME</span>/tesseract/tessdata
+</pre></td></tr></tbody></table></code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Also, you’ll have to download the <strong>eng</strong> (default) language pack into <strong>tessdata</strong>:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>wget https://github.com/tesseract-ocr/tessdata/raw/master/eng.traineddata <span class="nt">-P</span> tessdata/
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<ol>
+  <li>See if it works:
+```
+(tess-build) [dan.sporici@hpsl-wn02 tesseract]$ ./tesseract -v</li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre>
+
+## Possible Leptonica Linking Issue
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>/usr/bin/ld: warning: libpng16.so.16, needed by /.conda/envs/tess-build/lib/liblept.so, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libjpeg.so.9, needed by /.conda/envs/tess-build/lib/liblept.so, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libgif.so.7, needed by /.conda/envs/tess-build/lib/liblept.so, not found (try using -rpath or -rpath-link)
+/usr/bin/ld: warning: libwebp.so.7, needed by /.conda/envs/tess-build/lib/liblept.so, not found (try using -rpath or -rpath-link)
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to <code class="highlighter-rouge">png_create_read_struct@PNG16_0'
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to </code>DGifOpen’
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to <code class="highlighter-rouge">png_get_PLTE@PNG16_0'
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to </code>jpeg_std_error@LIBJPEG_9.0’ 
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to <code class="highlighter-rouge">png_write_image@PNG16_0'
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to </code>EGifPutScreenDesc’
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to <code class="highlighter-rouge">EGifPutComment'
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to </code>WebPEncodeRGBA’
+[…]
+/.conda/envs/tess-build/lib/liblept.so: undefined reference to <code class="highlighter-rouge">png_init_io@PNG16_0'
+collect2: error: ld returned 1 exit status
+make[2]: *** [tesseract] Error 1
+make[2]: Leaving directory </code>/tesseract’
+make[1]: <em>** [all-recursive] Error 1
+make[1]: Leaving directory `/tesseract’
+make: **</em> [all] Error 2</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>
+This happens because the libraries in cause (**libpng16.so**, **libjpeg.so**, **libgif.so**, **libwebp.so**) are not found in `LD_LIBRARY_PATH`.
+If step 5 doesn't work for you, you might be able to get around this by modifying the **Makefile** and adding the libraries yourself after `-llept`:
+```make
+LEPTONICA_LIBS = -L/.conda/envs/tess-build/lib -llept -lz -lpng16 -ljpeg -lgif -lwebp
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>If you follow this approach, you need to copy the libraries to <code class="highlighter-rouge">tesseract/.libs</code> otherwise you’ll get:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre>(tess-build) [dan.sporici@hpsl-wn02 tesseract]$ ./tesseract
+/tesseract/.libs/lt-tesseract: error while loading shared libraries: liblept.so.5: cannot open shared object file: No such file or directory
+/tesseract/.libs/lt-tesseract: error while loading shared libraries: libpng16.so.16: cannot open shared object file: No such file or directory
+/tesseract/.libs/lt-tesseract: error while loading shared libraries: libjpeg.so.9: cannot open shared object file: No such file or directory
+/tesseract/.libs/lt-tesseract: error while loading shared libraries: libgif.so.7: cannot open shared object file: No such file or directory 
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+:ET

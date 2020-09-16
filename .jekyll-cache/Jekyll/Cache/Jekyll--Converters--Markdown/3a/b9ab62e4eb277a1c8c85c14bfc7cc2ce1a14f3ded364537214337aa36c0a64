@@ -1,0 +1,168 @@
+I"n<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/passwordTextBox.webp " alt="C# Protect the Password inside a TextBox" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-protect-the-password-inside-a-textbox">C# Protect the Password inside a TextBox</a>
+        </h2>
+        
+        <p class="excerpt">
+            First of all, the TextBox Control is not a secure way to hold passwords - so don’t use it as it is by default. Even with a PasswordChar, the real password is still visible if you use a tool like...
+        </p>
+        
+        <p class="post-meta">May 4, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/sendtext.webp " alt="C# Send Text to Notepad" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-send-text-to-notepad">C# Send Text to Notepad</a>
+        </h2>
+        
+        <p class="excerpt">
+            This tutorial focuses on sending text from a C# program to any other window by using 2 functions provided by user32.dll. The big advantage of this method is that the window you’re sending the text to doesn’t require focus. Don’t...
+        </p>
+        
+        <p class="post-meta">Dec 9, 2012</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

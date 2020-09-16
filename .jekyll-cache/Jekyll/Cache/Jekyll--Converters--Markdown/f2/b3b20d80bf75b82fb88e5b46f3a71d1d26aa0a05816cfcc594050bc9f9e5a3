@@ -1,0 +1,168 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/patch.webp " alt="Hot Patching C/C++ Functions with Intel Pin" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/hot-patching-functions-with-intel-pin">Hot Patching C/C++ Functions with Intel Pin</a>
+        </h2>
+        
+        <p class="excerpt">
+            5 years ago, I said in one of my articles that I shall return, one day, with a method of hot patching functions inside live processes; So… I guess this is that day. What we’ll try to achieve here is...
+        </p>
+        
+        <p class="post-meta">Aug 21, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/ret_buffer_overflow.webp " alt="Bypassing ASLR and DEP - Getting Shells with pwntools" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/bypassing-aslr-dep-getting-shells-with-pwntools">Bypassing ASLR and DEP - Getting Shells with pwntools</a>
+        </h2>
+        
+        <p class="excerpt">
+            Today, I’d like to take some time and to present a short trick to bypass both ASLR (Address Space Layout Randomization) and DEP (Data Execution Prevention) in order to obtain a shell in a buffer-overflow vulnerable binary. I’ve seen this...
+        </p>
+        
+        <p class="post-meta">Jul 3, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

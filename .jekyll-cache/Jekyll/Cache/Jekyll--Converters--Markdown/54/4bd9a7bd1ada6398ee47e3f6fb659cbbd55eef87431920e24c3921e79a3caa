@@ -1,0 +1,196 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/rnn-ctc-ocr.png " alt="PyTorch CRNN: Seq2Seq Digits Recognition w/ CTC" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/pytorch-crnn-seq2seq-digits-recognition-ctc">PyTorch CRNN: Seq2Seq Digits Recognition w/ CTC</a>
+        </h2>
+        
+        <p class="excerpt">
+            This article discusses handwritten character recognition (OCR) in images using sequence-to-sequence (seq2seq) mapping performed by a Convolutional Recurrent Neural Network (CRNN) trained with Connectionist Temporal Classification (CTC) loss. The aforementioned approach is employed in multiple modern OCR engines for handwritten...
+        </p>
+        
+        <p class="post-meta">Jul 31, 2020</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/tesseract-convolutional-preprocessor.webp " alt="Improving Tesseract 4's OCR Accuracy through Image Preprocessing" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/improving-tesseract-4-ocr-accuracy-through-image-preprocessing">Improving Tesseract 4's OCR Accuracy through Image Preprocessing</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this work I took a look at Tesseract 4’s performance at recognizing characters from a challenging dataset and proposed a minimalistic convolution-based approach for input image preprocessing that can boost the character-level accuracy from 13.4% to 61.6% (+359% relative...
+        </p>
+        
+        <p class="post-meta">Jun 8, 2020</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/adversarial_samples_ocr.webp " alt="Evaluating the Robustness of OCR Systems" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/evaluating-the-robustness-of-ocr-systems">Evaluating the Robustness of OCR Systems</a>
+        </h2>
+        
+        <p class="excerpt">
+            In this article, I’m going to discuss about my Bachelor’s degree final project, which is about evaluating the robustness of OCR systems (such as Tesseract or Google’s Cloud Vision) when adversarial samples are presented as inputs. It’s somewhere in-between fuzzing...
+        </p>
+        
+        <p class="post-meta">Sep 8, 2019</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/naive_bayes_ocr.webp " alt="C# Naive Bayes Basic OCR (w/ Example)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-naive-bayes-basic-ocr-w-example">C# Naive Bayes Basic OCR (w/ Example)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Hello again; I’m back - once again sacrificing my time for homework so I can publish something that I find more interesting. So if anyone is still reading this: the whole article is about OCR (which stands for Optical Character...
+        </p>
+        
+        <p class="post-meta">Nov 17, 2016</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET

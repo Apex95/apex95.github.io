@@ -1,0 +1,196 @@
+I"�<ul class="post-list">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/mmf.webp " alt="C# Send Data Between Processes (w/ Memory Mapped File)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-send-data-between-processes-w-memory-mapped-file">C# Send Data Between Processes (w/ Memory Mapped File)</a>
+        </h2>
+        
+        <p class="excerpt">
+            If you’re reading this right now you’re probably developing some application that has 2 or more processes and you want those processes to share some data with each other. There are multiple ways to pass data between processes (IPC), each...
+        </p>
+        
+        <p class="post-meta">Sep 24, 2015</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/dllInject.webp " alt="C# Inject a Dll into a Process (w/ CreateRemoteThread)" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-inject-a-dll-into-a-process-w-createremotethread">C# Inject a Dll into a Process (w/ CreateRemoteThread)</a>
+        </h2>
+        
+        <p class="excerpt">
+            Since I’ve been asked if this is possible - well…you can do DLL Injection using C# but the injected DLL must be written in a language that doesn’t depend on a CLR (C/C++ would be a good option here, but...
+        </p>
+        
+        <p class="post-meta">Oct 14, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/memorydump.webp " alt="C# How to Scan a Process' Memory" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-how-to-scan-a-process-memory">C# How to Scan a Process' Memory</a>
+        </h2>
+        
+        <p class="excerpt">
+            This article is about how to get the memory dump of a process, by checking almost all memory addresses that can store data. Since C# is quite a high level programming language, I think this is the only method available...
+        </p>
+        
+        <p class="post-meta">Jan 26, 2014</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <div class="thumbnail"><img src="/imgs/thumbnails/no_thumbnail.png" data-echo=" /imgs/thumbnails/memory.webp " alt="C# Read/Write another Process' Memory" /></div>
+        <h2 style="border:none;">
+          <a class="post-link" href="/c-read-write-another-process-memory">C# Read/Write another Process' Memory</a>
+        </h2>
+        
+        <p class="excerpt">
+            Today’s tutorial is about…processes’ memory! In this article I’ll show you how to read/write a process’ memory using C#. This is a good way to learn a part of WinAPI and also understand the basics of memory allocation. I’ll be...
+        </p>
+        
+        <p class="post-meta">Aug 4, 2013</p>
+      </li>
+      <hr class="separator" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </ul>
+:ET
