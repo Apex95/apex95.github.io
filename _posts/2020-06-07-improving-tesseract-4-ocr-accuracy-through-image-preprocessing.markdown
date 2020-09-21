@@ -116,5 +116,21 @@ Significant improvements can be observed through this preprocessing operation. M
 
 The OCR performance on the preprocessed images is overall better but not good enough to be reliable. A 38% character error rate is still a large setback. I'm pretty sure that better recognitions can be obtained with more fine-tuning, a more complex architecture for the convolutional preprocessor and a more diverse training set. However, the current implementation is already very slow to train which makes me question if the entire methodology is feasible from this point of view.
 
+## Cite
+
+If you found this relevant to your work, you can cite the article using:
+```
+@article{sporici2020improving,
+  title={Improving the Accuracy of Tesseract 4.0 OCR Engine Using Convolution-Based Preprocessing},
+  author={Sporici, Dan and Cușnir, Elena and Boiangiu, Costin-Anton},
+  journal={Symmetry},
+  volume={12},
+  number={5},
+  pages={715},
+  year={2020},
+  publisher={Multidisciplinary Digital Publishing Institute}
+}
+```
+
 
 

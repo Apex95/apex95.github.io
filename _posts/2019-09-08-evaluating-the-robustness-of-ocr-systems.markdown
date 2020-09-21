@@ -160,6 +160,20 @@ However, we can conclude that, using this approach, it is more challenging to ma
 
 Maybe someday...
 
+## Cite
+
+Should you find this relevant to your work, you can cite the article using:
+```
+@inproceedings{sporici2018evaluation,
+  title={An Evaluation of OCR Systems Against Adversarial Machine Learning},
+  author={Sporici, Dan and Chiroiu, Mihai and Cioc{\^\i}rlan, Dan},
+  booktitle={International Conference on Security for Information Technology and Communications},
+  pages={126--141},
+  year={2018},
+  organization={Springer}
+}
+```
+
 
 
 
