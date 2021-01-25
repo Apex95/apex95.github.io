@@ -180,10 +180,10 @@ optimizer = torch.optim.Adam(crnn.parameters(), lr=0.001)
 ```
 
 When performing backpropagation, the `CTCLoss` method will take the following parameters:
-    - `log_probabilities` - this is the output from the `log_softmax`
-    - `targets` - a tensor which contains the expected sequence of digits
-    - `input_lengts` - the length of the input sequence after it processed by the convolutional layers (i.e. post-convolution width)
-    - `target_lengths` - the length of the target sequence
+* `log_probabilities` - this is the output from the `log_softmax`
+* `targets` - a tensor which contains the expected sequence of digits
+* `input_lengts` - the length of the input sequence after it processed by the convolutional layers (i.e. post-convolution width)
+* `target_lengths` - the length of the target sequence
 
 The last 2 parameters (`input_lengths` and `target_lengths`) are used to instruct the `CTCLoss` function to ignore additional padding (in case you added padding to the imagine or the target sequences to fit them into a batch).
 
