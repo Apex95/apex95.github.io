@@ -182,14 +182,14 @@ optimizer = torch.optim.Adam(crnn.parameters(), lr=0.001)
 When performing backpropagation, the `CTCLoss` method will take the following parameters:
 * `log_probabilities` - this is the output from the `log_softmax`
 * `targets` - a tensor which contains the expected sequence of digits
-* `input_lengts` - the length of the input sequence after it processed by the convolutional layers (i.e. post-convolution width)
+* `input_lengts` - the length of the input sequence after it is processed by the convolutional layers (i.e. post-convolution width)
 * `target_lengths` - the length of the target sequence
 
 The last 2 parameters (`input_lengths` and `target_lengths`) are used to instruct the `CTCLoss` function to ignore additional padding (in case you added padding to the imagine or the target sequences to fit them into a batch).
 
 `log_probabilities` will look like a `(T, C)`-shaped tensor (T = number of timesteps, C = number of classes) and specifies, for teach timestep, the probability of it belonging in a specific class. This tensor is decoded into text using a **best path** (greedy) approach: for each timestep, this algorithm picks the class with the maximum probability while also collapsing multiple occurences of the same character into one (unless they're separated by a blank).
 
-In my implementation, I've used `y_pred.permute(1, 0, 2)` to match on the CRNN's output to match the `CTCLoss`'s desired input format.
+In my implementation, I've used `y_pred.permute(1, 0, 2)` to reorder the CRNN's output so it matches the `CTCLoss`'s desired input format.
 
 
 Another aspect you should pay attention to is resetting the **hidden state** of the GRU layers (`crnn.reset_hidden(batch_size)`) before recognizing any new sequence; in my experience this provided better results.
